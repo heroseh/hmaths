@@ -2860,6 +2860,8 @@ void print_mat4x4_determinant(void) {
 void generate_math_file() {
 	ctx.f = open_file_write("maths.c");
 	print_file_header();
+	fprintf(ctx.f,"#include \"maths.h\"\n");
+	fprintf(ctx.f,"\n");
 
 	print_section_header("Half type aka. float 16 bit", "");
 	fprintf(ctx.f,
