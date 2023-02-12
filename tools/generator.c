@@ -1284,6 +1284,10 @@ void generate_math_types_header_file() {
 	ctx.f = open_file_write("types.h");
 	print_header_file_header("_HMATHS_TYPES_H_");
 
+	fprintf(ctx.f,"#include <stdbool.h>\n");
+	fprintf(ctx.f,"#include <stdint.h>\n");
+	fprintf(ctx.f,"\n");
+
 	print_entry(
 		"#ifndef HMATHS_ENABLE_VECTOR_EXTENSIONS\n"
 		"#if defined(__HCC__) || defined(__clang__)\n"

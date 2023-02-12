@@ -7,6 +7,9 @@
 #ifndef _HMATHS_TYPES_H_
 #define _HMATHS_TYPES_H_
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifndef HMATHS_ENABLE_VECTOR_EXTENSIONS
 #if defined(__HCC__) || defined(__clang__)
 #define HMATHS_ENABLE_VECTOR_EXTENSIONS 1
