@@ -1290,7 +1290,7 @@ void generate_math_types_header_file() {
 
 	print_entry(
 		"#ifndef HMATHS_ENABLE_VECTOR_EXTENSIONS\n"
-		"#if defined(__HCC__) || defined(__clang__)\n"
+		"#if defined(__HCC__) || defined(__clang__) || defined(__GNUC__)\n"
 		"#define HMATHS_ENABLE_VECTOR_EXTENSIONS 1\n"
 		"#else\n"
 		"#define HMATHS_ENABLE_VECTOR_EXTENSIONS 0\n"
@@ -1305,6 +1305,8 @@ void generate_math_types_header_file() {
 		"#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef __hcc_vector_t(scalar_t, num_comps) vector_t\n"
 		"#elif defined(__clang__)\n"
 		"#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef scalar_t vector_t __attribute__((ext_vector_type(num_comps))) __attribute__((aligned(sizeof(scalar_t))))\n"
+		"elif defined(__GNUC__)\n"
+		"#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef scalar_t vector_t __attribute__((vector_size(num_comps*sizeof(scalar_t)))) __attribute__((aligned(sizeof(scalar_t))))\n"
 		"#endif\n"
 		"#endif\n"
 		"\n"
