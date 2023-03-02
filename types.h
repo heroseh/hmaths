@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 #ifndef HMATHS_ENABLE_VECTOR_EXTENSIONS
-#if defined(__HCC__) || defined(__clang__)
+#if defined(__HCC__)
 #define HMATHS_ENABLE_VECTOR_EXTENSIONS 1
 #else
 #define HMATHS_ENABLE_VECTOR_EXTENSIONS 0
@@ -21,8 +21,6 @@
 #if HMATHS_ENABLE_VECTOR_EXTENSIONS
 #if defined(__HCC__)
 #define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef __hcc_vector_t(scalar_t, num_comps) vector_t
-#elif defined(__clang__)
-#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef scalar_t vector_t __attribute__((ext_vector_type(num_comps))) __attribute__((aligned(sizeof(scalar_t))))
 #endif
 #endif
 
@@ -151,292 +149,364 @@ typedef struct u32x4 u32x4;
 typedef struct u64x4 u64x4;
 
 struct boolx2 {
-	struct { bool x; bool y; };
-	struct { bool r; bool g; };
+	union {
+		struct { bool x; bool y; };
+		struct { bool r; bool g; };
+	};
 };
 
 struct f16x2 {
-	struct { half x; half y; };
-	struct { half r; half g; };
+	union {
+		struct { half x; half y; };
+		struct { half r; half g; };
+	};
 };
 
 struct f32x2 {
-	struct { float x; float y; };
-	struct { float r; float g; };
+	union {
+		struct { float x; float y; };
+		struct { float r; float g; };
+	};
 };
 
 struct f64x2 {
-	struct { double x; double y; };
-	struct { double r; double g; };
+	union {
+		struct { double x; double y; };
+		struct { double r; double g; };
+	};
 };
 
 struct s8x2 {
-	struct { int8_t x; int8_t y; };
-	struct { int8_t r; int8_t g; };
+	union {
+		struct { int8_t x; int8_t y; };
+		struct { int8_t r; int8_t g; };
+	};
 };
 
 struct s16x2 {
-	struct { int16_t x; int16_t y; };
-	struct { int16_t r; int16_t g; };
+	union {
+		struct { int16_t x; int16_t y; };
+		struct { int16_t r; int16_t g; };
+	};
 };
 
 struct s32x2 {
-	struct { int32_t x; int32_t y; };
-	struct { int32_t r; int32_t g; };
+	union {
+		struct { int32_t x; int32_t y; };
+		struct { int32_t r; int32_t g; };
+	};
 };
 
 struct s64x2 {
-	struct { int64_t x; int64_t y; };
-	struct { int64_t r; int64_t g; };
+	union {
+		struct { int64_t x; int64_t y; };
+		struct { int64_t r; int64_t g; };
+	};
 };
 
 struct u8x2 {
-	struct { uint8_t x; uint8_t y; };
-	struct { uint8_t r; uint8_t g; };
+	union {
+		struct { uint8_t x; uint8_t y; };
+		struct { uint8_t r; uint8_t g; };
+	};
 };
 
 struct u16x2 {
-	struct { uint16_t x; uint16_t y; };
-	struct { uint16_t r; uint16_t g; };
+	union {
+		struct { uint16_t x; uint16_t y; };
+		struct { uint16_t r; uint16_t g; };
+	};
 };
 
 struct u32x2 {
-	struct { uint32_t x; uint32_t y; };
-	struct { uint32_t r; uint32_t g; };
+	union {
+		struct { uint32_t x; uint32_t y; };
+		struct { uint32_t r; uint32_t g; };
+	};
 };
 
 struct u64x2 {
-	struct { uint64_t x; uint64_t y; };
-	struct { uint64_t r; uint64_t g; };
+	union {
+		struct { uint64_t x; uint64_t y; };
+		struct { uint64_t r; uint64_t g; };
+	};
 };
 
 struct boolx3 {
-	struct { bool x; bool y; bool z; };
-	struct { bool r; bool g; bool b; };
-	boolx2 xy;
-	struct { bool _; boolx2 yz; };
-	boolx2 rg;
-	struct { bool __; boolx2 gb; };
+	union {
+		struct { bool x; bool y; bool z; };
+		struct { bool r; bool g; bool b; };
+		boolx2 xy;
+		struct { bool _; boolx2 yz; };
+		boolx2 rg;
+		struct { bool __; boolx2 gb; };
+	};
 };
 
 struct f16x3 {
-	struct { half x; half y; half z; };
-	struct { half r; half g; half b; };
-	f16x2 xy;
-	struct { half _; f16x2 yz; };
-	f16x2 rg;
-	struct { half __; f16x2 gb; };
+	union {
+		struct { half x; half y; half z; };
+		struct { half r; half g; half b; };
+		f16x2 xy;
+		struct { half _; f16x2 yz; };
+		f16x2 rg;
+		struct { half __; f16x2 gb; };
+	};
 };
 
 struct f32x3 {
-	struct { float x; float y; float z; };
-	struct { float r; float g; float b; };
-	f32x2 xy;
-	struct { float _; f32x2 yz; };
-	f32x2 rg;
-	struct { float __; f32x2 gb; };
+	union {
+		struct { float x; float y; float z; };
+		struct { float r; float g; float b; };
+		f32x2 xy;
+		struct { float _; f32x2 yz; };
+		f32x2 rg;
+		struct { float __; f32x2 gb; };
+	};
 };
 
 struct f64x3 {
-	struct { double x; double y; double z; };
-	struct { double r; double g; double b; };
-	f64x2 xy;
-	struct { double _; f64x2 yz; };
-	f64x2 rg;
-	struct { double __; f64x2 gb; };
+	union {
+		struct { double x; double y; double z; };
+		struct { double r; double g; double b; };
+		f64x2 xy;
+		struct { double _; f64x2 yz; };
+		f64x2 rg;
+		struct { double __; f64x2 gb; };
+	};
 };
 
 struct s8x3 {
-	struct { int8_t x; int8_t y; int8_t z; };
-	struct { int8_t r; int8_t g; int8_t b; };
-	s8x2 xy;
-	struct { int8_t _; s8x2 yz; };
-	s8x2 rg;
-	struct { int8_t __; s8x2 gb; };
+	union {
+		struct { int8_t x; int8_t y; int8_t z; };
+		struct { int8_t r; int8_t g; int8_t b; };
+		s8x2 xy;
+		struct { int8_t _; s8x2 yz; };
+		s8x2 rg;
+		struct { int8_t __; s8x2 gb; };
+	};
 };
 
 struct s16x3 {
-	struct { int16_t x; int16_t y; int16_t z; };
-	struct { int16_t r; int16_t g; int16_t b; };
-	s16x2 xy;
-	struct { int16_t _; s16x2 yz; };
-	s16x2 rg;
-	struct { int16_t __; s16x2 gb; };
+	union {
+		struct { int16_t x; int16_t y; int16_t z; };
+		struct { int16_t r; int16_t g; int16_t b; };
+		s16x2 xy;
+		struct { int16_t _; s16x2 yz; };
+		s16x2 rg;
+		struct { int16_t __; s16x2 gb; };
+	};
 };
 
 struct s32x3 {
-	struct { int32_t x; int32_t y; int32_t z; };
-	struct { int32_t r; int32_t g; int32_t b; };
-	s32x2 xy;
-	struct { int32_t _; s32x2 yz; };
-	s32x2 rg;
-	struct { int32_t __; s32x2 gb; };
+	union {
+		struct { int32_t x; int32_t y; int32_t z; };
+		struct { int32_t r; int32_t g; int32_t b; };
+		s32x2 xy;
+		struct { int32_t _; s32x2 yz; };
+		s32x2 rg;
+		struct { int32_t __; s32x2 gb; };
+	};
 };
 
 struct s64x3 {
-	struct { int64_t x; int64_t y; int64_t z; };
-	struct { int64_t r; int64_t g; int64_t b; };
-	s64x2 xy;
-	struct { int64_t _; s64x2 yz; };
-	s64x2 rg;
-	struct { int64_t __; s64x2 gb; };
+	union {
+		struct { int64_t x; int64_t y; int64_t z; };
+		struct { int64_t r; int64_t g; int64_t b; };
+		s64x2 xy;
+		struct { int64_t _; s64x2 yz; };
+		s64x2 rg;
+		struct { int64_t __; s64x2 gb; };
+	};
 };
 
 struct u8x3 {
-	struct { uint8_t x; uint8_t y; uint8_t z; };
-	struct { uint8_t r; uint8_t g; uint8_t b; };
-	u8x2 xy;
-	struct { uint8_t _; u8x2 yz; };
-	u8x2 rg;
-	struct { uint8_t __; u8x2 gb; };
+	union {
+		struct { uint8_t x; uint8_t y; uint8_t z; };
+		struct { uint8_t r; uint8_t g; uint8_t b; };
+		u8x2 xy;
+		struct { uint8_t _; u8x2 yz; };
+		u8x2 rg;
+		struct { uint8_t __; u8x2 gb; };
+	};
 };
 
 struct u16x3 {
-	struct { uint16_t x; uint16_t y; uint16_t z; };
-	struct { uint16_t r; uint16_t g; uint16_t b; };
-	u16x2 xy;
-	struct { uint16_t _; u16x2 yz; };
-	u16x2 rg;
-	struct { uint16_t __; u16x2 gb; };
+	union {
+		struct { uint16_t x; uint16_t y; uint16_t z; };
+		struct { uint16_t r; uint16_t g; uint16_t b; };
+		u16x2 xy;
+		struct { uint16_t _; u16x2 yz; };
+		u16x2 rg;
+		struct { uint16_t __; u16x2 gb; };
+	};
 };
 
 struct u32x3 {
-	struct { uint32_t x; uint32_t y; uint32_t z; };
-	struct { uint32_t r; uint32_t g; uint32_t b; };
-	u32x2 xy;
-	struct { uint32_t _; u32x2 yz; };
-	u32x2 rg;
-	struct { uint32_t __; u32x2 gb; };
+	union {
+		struct { uint32_t x; uint32_t y; uint32_t z; };
+		struct { uint32_t r; uint32_t g; uint32_t b; };
+		u32x2 xy;
+		struct { uint32_t _; u32x2 yz; };
+		u32x2 rg;
+		struct { uint32_t __; u32x2 gb; };
+	};
 };
 
 struct u64x3 {
-	struct { uint64_t x; uint64_t y; uint64_t z; };
-	struct { uint64_t r; uint64_t g; uint64_t b; };
-	u64x2 xy;
-	struct { uint64_t _; u64x2 yz; };
-	u64x2 rg;
-	struct { uint64_t __; u64x2 gb; };
+	union {
+		struct { uint64_t x; uint64_t y; uint64_t z; };
+		struct { uint64_t r; uint64_t g; uint64_t b; };
+		u64x2 xy;
+		struct { uint64_t _; u64x2 yz; };
+		u64x2 rg;
+		struct { uint64_t __; u64x2 gb; };
+	};
 };
 
 struct boolx4 {
-	struct { bool x; bool y; bool z; bool w; };
-	struct { bool r; bool g; bool b; bool a; };
-	struct { boolx2 xy; boolx2 zw; };
-	struct { boolx2 rg; boolx2 ba; };
-	boolx3 xyz;
-	struct { bool _; boolx3 yzw; };
-	boolx3 rgb;
-	struct { bool _; boolx3 gba; };
+	union {
+		struct { bool x; bool y; bool z; bool w; };
+		struct { bool r; bool g; bool b; bool a; };
+		struct { boolx2 xy; boolx2 zw; };
+		struct { boolx2 rg; boolx2 ba; };
+		boolx3 xyz;
+		struct { bool _; boolx3 yzw; };
+		boolx3 rgb;
+		struct { bool __; boolx3 gba; };
+	};
 };
 struct f16x4 {
-	struct { half x; half y; half z; half w; };
-	struct { half r; half g; half b; half a; };
-	struct { f16x2 xy; f16x2 zw; };
-	struct { f16x2 rg; f16x2 ba; };
-	f16x3 xyz;
-	struct { half _; f16x3 yzw; };
-	f16x3 rgb;
-	struct { half _; f16x3 gba; };
+	union {
+		struct { half x; half y; half z; half w; };
+		struct { half r; half g; half b; half a; };
+		struct { f16x2 xy; f16x2 zw; };
+		struct { f16x2 rg; f16x2 ba; };
+		f16x3 xyz;
+		struct { half _; f16x3 yzw; };
+		f16x3 rgb;
+		struct { half __; f16x3 gba; };
+	};
 };
 struct f32x4 {
-	struct { float x; float y; float z; float w; };
-	struct { float r; float g; float b; float a; };
-	struct { f32x2 xy; f32x2 zw; };
-	struct { f32x2 rg; f32x2 ba; };
-	f32x3 xyz;
-	struct { float _; f32x3 yzw; };
-	f32x3 rgb;
-	struct { float _; f32x3 gba; };
+	union {
+		struct { float x; float y; float z; float w; };
+		struct { float r; float g; float b; float a; };
+		struct { f32x2 xy; f32x2 zw; };
+		struct { f32x2 rg; f32x2 ba; };
+		f32x3 xyz;
+		struct { float _; f32x3 yzw; };
+		f32x3 rgb;
+		struct { float __; f32x3 gba; };
+	};
 };
 struct f64x4 {
-	struct { double x; double y; double z; double w; };
-	struct { double r; double g; double b; double a; };
-	struct { f64x2 xy; f64x2 zw; };
-	struct { f64x2 rg; f64x2 ba; };
-	f64x3 xyz;
-	struct { double _; f64x3 yzw; };
-	f64x3 rgb;
-	struct { double _; f64x3 gba; };
+	union {
+		struct { double x; double y; double z; double w; };
+		struct { double r; double g; double b; double a; };
+		struct { f64x2 xy; f64x2 zw; };
+		struct { f64x2 rg; f64x2 ba; };
+		f64x3 xyz;
+		struct { double _; f64x3 yzw; };
+		f64x3 rgb;
+		struct { double __; f64x3 gba; };
+	};
 };
 struct s8x4 {
-	struct { int8_t x; int8_t y; int8_t z; int8_t w; };
-	struct { int8_t r; int8_t g; int8_t b; int8_t a; };
-	struct { s8x2 xy; s8x2 zw; };
-	struct { s8x2 rg; s8x2 ba; };
-	s8x3 xyz;
-	struct { int8_t _; s8x3 yzw; };
-	s8x3 rgb;
-	struct { int8_t _; s8x3 gba; };
+	union {
+		struct { int8_t x; int8_t y; int8_t z; int8_t w; };
+		struct { int8_t r; int8_t g; int8_t b; int8_t a; };
+		struct { s8x2 xy; s8x2 zw; };
+		struct { s8x2 rg; s8x2 ba; };
+		s8x3 xyz;
+		struct { int8_t _; s8x3 yzw; };
+		s8x3 rgb;
+		struct { int8_t __; s8x3 gba; };
+	};
 };
 struct s16x4 {
-	struct { int16_t x; int16_t y; int16_t z; int16_t w; };
-	struct { int16_t r; int16_t g; int16_t b; int16_t a; };
-	struct { s16x2 xy; s16x2 zw; };
-	struct { s16x2 rg; s16x2 ba; };
-	s16x3 xyz;
-	struct { int16_t _; s16x3 yzw; };
-	s16x3 rgb;
-	struct { int16_t _; s16x3 gba; };
+	union {
+		struct { int16_t x; int16_t y; int16_t z; int16_t w; };
+		struct { int16_t r; int16_t g; int16_t b; int16_t a; };
+		struct { s16x2 xy; s16x2 zw; };
+		struct { s16x2 rg; s16x2 ba; };
+		s16x3 xyz;
+		struct { int16_t _; s16x3 yzw; };
+		s16x3 rgb;
+		struct { int16_t __; s16x3 gba; };
+	};
 };
 struct s32x4 {
-	struct { int32_t x; int32_t y; int32_t z; int32_t w; };
-	struct { int32_t r; int32_t g; int32_t b; int32_t a; };
-	struct { s32x2 xy; s32x2 zw; };
-	struct { s32x2 rg; s32x2 ba; };
-	s32x3 xyz;
-	struct { int32_t _; s32x3 yzw; };
-	s32x3 rgb;
-	struct { int32_t _; s32x3 gba; };
+	union {
+		struct { int32_t x; int32_t y; int32_t z; int32_t w; };
+		struct { int32_t r; int32_t g; int32_t b; int32_t a; };
+		struct { s32x2 xy; s32x2 zw; };
+		struct { s32x2 rg; s32x2 ba; };
+		s32x3 xyz;
+		struct { int32_t _; s32x3 yzw; };
+		s32x3 rgb;
+		struct { int32_t __; s32x3 gba; };
+	};
 };
 struct s64x4 {
-	struct { int64_t x; int64_t y; int64_t z; int64_t w; };
-	struct { int64_t r; int64_t g; int64_t b; int64_t a; };
-	struct { s64x2 xy; s64x2 zw; };
-	struct { s64x2 rg; s64x2 ba; };
-	s64x3 xyz;
-	struct { int64_t _; s64x3 yzw; };
-	s64x3 rgb;
-	struct { int64_t _; s64x3 gba; };
+	union {
+		struct { int64_t x; int64_t y; int64_t z; int64_t w; };
+		struct { int64_t r; int64_t g; int64_t b; int64_t a; };
+		struct { s64x2 xy; s64x2 zw; };
+		struct { s64x2 rg; s64x2 ba; };
+		s64x3 xyz;
+		struct { int64_t _; s64x3 yzw; };
+		s64x3 rgb;
+		struct { int64_t __; s64x3 gba; };
+	};
 };
 struct u8x4 {
-	struct { uint8_t x; uint8_t y; uint8_t z; uint8_t w; };
-	struct { uint8_t r; uint8_t g; uint8_t b; uint8_t a; };
-	struct { u8x2 xy; u8x2 zw; };
-	struct { u8x2 rg; u8x2 ba; };
-	u8x3 xyz;
-	struct { uint8_t _; u8x3 yzw; };
-	u8x3 rgb;
-	struct { uint8_t _; u8x3 gba; };
+	union {
+		struct { uint8_t x; uint8_t y; uint8_t z; uint8_t w; };
+		struct { uint8_t r; uint8_t g; uint8_t b; uint8_t a; };
+		struct { u8x2 xy; u8x2 zw; };
+		struct { u8x2 rg; u8x2 ba; };
+		u8x3 xyz;
+		struct { uint8_t _; u8x3 yzw; };
+		u8x3 rgb;
+		struct { uint8_t __; u8x3 gba; };
+	};
 };
 struct u16x4 {
-	struct { uint16_t x; uint16_t y; uint16_t z; uint16_t w; };
-	struct { uint16_t r; uint16_t g; uint16_t b; uint16_t a; };
-	struct { u16x2 xy; u16x2 zw; };
-	struct { u16x2 rg; u16x2 ba; };
-	u16x3 xyz;
-	struct { uint16_t _; u16x3 yzw; };
-	u16x3 rgb;
-	struct { uint16_t _; u16x3 gba; };
+	union {
+		struct { uint16_t x; uint16_t y; uint16_t z; uint16_t w; };
+		struct { uint16_t r; uint16_t g; uint16_t b; uint16_t a; };
+		struct { u16x2 xy; u16x2 zw; };
+		struct { u16x2 rg; u16x2 ba; };
+		u16x3 xyz;
+		struct { uint16_t _; u16x3 yzw; };
+		u16x3 rgb;
+		struct { uint16_t __; u16x3 gba; };
+	};
 };
 struct u32x4 {
-	struct { uint32_t x; uint32_t y; uint32_t z; uint32_t w; };
-	struct { uint32_t r; uint32_t g; uint32_t b; uint32_t a; };
-	struct { u32x2 xy; u32x2 zw; };
-	struct { u32x2 rg; u32x2 ba; };
-	u32x3 xyz;
-	struct { uint32_t _; u32x3 yzw; };
-	u32x3 rgb;
-	struct { uint32_t _; u32x3 gba; };
+	union {
+		struct { uint32_t x; uint32_t y; uint32_t z; uint32_t w; };
+		struct { uint32_t r; uint32_t g; uint32_t b; uint32_t a; };
+		struct { u32x2 xy; u32x2 zw; };
+		struct { u32x2 rg; u32x2 ba; };
+		u32x3 xyz;
+		struct { uint32_t _; u32x3 yzw; };
+		u32x3 rgb;
+		struct { uint32_t __; u32x3 gba; };
+	};
 };
 struct u64x4 {
-	struct { uint64_t x; uint64_t y; uint64_t z; uint64_t w; };
-	struct { uint64_t r; uint64_t g; uint64_t b; uint64_t a; };
-	struct { u64x2 xy; u64x2 zw; };
-	struct { u64x2 rg; u64x2 ba; };
-	u64x3 xyz;
-	struct { uint64_t _; u64x3 yzw; };
-	u64x3 rgb;
-	struct { uint64_t _; u64x3 gba; };
+	union {
+		struct { uint64_t x; uint64_t y; uint64_t z; uint64_t w; };
+		struct { uint64_t r; uint64_t g; uint64_t b; uint64_t a; };
+		struct { u64x2 xy; u64x2 zw; };
+		struct { u64x2 rg; u64x2 ba; };
+		u64x3 xyz;
+		struct { uint64_t _; u64x3 yzw; };
+		u64x3 rgb;
+		struct { uint64_t __; u64x3 gba; };
+	};
 };
 #endif
 

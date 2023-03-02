@@ -1290,7 +1290,7 @@ void generate_math_types_header_file() {
 
 	print_entry(
 		"#ifndef HMATHS_ENABLE_VECTOR_EXTENSIONS\n"
-		"#if defined(__HCC__) || defined(__clang__)\n"
+		"#if defined(__HCC__)\n"
 		"#define HMATHS_ENABLE_VECTOR_EXTENSIONS 1\n"
 		"#else\n"
 		"#define HMATHS_ENABLE_VECTOR_EXTENSIONS 0\n"
@@ -1303,8 +1303,6 @@ void generate_math_types_header_file() {
 		"#if HMATHS_ENABLE_VECTOR_EXTENSIONS\n"
 		"#if defined(__HCC__)\n"
 		"#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef __hcc_vector_t(scalar_t, num_comps) vector_t\n"
-		"#elif defined(__clang__)\n"
-		"#define HMATHS_DEFINE_VECTOR(vector_t, scalar_t, num_comps) typedef scalar_t vector_t __attribute__((ext_vector_type(num_comps))) __attribute__((aligned(sizeof(scalar_t))))\n"
 		"#endif\n"
 		"#endif\n"
 		"\n"
@@ -1366,8 +1364,10 @@ void generate_math_types_header_file() {
 		ctx.data_type = data_type;
 		print_entry(
 			"struct $vs {\n"
-				"\tstruct { $di x; $di y; };\n"
-				"\tstruct { $di r; $di g; };\n"
+				"\tunion {\n"
+					"\t\tstruct { $di x; $di y; };\n"
+					"\t\tstruct { $di r; $di g; };\n"
+				"\t};\n"
 			"};\n\n");
 	}
 
@@ -1376,12 +1376,14 @@ void generate_math_types_header_file() {
 		ctx.data_type = data_type;
 		print_entry(
 			"struct $vs {\n"
-				"\tstruct { $di x; $di y; $di z; };\n"
-				"\tstruct { $di r; $di g; $di b; };\n"
-				"\t$v2 xy;\n"
-				"\tstruct { $di _; $v2 yz; };\n"
-				"\t$v2 rg;\n"
-				"\tstruct { $di __; $v2 gb; };\n"
+				"\tunion {\n"
+					"\t\tstruct { $di x; $di y; $di z; };\n"
+					"\t\tstruct { $di r; $di g; $di b; };\n"
+					"\t\t$v2 xy;\n"
+					"\t\tstruct { $di _; $v2 yz; };\n"
+					"\t\t$v2 rg;\n"
+					"\t\tstruct { $di __; $v2 gb; };\n"
+				"\t};\n"
 			"};\n\n");
 	}
 
@@ -1390,14 +1392,16 @@ void generate_math_types_header_file() {
 		ctx.data_type = data_type;
 		print_entry(
 			"struct $vs {\n"
-				"\tstruct { $di x; $di y; $di z; $di w; };\n"
-				"\tstruct { $di r; $di g; $di b; $di a; };\n"
-				"\tstruct { $v2 xy; $v2 zw; };\n"
-				"\tstruct { $v2 rg; $v2 ba; };\n"
-				"\t$v3 xyz;\n"
-				"\tstruct { $di _; $v3 yzw; };\n"
-				"\t$v3 rgb;\n"
-				"\tstruct { $di _; $v3 gba; };\n"
+				"\tunion {\n"
+					"\t\tstruct { $di x; $di y; $di z; $di w; };\n"
+					"\t\tstruct { $di r; $di g; $di b; $di a; };\n"
+					"\t\tstruct { $v2 xy; $v2 zw; };\n"
+					"\t\tstruct { $v2 rg; $v2 ba; };\n"
+					"\t\t$v3 xyz;\n"
+					"\t\tstruct { $di _; $v3 yzw; };\n"
+					"\t\t$v3 rgb;\n"
+					"\t\tstruct { $di __; $v3 gba; };\n"
+				"\t};\n"
 			"};\n");
 	}
 
