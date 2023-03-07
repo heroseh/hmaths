@@ -2268,7 +2268,7 @@ static inline f32x4 invlerp_f32x4(f32x4 start, f32x4 end, f32x4 v) { return f32x
 static inline f64x4 invlerp_f64x4(f64x4 start, f64x4 end, f64x4 v) { return f64x4(invlerp_f64(start.x, end.x, v.x), invlerp_f64(start.y, end.y, v.y), invlerp_f64(start.z, end.z, v.z), invlerp_f64(start.w, end.w, v.w)); }
 
 //
-// returns a vector which is the dot product of 'a' and 'b'
+// returns a vector which is the cross product of 'a' and 'b'
 static inline half cross_f16x2(f16x2 a, f16x2 b) { return sub_f16(mul_f16(a.x, b.y), mul_f16(b.x, a.y)); }
 static inline float cross_f32x2(f32x2 a, f32x2 b) { return (a.x * b.y) - (b.x * a.y); }
 static inline double cross_f64x2(f64x2 a, f64x2 b) { return (a.x * b.y) - (b.x * a.y); }

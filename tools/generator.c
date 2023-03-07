@@ -26,6 +26,7 @@ enum VectorFn {
 	VECTOR_FN_PRODUCT_ELMTS,
 	VECTOR_FN_SQUARE,
 	VECTOR_FN_SWIZZLE,
+	VECTOR_FN_CROSS,
 	VECTOR_FN_DOT,
 	VECTOR_FN_LEN,
 	VECTOR_FN_LENSQ,
@@ -403,6 +404,7 @@ unsigned vector_fn_number_params[VECTOR_FN_COUNT] = {
 	[VECTOR_FN_PRODUCT_ELMTS] = 1,
 	[VECTOR_FN_SQUARE] = 1,
 	[VECTOR_FN_SWIZZLE] = 0,
+	[VECTOR_FN_CROSS] = 2,
 	[VECTOR_FN_DOT] = 2,
 	[VECTOR_FN_NORM] = 1,
 	[VECTOR_FN_DISTANCE] = 2,
@@ -536,6 +538,7 @@ const char* vector_fn_idents[VECTOR_FN_COUNT] = {
 	[VECTOR_FN_PRODUCT_ELMTS] = "productelmts",
 	[VECTOR_FN_SQUARE] = "square",
 	[VECTOR_FN_SWIZZLE] = "swizzle",
+	[VECTOR_FN_CROSS] = "cross",
 	[VECTOR_FN_DOT] = "dot",
 	[VECTOR_FN_NORM] = "norm",
 	[VECTOR_FN_DISTANCE] = "distance",
@@ -668,6 +671,7 @@ const char* vector_fn_docs[VECTOR_FN_COUNT] = {
 	[VECTOR_FN_PRODUCT_ELMTS] = "returns the product of all of the components in 'v'",
 	[VECTOR_FN_SQUARE] = "returns a vector where each component is the square of itself",
 	[VECTOR_FN_SWIZZLE] = "returns a vector that is a a shuffled version of 'v' that is constructed like so:\n//\tv4f(v.array[x], v.array[y], v.array[z], v.array[w]);",
+	[VECTOR_FN_CROSS] = "returns a vector which is the cross product of 'a' and 'b'",
 	[VECTOR_FN_DOT] = "returns a vector which is the dot product of 'a' and 'b'",
 	[VECTOR_FN_LEN] = "returns a euclidean length of the vector 'v' aka. L2 norm",
 	[VECTOR_FN_LENSQ] = "returns the squared euclidean length of the vector 'v', this avoids doing the square root. useful when you want to compare of one length is less than another vector length without paying the cost of a sqrt instruction",
@@ -2052,6 +2056,21 @@ void generate_math_scalar_header_file() {
 	print_header_file_footer("_HMATHS_SCALAR_H_");
 }
 
+void generate_generic_fn(const char* fn_name, const char* params, const char* cond_param, Vector first_vector, Vector last_vector, DataType first_data_type, DataType last_data_type) {
+	fprintf(ctx.f, "#define %sG(%s) \\\n\t_Generic((%s)", fn_name, params, cond_param);
+	for (Vector vector = first_vector; vector <= last_vector; vector += 1) {
+		ctx.vector = vector;
+		for (DataType data_type = first_data_type; data_type <= last_data_type; data_type += 1) {
+			ctx.data_type = data_type;
+			print_entry(", \\\n\t\t");
+			print_entry("$vs: ");
+			print_entry(fn_name);
+			print_entry("_$vs");
+		}
+	}
+	fprintf(ctx.f, " \\\n\t)(%s)\n", params);
+}
+
 void generate_math_vector_header_file() {
 	ctx.f = open_file_write("vector.h");
 	print_header_file_header("_HMATHS_VECTOR_H_");
@@ -2293,7 +2312,7 @@ void generate_math_vector_header_file() {
 	//
 	// vector cross
 	{
-		print_vector_fn_docs(VECTOR_FN_DOT);
+		print_vector_fn_docs(VECTOR_FN_CROSS);
 
 		ctx.vector = VECTOR_2;
 		ctx.data_type = DATA_TYPE_HALF;
@@ -2344,7 +2363,6 @@ void generate_math_vector_header_file() {
 		for (DataType data_type = DATA_TYPE_FLOAT; data_type <= DATA_TYPE_DOUBLE; data_type += 1) {
 			ctx.data_type = data_type;
 			print_entry("static inline $di dot_$vs($vs a, $vs b) { return (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w); }\n");
-
 		}
 	}
 
@@ -2828,6 +2846,7 @@ void generate_math_header_file() {
 	fprintf(ctx.f,"#include \"scalar.h\"\n");
 	fprintf(ctx.f,"#include \"vector.h\"\n");
 	fprintf(ctx.f,"#include \"matrix.h\"\n");
+	fprintf(ctx.f,"#include \"generics.h\"\n");
 
 	print_header_file_footer("_HMATHS_MATHS_H_");
 }
@@ -3399,11 +3418,116 @@ void generate_math_file() {
 	}
 }
 
+void generate_math_generics_header_file() {
+	ctx.f = open_file_write("generics.h");
+	print_header_file_header("_HMATHS_GENERICS_H_");
+
+	for (VectorFn fn = 0; fn < VECTOR_FN_COUNT; fn += 1) {
+		bool has_compatible = false;
+		for (Vector vector = VECTOR_2; vector < VECTOR_COUNT; vector += 1) {
+			ctx.vector = vector;
+			for (DataType data_type = 0; data_type < DATA_TYPE_COUNT; data_type += 1) {
+				ctx.data_type = data_type;
+				if (is_function_compatible(fn)) {
+					has_compatible = true;
+					break;
+				}
+			}
+		}
+
+		if (!has_compatible) {
+			continue;
+		}
+
+		print_vector_fn_docs(fn);
+
+		const char* fn_ident = vector_fn_idents[fn];
+		print_entry("#define ");
+		print_entry(fn_ident);
+		print_entry("G(");
+		for (unsigned param_idx = 0; param_idx < vector_fn_number_params[fn]; param_idx += 1) {
+			print_entry(function_param_ident(fn, param_idx));
+			if (param_idx + 1 < vector_fn_number_params[fn]) {
+				print_entry(", ");
+			}
+		}
+		print_entry(") \\\n\t_Generic((");
+		print_entry(function_param_ident(fn, function_param_is_scalar(fn, 0) ? 1 : 0));
+		print_entry(")");
+		for (Vector vector = VECTOR_2; vector < VECTOR_COUNT; vector += 1) {
+			ctx.vector = vector;
+			for (DataType data_type = 0; data_type < DATA_TYPE_COUNT; data_type += 1) {
+				ctx.data_type = data_type;
+				if (!is_function_compatible(fn)) {
+					continue;
+				}
+				print_entry(", \\\n");
+				if (fn == VECTOR_FN_BITSTO) {
+					print_entry("\t\t$vb: ");
+				} else {
+					print_entry("\t\t$vs: ");
+				}
+
+				const char* fn_ident = vector_fn_idents[fn];
+				print_entry(fn_ident);
+				print_entry("_$vs");
+			}
+		}
+		print_entry(" \\\n\t)(");
+		for (unsigned param_idx = 0; param_idx < vector_fn_number_params[fn]; param_idx += 1) {
+			print_entry(function_param_ident(fn, param_idx));
+			if (param_idx + 1 < vector_fn_number_params[fn]) {
+				print_entry(", ");
+			}
+		}
+		print_entry(")\n");
+	}
+
+	print_vector_fn_docs(VECTOR_FN_CROSS);
+	generate_generic_fn("cross", "a, b", "a", VECTOR_2, VECTOR_3, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_DOT);
+	generate_generic_fn("dot", "a, b", "a", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_LEN);
+	generate_generic_fn("len", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_LENSQ);
+	generate_generic_fn("lensq", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_vector_fn_docs(VECTOR_FN_NORM);
+	generate_generic_fn("norm", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_REFLECT);
+	generate_generic_fn("reflect", "v, normal", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_REFRACT);
+	generate_generic_fn("refract", "v, normal, eta", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_DOUBLE);
+
+	print_vector_fn_docs(VECTOR_FN_MIN_ELMT);
+	generate_generic_fn("minelmt", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_vector_fn_docs(VECTOR_FN_MAX_ELMT);
+	generate_generic_fn("maxelmt", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_vector_fn_docs(VECTOR_FN_SUM_ELMTS);
+	generate_generic_fn("sumelmts", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_vector_fn_docs(VECTOR_FN_PRODUCT_ELMTS);
+	generate_generic_fn("productelmts", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_vector_fn_docs(VECTOR_FN_SQUARE);
+	generate_generic_fn("square", "v", "v", VECTOR_2, VECTOR_4, DATA_TYPE_HALF, DATA_TYPE_U64);
+
+	print_header_file_footer("_HMATHS_GENERICS_H_");
+}
+
 int main(int argc, char** argv) {
 	generate_math_types_header_file();
 	generate_math_scalar_header_file();
 	generate_math_vector_header_file();
 	generate_math_matrix_header_file();
+	generate_math_generics_header_file();
 	generate_math_header_file();
 	generate_math_file();
 	printf("Success! you will find {types.h, vector.h, matrix.h, maths.h, maths.c} files have been updated\n");

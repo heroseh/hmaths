@@ -11,5 +11,6 @@
 #include "scalar.h"
 #include "vector.h"
 #include "matrix.h"
+#include "generics.h"
 
 #endif // _HMATHS_MATHS_H_
