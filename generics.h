@@ -96,6 +96,17 @@
 // returns a boolean vector where each component is true if the component in 'v' is a zero value, otherwise it would be false
 #define notG(v) \
 	_Generic((v), \
+		half: not_f16, \
+		float: not_f32, \
+		double: not_f64, \
+		int8_t: not_s8, \
+		int16_t: not_s16, \
+		int32_t: not_s32, \
+		int64_t: not_s64, \
+		uint8_t: not_u8, \
+		uint16_t: not_u16, \
+		uint32_t: not_u32, \
+		uint64_t: not_u64, \
 		boolx2: not_boolx2, \
 		f16x2: not_f16x2, \
 		f32x2: not_f32x2, \
@@ -138,6 +149,17 @@
 // returns a vector where each component is the result from adding that component in 'a' to that component in 'b'
 #define addG(a, b) \
 	_Generic((a), \
+		half: add_f16, \
+		float: add_f32, \
+		double: add_f64, \
+		int8_t: add_s8, \
+		int16_t: add_s16, \
+		int32_t: add_s32, \
+		int64_t: add_s64, \
+		uint8_t: add_u8, \
+		uint16_t: add_u16, \
+		uint32_t: add_u32, \
+		uint64_t: add_u64, \
 		f16x2: add_f16x2, \
 		f32x2: add_f32x2, \
 		f64x2: add_f64x2, \
@@ -216,6 +238,17 @@
 // returns a vector where each component is the result from subtracting that component in 'a' to that component in 'b'
 #define subG(a, b) \
 	_Generic((a), \
+		half: sub_f16, \
+		float: sub_f32, \
+		double: sub_f64, \
+		int8_t: sub_s8, \
+		int16_t: sub_s16, \
+		int32_t: sub_s32, \
+		int64_t: sub_s64, \
+		uint8_t: sub_u8, \
+		uint16_t: sub_u16, \
+		uint32_t: sub_u32, \
+		uint64_t: sub_u64, \
 		f16x2: sub_f16x2, \
 		f32x2: sub_f32x2, \
 		f64x2: sub_f64x2, \
@@ -333,6 +366,17 @@
 // returns a vector where each component is the result from multiplying that component in 'a' to that component in 'b'
 #define mulG(a, b) \
 	_Generic((a), \
+		half: mul_f16, \
+		float: mul_f32, \
+		double: mul_f64, \
+		int8_t: mul_s8, \
+		int16_t: mul_s16, \
+		int32_t: mul_s32, \
+		int64_t: mul_s64, \
+		uint8_t: mul_u8, \
+		uint16_t: mul_u16, \
+		uint32_t: mul_u32, \
+		uint64_t: mul_u64, \
 		f16x2: mul_f16x2, \
 		f32x2: mul_f32x2, \
 		f64x2: mul_f64x2, \
@@ -365,7 +409,25 @@
 		u8x4: mul_u8x4, \
 		u16x4: mul_u16x4, \
 		u32x4: mul_u32x4, \
-		u64x4: mul_u64x4 \
+		u64x4: mul_u64x4, \
+		f32x2x2: mul_f32x2x2_f32x2x2, \
+		f64x2x2: mul_f64x2x2_f64x2x2, \
+		f32x2x3: mul_f32x2x3_f32x3x2, \
+		f64x2x3: mul_f64x2x3_f64x3x2, \
+		f32x2x4: mul_f32x2x4_f32x4x2, \
+		f64x2x4: mul_f64x2x4_f64x4x2, \
+		f32x3x2: mul_f32x3x2_f32x2x3, \
+		f64x3x2: mul_f64x3x2_f64x2x3, \
+		f32x3x3: mul_f32x3x3_f32x3x3, \
+		f64x3x3: mul_f64x3x3_f64x3x3, \
+		f32x3x4: mul_f32x3x4_f32x4x3, \
+		f64x3x4: mul_f64x3x4_f64x4x3, \
+		f32x4x2: mul_f32x4x2_f32x2x4, \
+		f64x4x2: mul_f64x4x2_f64x2x4, \
+		f32x4x3: mul_f32x4x3_f32x3x4, \
+		f64x4x3: mul_f64x4x3_f64x3x4, \
+		f32x4x4: mul_f32x4x4_f32x4x4, \
+		f64x4x4: mul_f64x4x4_f64x4x4 \
 	)(a, b)
 
 //
@@ -404,13 +466,90 @@
 		u8x4: muls_u8x4, \
 		u16x4: muls_u16x4, \
 		u32x4: muls_u32x4, \
-		u64x4: muls_u64x4 \
+		u64x4: muls_u64x4, \
+		f32x2x2: muls_f32x2x2, \
+		f64x2x2: muls_f64x2x2, \
+		f32x2x3: muls_f32x2x3, \
+		f64x2x3: muls_f64x2x3, \
+		f32x2x4: muls_f32x2x4, \
+		f64x2x4: muls_f64x2x4, \
+		f32x3x2: muls_f32x3x2, \
+		f64x3x2: muls_f64x3x2, \
+		f32x3x3: muls_f32x3x3, \
+		f64x3x3: muls_f64x3x3, \
+		f32x3x4: muls_f32x3x4, \
+		f64x3x4: muls_f64x3x4, \
+		f32x4x2: muls_f32x4x2, \
+		f64x4x2: muls_f64x4x2, \
+		f32x4x3: muls_f32x4x3, \
+		f64x4x3: muls_f64x4x3, \
+		f32x4x4: muls_f32x4x4, \
+		f64x4x4: muls_f64x4x4 \
 	)(v, s)
+
+//
+// returns a vector that is a result of multipling matrix 'm' with vector 'v'
+#define mulvG(m, v) \
+	_Generic((m), \
+		f32x2x2: mul_f32x2x2_f32x2, \
+		f64x2x2: mul_f64x2x2_f64x2, \
+		f32x2x3: mul_f32x2x3_f32x2, \
+		f64x2x3: mul_f64x2x3_f64x2, \
+		f32x2x4: mul_f32x2x4_f32x2, \
+		f64x2x4: mul_f64x2x4_f64x2, \
+		f32x3x2: mul_f32x3x2_f32x3, \
+		f64x3x2: mul_f64x3x2_f64x3, \
+		f32x3x3: mul_f32x3x3_f32x3, \
+		f64x3x3: mul_f64x3x3_f64x3, \
+		f32x3x4: mul_f32x3x4_f32x3, \
+		f64x3x4: mul_f64x3x4_f64x3, \
+		f32x4x2: mul_f32x4x2_f32x4, \
+		f64x4x2: mul_f64x4x2_f64x4, \
+		f32x4x3: mul_f32x4x3_f32x4, \
+		f64x4x3: mul_f64x4x3_f64x4, \
+		f32x4x4: mul_f32x4x4_f32x4, \
+		f64x4x4: mul_f64x4x4_f64x4 \
+	)(m, v)
+
+//
+// returns a vector that is a result of multipling vector 'v' with matrix 'm'
+#define vmulG(v, m) \
+	_Generic((m), \
+		f32x2x2: mul_f32x2_f32x2x2, \
+		f64x2x2: mul_f64x2_f64x2x2, \
+		f32x2x3: mul_f32x3_f32x2x3, \
+		f64x2x3: mul_f64x3_f64x2x3, \
+		f32x2x4: mul_f32x4_f32x2x4, \
+		f64x2x4: mul_f64x4_f64x2x4, \
+		f32x3x2: mul_f32x2_f32x3x2, \
+		f64x3x2: mul_f64x2_f64x3x2, \
+		f32x3x3: mul_f32x3_f32x3x3, \
+		f64x3x3: mul_f64x3_f64x3x3, \
+		f32x3x4: mul_f32x4_f32x3x4, \
+		f64x3x4: mul_f64x4_f64x3x4, \
+		f32x4x2: mul_f32x2_f32x4x2, \
+		f64x4x2: mul_f64x2_f64x4x2, \
+		f32x4x3: mul_f32x3_f32x4x3, \
+		f64x4x3: mul_f64x3_f64x4x3, \
+		f32x4x4: mul_f32x4_f32x4x4, \
+		f64x4x4: mul_f64x4_f64x4x4 \
+	)(v, m)
 
 //
 // returns a vector where each component is the result from dividing that component in 'a' to that component in 'b'
 #define divG(a, b) \
 	_Generic((a), \
+		half: div_f16, \
+		float: div_f32, \
+		double: div_f64, \
+		int8_t: div_s8, \
+		int16_t: div_s16, \
+		int32_t: div_s32, \
+		int64_t: div_s64, \
+		uint8_t: div_u8, \
+		uint16_t: div_u16, \
+		uint32_t: div_u32, \
+		uint64_t: div_u64, \
 		f16x2: div_f16x2, \
 		f32x2: div_f32x2, \
 		f64x2: div_f64x2, \
@@ -528,6 +667,17 @@
 // returns a vector where each component is the result from moduloing that component in 'a' to that component in 'b'
 #define modG(a, b) \
 	_Generic((a), \
+		half: mod_f16, \
+		float: mod_f32, \
+		double: mod_f64, \
+		int8_t: mod_s8, \
+		int16_t: mod_s16, \
+		int32_t: mod_s32, \
+		int64_t: mod_s64, \
+		uint8_t: mod_u8, \
+		uint16_t: mod_u16, \
+		uint32_t: mod_u32, \
+		uint64_t: mod_u64, \
 		f16x2: mod_f16x2, \
 		f32x2: mod_f32x2, \
 		f64x2: mod_f64x2, \
@@ -606,6 +756,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is equal to that component in 'b'
 #define eqG(a, b) \
 	_Generic((a), \
+		half: eq_f16, \
+		float: eq_f32, \
+		double: eq_f64, \
+		int8_t: eq_s8, \
+		int16_t: eq_s16, \
+		int32_t: eq_s32, \
+		int64_t: eq_s64, \
+		uint8_t: eq_u8, \
+		uint16_t: eq_u16, \
+		uint32_t: eq_u32, \
+		uint64_t: eq_u64, \
 		f16x2: eq_f16x2, \
 		f32x2: eq_f32x2, \
 		f64x2: eq_f64x2, \
@@ -684,6 +845,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is not equal to that component in 'b'
 #define neqG(a, b) \
 	_Generic((a), \
+		half: neq_f16, \
+		float: neq_f32, \
+		double: neq_f64, \
+		int8_t: neq_s8, \
+		int16_t: neq_s16, \
+		int32_t: neq_s32, \
+		int64_t: neq_s64, \
+		uint8_t: neq_u8, \
+		uint16_t: neq_u16, \
+		uint32_t: neq_u32, \
+		uint64_t: neq_u64, \
 		f16x2: neq_f16x2, \
 		f32x2: neq_f32x2, \
 		f64x2: neq_f64x2, \
@@ -762,6 +934,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is less than to that component in 'b'
 #define ltG(a, b) \
 	_Generic((a), \
+		half: lt_f16, \
+		float: lt_f32, \
+		double: lt_f64, \
+		int8_t: lt_s8, \
+		int16_t: lt_s16, \
+		int32_t: lt_s32, \
+		int64_t: lt_s64, \
+		uint8_t: lt_u8, \
+		uint16_t: lt_u16, \
+		uint32_t: lt_u32, \
+		uint64_t: lt_u64, \
 		f16x2: lt_f16x2, \
 		f32x2: lt_f32x2, \
 		f64x2: lt_f64x2, \
@@ -840,6 +1023,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is less than or equal to that component in 'b'
 #define lteqG(a, b) \
 	_Generic((a), \
+		half: lteq_f16, \
+		float: lteq_f32, \
+		double: lteq_f64, \
+		int8_t: lteq_s8, \
+		int16_t: lteq_s16, \
+		int32_t: lteq_s32, \
+		int64_t: lteq_s64, \
+		uint8_t: lteq_u8, \
+		uint16_t: lteq_u16, \
+		uint32_t: lteq_u32, \
+		uint64_t: lteq_u64, \
 		f16x2: lteq_f16x2, \
 		f32x2: lteq_f32x2, \
 		f64x2: lteq_f64x2, \
@@ -918,6 +1112,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is greater than to that component in 'b'
 #define gtG(a, b) \
 	_Generic((a), \
+		half: gt_f16, \
+		float: gt_f32, \
+		double: gt_f64, \
+		int8_t: gt_s8, \
+		int16_t: gt_s16, \
+		int32_t: gt_s32, \
+		int64_t: gt_s64, \
+		uint8_t: gt_u8, \
+		uint16_t: gt_u16, \
+		uint32_t: gt_u32, \
+		uint64_t: gt_u64, \
 		f16x2: gt_f16x2, \
 		f32x2: gt_f32x2, \
 		f64x2: gt_f64x2, \
@@ -996,6 +1201,17 @@
 // returns a boolean vector where each component is true when that component in 'a' is greater than or equal to that component in 'b'
 #define gteqG(a, b) \
 	_Generic((a), \
+		half: gteq_f16, \
+		float: gteq_f32, \
+		double: gteq_f64, \
+		int8_t: gteq_s8, \
+		int16_t: gteq_s16, \
+		int32_t: gteq_s32, \
+		int64_t: gteq_s64, \
+		uint8_t: gteq_u8, \
+		uint16_t: gteq_u16, \
+		uint32_t: gteq_u32, \
+		uint64_t: gteq_u64, \
 		f16x2: gteq_f16x2, \
 		f32x2: gteq_f32x2, \
 		f64x2: gteq_f64x2, \
@@ -1074,6 +1290,13 @@
 // returns a vector where each component is the result from negating that component in 'v'
 #define negG(v) \
 	_Generic((v), \
+		half: neg_f16, \
+		float: neg_f32, \
+		double: neg_f64, \
+		int8_t: neg_s8, \
+		int16_t: neg_s16, \
+		int32_t: neg_s32, \
+		int64_t: neg_s64, \
 		f16x2: neg_f16x2, \
 		f32x2: neg_f32x2, \
 		f64x2: neg_f64x2, \
@@ -1113,6 +1336,17 @@
 // returns a vector where each component is the minimum between that component in 'a' and that component in 'b'
 #define minG(a, b) \
 	_Generic((a), \
+		half: min_f16, \
+		float: min_f32, \
+		double: min_f64, \
+		int8_t: min_s8, \
+		int16_t: min_s16, \
+		int32_t: min_s32, \
+		int64_t: min_s64, \
+		uint8_t: min_u8, \
+		uint16_t: min_u16, \
+		uint32_t: min_u32, \
+		uint64_t: min_u64, \
 		f16x2: min_f16x2, \
 		f32x2: min_f32x2, \
 		f64x2: min_f64x2, \
@@ -1191,6 +1425,17 @@
 // returns a vector where each component is the maximum between that component in 'a' and that component in 'b'
 #define maxG(a, b) \
 	_Generic((a), \
+		half: max_f16, \
+		float: max_f32, \
+		double: max_f64, \
+		int8_t: max_s8, \
+		int16_t: max_s16, \
+		int32_t: max_s32, \
+		int64_t: max_s64, \
+		uint8_t: max_u8, \
+		uint16_t: max_u16, \
+		uint32_t: max_u32, \
+		uint64_t: max_u64, \
 		f16x2: max_f16x2, \
 		f32x2: max_f32x2, \
 		f64x2: max_f64x2, \
@@ -1269,6 +1514,17 @@
 // returns a vector where each component is clamped between the minimum value that is the component in 'min' and the maximum value that is the component in 'max'
 #define clampG(v, min, max) \
 	_Generic((v), \
+		half: clamp_f16, \
+		float: clamp_f32, \
+		double: clamp_f64, \
+		int8_t: clamp_s8, \
+		int16_t: clamp_s16, \
+		int32_t: clamp_s32, \
+		int64_t: clamp_s64, \
+		uint8_t: clamp_u8, \
+		uint16_t: clamp_u16, \
+		uint32_t: clamp_u32, \
+		uint64_t: clamp_u64, \
 		f16x2: clamp_f16x2, \
 		f32x2: clamp_f32x2, \
 		f64x2: clamp_f64x2, \
@@ -1347,6 +1603,13 @@
 // returns a vector where each component is -1, 0, or 1 depending on the sign of that component that is in 'v'
 #define signG(v) \
 	_Generic((v), \
+		half: sign_f16, \
+		float: sign_f32, \
+		double: sign_f64, \
+		int8_t: sign_s8, \
+		int16_t: sign_s16, \
+		int32_t: sign_s32, \
+		int64_t: sign_s64, \
 		f16x2: sign_f16x2, \
 		f32x2: sign_f32x2, \
 		f64x2: sign_f64x2, \
@@ -1374,6 +1637,13 @@
 // returns a vector where each component is that component in 'v' with sign of that component in 'sign'
 #define copysignG(v, sign) \
 	_Generic((v), \
+		half: copysign_f16, \
+		float: copysign_f32, \
+		double: copysign_f64, \
+		int8_t: copysign_s8, \
+		int16_t: copysign_s16, \
+		int32_t: copysign_s32, \
+		int64_t: copysign_s64, \
 		f16x2: copysign_f16x2, \
 		f32x2: copysign_f32x2, \
 		f64x2: copysign_f64x2, \
@@ -1428,6 +1698,13 @@
 // returns a vector where each component is the absolute of that component in 'v'
 #define absG(v) \
 	_Generic((v), \
+		half: abs_f16, \
+		float: abs_f32, \
+		double: abs_f64, \
+		int8_t: abs_s8, \
+		int16_t: abs_s16, \
+		int32_t: abs_s32, \
+		int64_t: abs_s64, \
 		f16x2: abs_f16x2, \
 		f32x2: abs_f32x2, \
 		f64x2: abs_f64x2, \
@@ -1455,6 +1732,14 @@
 // returns a vector where each component is the result from bitwise anding that component in 'a' to that component in 'b'
 #define bitandG(a, b) \
 	_Generic((a), \
+		int8_t: bitand_s8, \
+		int16_t: bitand_s16, \
+		int32_t: bitand_s32, \
+		int64_t: bitand_s64, \
+		uint8_t: bitand_u8, \
+		uint16_t: bitand_u16, \
+		uint32_t: bitand_u32, \
+		uint64_t: bitand_u64, \
 		s8x2: bitand_s8x2, \
 		s16x2: bitand_s16x2, \
 		s32x2: bitand_s32x2, \
@@ -1515,6 +1800,14 @@
 // returns a vector where each component is the result from bitwise oring that component in 'a' to that component in 'b'
 #define bitorG(a, b) \
 	_Generic((a), \
+		int8_t: bitor_s8, \
+		int16_t: bitor_s16, \
+		int32_t: bitor_s32, \
+		int64_t: bitor_s64, \
+		uint8_t: bitor_u8, \
+		uint16_t: bitor_u16, \
+		uint32_t: bitor_u32, \
+		uint64_t: bitor_u64, \
 		s8x2: bitor_s8x2, \
 		s16x2: bitor_s16x2, \
 		s32x2: bitor_s32x2, \
@@ -1575,6 +1868,14 @@
 // returns a vector where each component is the result from bitwise xoring that component in 'a' to that component in 'b'
 #define bitxorG(a, b) \
 	_Generic((a), \
+		int8_t: bitxor_s8, \
+		int16_t: bitxor_s16, \
+		int32_t: bitxor_s32, \
+		int64_t: bitxor_s64, \
+		uint8_t: bitxor_u8, \
+		uint16_t: bitxor_u16, \
+		uint32_t: bitxor_u32, \
+		uint64_t: bitxor_u64, \
 		s8x2: bitxor_s8x2, \
 		s16x2: bitxor_s16x2, \
 		s32x2: bitxor_s32x2, \
@@ -1635,6 +1936,14 @@
 // returns a vector where each component is the result from bitwise shifting that component in 'v' to the left by the component in 'b'
 #define bitshlG(a, b) \
 	_Generic((a), \
+		int8_t: bitshl_s8, \
+		int16_t: bitshl_s16, \
+		int32_t: bitshl_s32, \
+		int64_t: bitshl_s64, \
+		uint8_t: bitshl_u8, \
+		uint16_t: bitshl_u16, \
+		uint32_t: bitshl_u32, \
+		uint64_t: bitshl_u64, \
 		s8x2: bitshl_s8x2, \
 		s16x2: bitshl_s16x2, \
 		s32x2: bitshl_s32x2, \
@@ -1695,6 +2004,14 @@
 // returns a vector where each component is the result from bitwise shifting that component in 'v' to the right by the component in 'b'
 #define bitshrG(a, b) \
 	_Generic((a), \
+		int8_t: bitshr_s8, \
+		int16_t: bitshr_s16, \
+		int32_t: bitshr_s32, \
+		int64_t: bitshr_s64, \
+		uint8_t: bitshr_u8, \
+		uint16_t: bitshr_u16, \
+		uint32_t: bitshr_u32, \
+		uint64_t: bitshr_u64, \
 		s8x2: bitshr_s8x2, \
 		s16x2: bitshr_s16x2, \
 		s32x2: bitshr_s32x2, \
@@ -1755,6 +2072,14 @@
 // returns a vector where each component is the result from bitwise noting that component in 'v'
 #define bitnotG(v) \
 	_Generic((v), \
+		int8_t: bitnot_s8, \
+		int16_t: bitnot_s16, \
+		int32_t: bitnot_s32, \
+		int64_t: bitnot_s64, \
+		uint8_t: bitnot_u8, \
+		uint16_t: bitnot_u16, \
+		uint32_t: bitnot_u32, \
+		uint64_t: bitnot_u64, \
 		s8x2: bitnot_s8x2, \
 		s16x2: bitnot_s16x2, \
 		s32x2: bitnot_s32x2, \
@@ -1785,6 +2110,9 @@
 // returns a vector where each component (x) is calculated like so x = (a.x * b.x) + c.x
 #define fmaG(a, b, c) \
 	_Generic((a), \
+		half: fma_f16, \
+		float: fma_f32, \
+		double: fma_f64, \
 		f16x2: fma_f16x2, \
 		f32x2: fma_f32x2, \
 		f64x2: fma_f64x2, \
@@ -1830,6 +2158,9 @@
 // return a vector where each component is the result of appling 'floor' to that component in 'v'
 #define floorG(v) \
 	_Generic((v), \
+		half: floor_f16, \
+		float: floor_f32, \
+		double: floor_f64, \
 		f16x2: floor_f16x2, \
 		f32x2: floor_f32x2, \
 		f64x2: floor_f64x2, \
@@ -1845,6 +2176,9 @@
 // return a vector where each component is the result of appling 'ceil' to that component in 'v'
 #define ceilG(v) \
 	_Generic((v), \
+		half: ceil_f16, \
+		float: ceil_f32, \
+		double: ceil_f64, \
 		f16x2: ceil_f16x2, \
 		f32x2: ceil_f32x2, \
 		f64x2: ceil_f64x2, \
@@ -1860,6 +2194,9 @@
 // return a vector where each component is the result of appling 'round' to that component in 'v'
 #define roundG(v) \
 	_Generic((v), \
+		half: round_f16, \
+		float: round_f32, \
+		double: round_f64, \
 		f16x2: round_f16x2, \
 		f32x2: round_f32x2, \
 		f64x2: round_f64x2, \
@@ -1875,6 +2212,9 @@
 // return a vector where each component is the result of appling 'trunc' to that component in 'v'
 #define truncG(v) \
 	_Generic((v), \
+		half: trunc_f16, \
+		float: trunc_f32, \
+		double: trunc_f64, \
 		f16x2: trunc_f16x2, \
 		f32x2: trunc_f32x2, \
 		f64x2: trunc_f64x2, \
@@ -1890,6 +2230,9 @@
 // return a vector where each component is the result of appling 'fract' to that component in 'v'
 #define fractG(v) \
 	_Generic((v), \
+		half: fract_f16, \
+		float: fract_f32, \
+		double: fract_f64, \
 		f16x2: fract_f16x2, \
 		f32x2: fract_f32x2, \
 		f64x2: fract_f64x2, \
@@ -1905,6 +2248,9 @@
 // return a vector where each component is the result of appling 'radians' to that component in 'v'
 #define radiansG(v) \
 	_Generic((v), \
+		half: radians_f16, \
+		float: radians_f32, \
+		double: radians_f64, \
 		f16x2: radians_f16x2, \
 		f32x2: radians_f32x2, \
 		f64x2: radians_f64x2, \
@@ -1920,6 +2266,9 @@
 // return a vector where each component is the result of appling 'degrees' to that component in 'v'
 #define degreesG(v) \
 	_Generic((v), \
+		half: degrees_f16, \
+		float: degrees_f32, \
+		double: degrees_f64, \
 		f16x2: degrees_f16x2, \
 		f32x2: degrees_f32x2, \
 		f64x2: degrees_f64x2, \
@@ -1935,6 +2284,9 @@
 // return a vector where each component is the result of appling 'step' to that component in 'v'
 #define stepG(v, edge) \
 	_Generic((v), \
+		half: step_f16, \
+		float: step_f32, \
+		double: step_f64, \
 		f16x2: step_f16x2, \
 		f32x2: step_f32x2, \
 		f64x2: step_f64x2, \
@@ -1965,6 +2317,9 @@
 // return a vector where each component is the result of appling 'smoothstep' to that component in 'v'
 #define smoothstepG(edge0, edge1, v) \
 	_Generic((edge0), \
+		half: smoothstep_f16, \
+		float: smoothstep_f32, \
+		double: smoothstep_f64, \
 		f16x2: smoothstep_f16x2, \
 		f32x2: smoothstep_f32x2, \
 		f64x2: smoothstep_f64x2, \
@@ -2010,6 +2365,9 @@
 // return a vector where each component is the result of appling 'remap' to that component in 'v', 'from_min', 'from_max', 'to_min' and 'to_max'
 #define remapG(v, from_min, from_max, to_min, to_max) \
 	_Generic((v), \
+		half: remap_f16, \
+		float: remap_f32, \
+		double: remap_f64, \
 		f16x2: remap_f16x2, \
 		f32x2: remap_f32x2, \
 		f64x2: remap_f64x2, \
@@ -2040,6 +2398,9 @@
 // return a vector where each component is the result of appling 'roundtomultiple' to that component in 'v' and 'multiple'
 #define roundtomultipleG(a, b) \
 	_Generic((a), \
+		half: roundtomultiple_f16, \
+		float: roundtomultiple_f32, \
+		double: roundtomultiple_f64, \
 		f16x2: roundtomultiple_f16x2, \
 		f32x2: roundtomultiple_f32x2, \
 		f64x2: roundtomultiple_f64x2, \
@@ -2070,6 +2431,9 @@
 // return a vector where each component is the result of appling 'rounduptomultiple' to that component in 'v' and 'multiple'
 #define rounduptomultipleG(a, b) \
 	_Generic((a), \
+		half: rounduptomultiple_f16, \
+		float: rounduptomultiple_f32, \
+		double: rounduptomultiple_f64, \
 		f16x2: rounduptomultiple_f16x2, \
 		f32x2: rounduptomultiple_f32x2, \
 		f64x2: rounduptomultiple_f64x2, \
@@ -2100,6 +2464,9 @@
 // return a vector where each component is the result of appling 'rounddowntomultiple' to that component in 'v' and 'multiple'
 #define rounddowntomultipleG(a, b) \
 	_Generic((a), \
+		half: rounddowntomultiple_f16, \
+		float: rounddowntomultiple_f32, \
+		double: rounddowntomultiple_f64, \
 		f16x2: rounddowntomultiple_f16x2, \
 		f32x2: rounddowntomultiple_f32x2, \
 		f64x2: rounddowntomultiple_f64x2, \
@@ -2130,6 +2497,9 @@
 // return a vector where each component is the result of appling 'bitsto' to that component in 'v'
 #define bitstoG(v) \
 	_Generic((v), \
+		half: bitsto_f16, \
+		float: bitsto_f32, \
+		double: bitsto_f64, \
 		s16x2: bitsto_f16x2, \
 		s32x2: bitsto_f32x2, \
 		s64x2: bitsto_f64x2, \
@@ -2145,6 +2515,9 @@
 // return a vector where each component is the result of appling 'bitsfrom' to that component in 'v'
 #define bitsfromG(v) \
 	_Generic((v), \
+		half: bitsfrom_f16, \
+		float: bitsfrom_f32, \
+		double: bitsfrom_f64, \
 		f16x2: bitsfrom_f16x2, \
 		f32x2: bitsfrom_f32x2, \
 		f64x2: bitsfrom_f64x2, \
@@ -2160,6 +2533,9 @@
 // return a vector where each component is the result of appling 'sin' to that component in 'v'
 #define sinG(v) \
 	_Generic((v), \
+		half: sin_f16, \
+		float: sin_f32, \
+		double: sin_f64, \
 		f16x2: sin_f16x2, \
 		f32x2: sin_f32x2, \
 		f64x2: sin_f64x2, \
@@ -2175,6 +2551,9 @@
 // return a vector where each component is the result of appling 'cos' to that component in 'v'
 #define cosG(v) \
 	_Generic((v), \
+		half: cos_f16, \
+		float: cos_f32, \
+		double: cos_f64, \
 		f16x2: cos_f16x2, \
 		f32x2: cos_f32x2, \
 		f64x2: cos_f64x2, \
@@ -2190,6 +2569,9 @@
 // return a vector where each component is the result of appling 'tan' to that component in 'v'
 #define tanG(v) \
 	_Generic((v), \
+		half: tan_f16, \
+		float: tan_f32, \
+		double: tan_f64, \
 		f16x2: tan_f16x2, \
 		f32x2: tan_f32x2, \
 		f64x2: tan_f64x2, \
@@ -2205,6 +2587,9 @@
 // return a vector where each component is the result of appling 'asin' to that component in 'v'
 #define asinG(v) \
 	_Generic((v), \
+		half: asin_f16, \
+		float: asin_f32, \
+		double: asin_f64, \
 		f16x2: asin_f16x2, \
 		f32x2: asin_f32x2, \
 		f64x2: asin_f64x2, \
@@ -2220,6 +2605,9 @@
 // return a vector where each component is the result of appling 'acos' to that component in 'v'
 #define acosG(v) \
 	_Generic((v), \
+		half: acos_f16, \
+		float: acos_f32, \
+		double: acos_f64, \
 		f16x2: acos_f16x2, \
 		f32x2: acos_f32x2, \
 		f64x2: acos_f64x2, \
@@ -2235,6 +2623,9 @@
 // return a vector where each component is the result of appling 'atan' to that component in 'v'
 #define atanG(v) \
 	_Generic((v), \
+		half: atan_f16, \
+		float: atan_f32, \
+		double: atan_f64, \
 		f16x2: atan_f16x2, \
 		f32x2: atan_f32x2, \
 		f64x2: atan_f64x2, \
@@ -2250,6 +2641,9 @@
 // return a vector where each component is the result of appling 'sinh' to that component in 'v'
 #define sinhG(v) \
 	_Generic((v), \
+		half: sinh_f16, \
+		float: sinh_f32, \
+		double: sinh_f64, \
 		f16x2: sinh_f16x2, \
 		f32x2: sinh_f32x2, \
 		f64x2: sinh_f64x2, \
@@ -2265,6 +2659,9 @@
 // return a vector where each component is the result of appling 'cosh' to that component in 'v'
 #define coshG(v) \
 	_Generic((v), \
+		half: cosh_f16, \
+		float: cosh_f32, \
+		double: cosh_f64, \
 		f16x2: cosh_f16x2, \
 		f32x2: cosh_f32x2, \
 		f64x2: cosh_f64x2, \
@@ -2280,6 +2677,9 @@
 // return a vector where each component is the result of appling 'tanh' to that component in 'v'
 #define tanhG(v) \
 	_Generic((v), \
+		half: tanh_f16, \
+		float: tanh_f32, \
+		double: tanh_f64, \
 		f16x2: tanh_f16x2, \
 		f32x2: tanh_f32x2, \
 		f64x2: tanh_f64x2, \
@@ -2295,6 +2695,9 @@
 // return a vector where each component is the result of appling 'asinh' to that component in 'v'
 #define asinhG(v) \
 	_Generic((v), \
+		half: asinh_f16, \
+		float: asinh_f32, \
+		double: asinh_f64, \
 		f16x2: asinh_f16x2, \
 		f32x2: asinh_f32x2, \
 		f64x2: asinh_f64x2, \
@@ -2310,6 +2713,9 @@
 // return a vector where each component is the result of appling 'acosh' to that component in 'v'
 #define acoshG(v) \
 	_Generic((v), \
+		half: acosh_f16, \
+		float: acosh_f32, \
+		double: acosh_f64, \
 		f16x2: acosh_f16x2, \
 		f32x2: acosh_f32x2, \
 		f64x2: acosh_f64x2, \
@@ -2325,6 +2731,9 @@
 // return a vector where each component is the result of appling 'atanh' to that component in 'v'
 #define atanhG(v) \
 	_Generic((v), \
+		half: atanh_f16, \
+		float: atanh_f32, \
+		double: atanh_f64, \
 		f16x2: atanh_f16x2, \
 		f32x2: atanh_f32x2, \
 		f64x2: atanh_f64x2, \
@@ -2340,6 +2749,9 @@
 // return a vector where each component is the result of appling 'atan2' to that component in 'v'
 #define atan2G(y, x) \
 	_Generic((y), \
+		half: atan2_f16, \
+		float: atan2_f32, \
+		double: atan2_f64, \
 		f16x2: atan2_f16x2, \
 		f32x2: atan2_f32x2, \
 		f64x2: atan2_f64x2, \
@@ -2355,6 +2767,9 @@
 // return a vector where each component is the result of appling 'pow' to that component in 'v'
 #define powG(a, b) \
 	_Generic((a), \
+		half: pow_f16, \
+		float: pow_f32, \
+		double: pow_f64, \
 		f16x2: pow_f16x2, \
 		f32x2: pow_f32x2, \
 		f64x2: pow_f64x2, \
@@ -2370,6 +2785,9 @@
 // return a vector where each component is the result of appling 'exp' to that component in 'v'
 #define expG(v) \
 	_Generic((v), \
+		half: exp_f16, \
+		float: exp_f32, \
+		double: exp_f64, \
 		f16x2: exp_f16x2, \
 		f32x2: exp_f32x2, \
 		f64x2: exp_f64x2, \
@@ -2385,6 +2803,9 @@
 // return a vector where each component is the result of appling 'log' to that component in 'v'
 #define logG(v) \
 	_Generic((v), \
+		half: log_f16, \
+		float: log_f32, \
+		double: log_f64, \
 		f16x2: log_f16x2, \
 		f32x2: log_f32x2, \
 		f64x2: log_f64x2, \
@@ -2400,6 +2821,9 @@
 // return a vector where each component is the result of appling 'exp2' to that component in 'v'
 #define exp2G(v) \
 	_Generic((v), \
+		half: exp2_f16, \
+		float: exp2_f32, \
+		double: exp2_f64, \
 		f16x2: exp2_f16x2, \
 		f32x2: exp2_f32x2, \
 		f64x2: exp2_f64x2, \
@@ -2415,6 +2839,9 @@
 // return a vector where each component is the result of appling 'log2' to that component in 'v'
 #define log2G(v) \
 	_Generic((v), \
+		half: log2_f16, \
+		float: log2_f32, \
+		double: log2_f64, \
 		f16x2: log2_f16x2, \
 		f32x2: log2_f32x2, \
 		f64x2: log2_f64x2, \
@@ -2430,6 +2857,9 @@
 // return a vector where each component is the result of appling 'sqrt' to that component in 'v'
 #define sqrtG(v) \
 	_Generic((v), \
+		half: sqrt_f16, \
+		float: sqrt_f32, \
+		double: sqrt_f64, \
 		f16x2: sqrt_f16x2, \
 		f32x2: sqrt_f32x2, \
 		f64x2: sqrt_f64x2, \
@@ -2445,6 +2875,9 @@
 // return a vector where each component is the result of appling 'rsqrt' to that component in 'v'
 #define rsqrtG(v) \
 	_Generic((v), \
+		half: rsqrt_f16, \
+		float: rsqrt_f32, \
+		double: rsqrt_f64, \
 		f16x2: rsqrt_f16x2, \
 		f32x2: rsqrt_f32x2, \
 		f64x2: rsqrt_f64x2, \
@@ -2460,6 +2893,9 @@
 // returns true if each component in 'a' is 'epsilon' away from that component that is in 'b'
 #define approxeqG(a, b, epsilon) \
 	_Generic((a), \
+		half: approxeq_f16, \
+		float: approxeq_f32, \
+		double: approxeq_f64, \
 		f16x2: approxeq_f16x2, \
 		f32x2: approxeq_f32x2, \
 		f64x2: approxeq_f64x2, \
@@ -2490,6 +2926,9 @@
 // return a vector where each component is the result of appling 'isinf' to that component in 'v'
 #define isinfG(v) \
 	_Generic((v), \
+		half: isinf_f16, \
+		float: isinf_f32, \
+		double: isinf_f64, \
 		f16x2: isinf_f16x2, \
 		f32x2: isinf_f32x2, \
 		f64x2: isinf_f64x2, \
@@ -2505,6 +2944,9 @@
 // return a vector where each component is the result of appling 'isnan' to that component in 'v'
 #define isnanG(v) \
 	_Generic((v), \
+		half: isnan_f16, \
+		float: isnan_f32, \
+		double: isnan_f64, \
 		f16x2: isnan_f16x2, \
 		f32x2: isnan_f32x2, \
 		f64x2: isnan_f64x2, \
@@ -2520,6 +2962,9 @@
 // return a vector where each component is the result of appling 'lerp' to that component in 'start', 'end' and 't'
 #define lerpG(start, end, t) \
 	_Generic((start), \
+		half: lerp_f16, \
+		float: lerp_f32, \
+		double: lerp_f64, \
 		f16x2: lerp_f16x2, \
 		f32x2: lerp_f32x2, \
 		f64x2: lerp_f64x2, \
@@ -2535,6 +2980,9 @@
 // return a vector where each component is the result of appling 'invlerp' to that component in 'start', 'end' and 't'
 #define invlerpG(start, end, v) \
 	_Generic((start), \
+		half: invlerp_f16, \
+		float: invlerp_f32, \
+		double: invlerp_f64, \
 		f16x2: invlerp_f16x2, \
 		f32x2: invlerp_f32x2, \
 		f64x2: invlerp_f64x2, \
@@ -2867,4 +3315,95 @@
 		u64x4: square_u64x4 \
 	)(v)
 
+//
+// returns the transposed matrix of matrix 'm'
+#define transposeG(m) \
+	_Generic((m), \
+		f32x2x2: transpose_f32x2x2, \
+		f64x2x2: transpose_f64x2x2, \
+		f32x2x3: transpose_f32x2x3, \
+		f64x2x3: transpose_f64x2x3, \
+		f32x2x4: transpose_f32x2x4, \
+		f64x2x4: transpose_f64x2x4, \
+		f32x3x2: transpose_f32x3x2, \
+		f64x3x2: transpose_f64x3x2, \
+		f32x3x3: transpose_f32x3x3, \
+		f64x3x3: transpose_f64x3x3, \
+		f32x3x4: transpose_f32x3x4, \
+		f64x3x4: transpose_f64x3x4, \
+		f32x4x2: transpose_f32x4x2, \
+		f64x4x2: transpose_f64x4x2, \
+		f32x4x3: transpose_f32x4x3, \
+		f64x4x3: transpose_f64x4x3, \
+		f32x4x4: transpose_f32x4x4, \
+		f64x4x4: transpose_f64x4x4 \
+	)(m)
+
+//
+// returns a matrix from the outer product of vector 'a' and vector 'b'
+#define outerproductG(a, b) \
+	_Generic((a), \
+		f32x2: \
+			_Generic((b), \
+				f32x2: outerproduct_f32x2_f32x2, \
+				f32x3: outerproduct_f32x2_f32x3, \
+				f32x4: outerproduct_f32x2_f32x4 \
+			), \
+		f64x2: \
+			_Generic((b), \
+				f64x2: outerproduct_f64x2_f64x2, \
+				f64x3: outerproduct_f64x2_f64x3, \
+				f64x4: outerproduct_f64x2_f64x4 \
+			), \
+		f32x3: \
+			_Generic((b), \
+				f32x2: outerproduct_f32x3_f32x2, \
+				f32x3: outerproduct_f32x3_f32x3, \
+				f32x4: outerproduct_f32x3_f32x4 \
+			), \
+		f64x3: \
+			_Generic((b), \
+				f64x2: outerproduct_f64x3_f64x2, \
+				f64x3: outerproduct_f64x3_f64x3, \
+				f64x4: outerproduct_f64x3_f64x4 \
+			), \
+		f32x4: \
+			_Generic((b), \
+				f32x2: outerproduct_f32x4_f32x2, \
+				f32x3: outerproduct_f32x4_f32x3, \
+				f32x4: outerproduct_f32x4_f32x4 \
+			), \
+		f64x4: \
+			_Generic((b), \
+				f64x2: outerproduct_f64x4_f64x2, \
+				f64x3: outerproduct_f64x4_f64x3, \
+				f64x4: outerproduct_f64x4_f64x4 \
+			) \
+	)(a, b)
+
+//
+// returns the determinant of matrix 'm'
+#define determinantG(m) \
+	_Generic((m), \
+		f32x2x2: determinant_f32x2x2, \
+		f64x2x2: determinant_f64x2x2, \
+		f32x3x3: determinant_f32x3x3, \
+		f64x3x3: determinant_f64x3x3, \
+		f32x4x4: determinant_f32x4x4, \
+		f64x4x4: determinant_f64x4x4 \
+	)(m)
+
+//
+// returns the inverse of matrix 'm'
+#define inverseG(m) \
+	_Generic((m), \
+		f32x2x2: inverse_f32x2x2, \
+		f64x2x2: inverse_f64x2x2, \
+		f32x3x3: inverse_f32x3x3, \
+		f64x3x3: inverse_f64x3x3, \
+		f32x4x4: inverse_f32x4x4, \
+		f64x4x4: inverse_f64x4x4 \
+	)(m)
+
 #endif // _HMATHS_GENERICS_H_
+

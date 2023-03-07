@@ -19,18 +19,6 @@ float f16tof32(half v);
 double f16tof64(half v);
 half f32tof16(float v);
 half f64tof16(double v);
-static inline half add_f16(half a, half b) { return f32tof16(f16tof32(a) + f16tof32(b)); }
-static inline half sub_f16(half a, half b) { return f32tof16(f16tof32(a) - f16tof32(b)); }
-static inline half mul_f16(half a, half b) { return f32tof16(f16tof32(a) * f16tof32(b)); }
-static inline half div_f16(half a, half b) { return f32tof16(f16tof32(a) / f16tof32(b)); }
-static inline bool eq_f16(half a, half b) { return f16tof32(a) == f16tof32(b); }
-static inline bool neq_f16(half a, half b) { return f16tof32(a) != f16tof32(b); }
-static inline bool lt_f16(half a, half b) { return f16tof32(a) < f16tof32(b); }
-static inline bool lteq_f16(half a, half b) { return f16tof32(a) <= f16tof32(b); }
-static inline bool gt_f16(half a, half b) { return f16tof32(a) > f16tof32(b); }
-static inline bool gteq_f16(half a, half b) { return f16tof32(a) >= f16tof32(b); }
-static inline bool not_f16(half v) { return !f16tof32(v); }
-static inline half neg_f16(half v) { return f32tof16(-f16tof32(v)); }
 
 // ===========================================
 //
@@ -39,6 +27,150 @@ static inline half neg_f16(half v) { return f32tof16(-f16tof32(v)); }
 //
 //
 // ===========================================
+
+static inline half add_f16(half a, half b) { return f32tof16(f16tof32(a) + f16tof32(b)); }
+static inline float add_f32(float a, float b) { return a + b; }
+static inline double add_f64(double a, double b) { return a + b; }
+static inline int8_t add_s8(int8_t a, int8_t b) { return a + b; }
+static inline int16_t add_s16(int16_t a, int16_t b) { return a + b; }
+static inline int32_t add_s32(int32_t a, int32_t b) { return a + b; }
+static inline int64_t add_s64(int64_t a, int64_t b) { return a + b; }
+static inline uint8_t add_u8(uint8_t a, int8_t b) { return a + b; }
+static inline uint16_t add_u16(uint16_t a, int16_t b) { return a + b; }
+static inline uint32_t add_u32(uint32_t a, int32_t b) { return a + b; }
+static inline uint64_t add_u64(uint64_t a, int64_t b) { return a + b; }
+
+static inline half sub_f16(half a, half b) { return f32tof16(f16tof32(a) - f16tof32(b)); }
+static inline float sub_f32(float a, float b) { return a - b; }
+static inline double sub_f64(double a, double b) { return a - b; }
+static inline int8_t sub_s8(int8_t a, int8_t b) { return a - b; }
+static inline int16_t sub_s16(int16_t a, int16_t b) { return a - b; }
+static inline int32_t sub_s32(int32_t a, int32_t b) { return a - b; }
+static inline int64_t sub_s64(int64_t a, int64_t b) { return a - b; }
+static inline uint8_t sub_u8(uint8_t a, uint8_t b) { return a - b; }
+static inline uint16_t sub_u16(uint16_t a, uint16_t b) { return a - b; }
+static inline uint32_t sub_u32(uint32_t a, uint32_t b) { return a - b; }
+static inline uint64_t sub_u64(uint64_t a, uint64_t b) { return a - b; }
+
+static inline half mul_f16(half a, half b) { return f32tof16(f16tof32(a) * f16tof32(b)); }
+static inline float mul_f32(float a, float b) { return a * b; }
+static inline double mul_f64(double a, double b) { return a * b; }
+static inline int8_t mul_s8(int8_t a, int8_t b) { return a * b; }
+static inline int16_t mul_s16(int16_t a, int16_t b) { return a * b; }
+static inline int32_t mul_s32(int32_t a, int32_t b) { return a * b; }
+static inline int64_t mul_s64(int64_t a, int64_t b) { return a * b; }
+static inline uint8_t mul_u8(uint8_t a, uint8_t b) { return a * b; }
+static inline uint16_t mul_u16(uint16_t a, uint16_t b) { return a * b; }
+static inline uint32_t mul_u32(uint32_t a, uint32_t b) { return a * b; }
+static inline uint64_t mul_u64(uint64_t a, uint64_t b) { return a * b; }
+
+static inline half div_f16(half a, half b) { return f32tof16(f16tof32(a) / f16tof32(b)); }
+static inline float div_f32(float a, float b) { return a / b; }
+static inline double div_f64(double a, double b) { return a / b; }
+static inline int8_t div_s8(int8_t a, int8_t b) { return a / b; }
+static inline int16_t div_s16(int16_t a, int16_t b) { return a / b; }
+static inline int32_t div_s32(int32_t a, int32_t b) { return a / b; }
+static inline int64_t div_s64(int64_t a, int64_t b) { return a / b; }
+static inline uint8_t div_u8(uint8_t a, uint8_t b) { return a / b; }
+static inline uint16_t div_u16(uint16_t a, uint16_t b) { return a / b; }
+static inline uint32_t div_u32(uint32_t a, uint32_t b) { return a / b; }
+static inline uint64_t div_u64(uint64_t a, uint64_t b) { return a / b; }
+
+static inline bool eq_f16(half a, half b) { return f16tof32(a) == f16tof32(b); }
+static inline bool eq_f32(float a, float b) { return a == b; }
+static inline bool eq_f64(double a, double b) { return a == b; }
+static inline bool eq_s8(int8_t a, int8_t b) { return a == b; }
+static inline bool eq_s16(int16_t a, int16_t b) { return a == b; }
+static inline bool eq_s32(int32_t a, int32_t b) { return a == b; }
+static inline bool eq_s64(int64_t a, int64_t b) { return a == b; }
+static inline bool eq_u8(uint8_t a, uint8_t b) { return a == b; }
+static inline bool eq_u16(uint16_t a, uint16_t b) { return a == b; }
+static inline bool eq_u32(uint32_t a, uint32_t b) { return a == b; }
+static inline bool eq_u64(uint64_t a, uint64_t b) { return a == b; }
+
+static inline bool neq_f16(half a, half b) { return f16tof32(a) != f16tof32(b); }
+static inline bool neq_f32(float a, float b) { return a != b; }
+static inline bool neq_f64(double a, double b) { return a != b; }
+static inline bool neq_s8(int8_t a, int8_t b) { return a != b; }
+static inline bool neq_s16(int16_t a, int16_t b) { return a != b; }
+static inline bool neq_s32(int32_t a, int32_t b) { return a != b; }
+static inline bool neq_s64(int64_t a, int64_t b) { return a != b; }
+static inline bool neq_u8(uint8_t a, uint8_t b) { return a != b; }
+static inline bool neq_u16(uint16_t a, uint16_t b) { return a != b; }
+static inline bool neq_u32(uint32_t a, uint32_t b) { return a != b; }
+static inline bool neq_u64(uint64_t a, uint64_t b) { return a != b; }
+
+static inline bool lt_f16(half a, half b) { return f16tof32(a) < f16tof32(b); }
+static inline bool lt_f32(float a, float b) { return a < b; }
+static inline bool lt_f64(double a, double b) { return a < b; }
+static inline bool lt_s8(int8_t a, int8_t b) { return a < b; }
+static inline bool lt_s16(int16_t a, int16_t b) { return a < b; }
+static inline bool lt_s32(int32_t a, int32_t b) { return a < b; }
+static inline bool lt_s64(int64_t a, int64_t b) { return a < b; }
+static inline bool lt_u8(uint8_t a, uint8_t b) { return a < b; }
+static inline bool lt_u16(uint16_t a, uint16_t b) { return a < b; }
+static inline bool lt_u32(uint32_t a, uint32_t b) { return a < b; }
+static inline bool lt_u64(uint64_t a, uint64_t b) { return a < b; }
+
+static inline bool lteq_f16(half a, half b) { return f16tof32(a) <= f16tof32(b); }
+static inline bool lteq_f32(float a, float b) { return a <= b; }
+static inline bool lteq_f64(double a, double b) { return a <= b; }
+static inline bool lteq_s8(int8_t a, int8_t b) { return a <= b; }
+static inline bool lteq_s16(int16_t a, int16_t b) { return a <= b; }
+static inline bool lteq_s32(int32_t a, int32_t b) { return a <= b; }
+static inline bool lteq_s64(int64_t a, int64_t b) { return a <= b; }
+static inline bool lteq_u8(uint8_t a, uint8_t b) { return a <= b; }
+static inline bool lteq_u16(uint16_t a, uint16_t b) { return a <= b; }
+static inline bool lteq_u32(uint32_t a, uint32_t b) { return a <= b; }
+static inline bool lteq_u64(uint64_t a, uint64_t b) { return a <= b; }
+
+static inline bool gt_f16(half a, half b) { return f16tof32(a) > f16tof32(b); }
+static inline bool gt_f32(float a, float b) { return a > b; }
+static inline bool gt_f64(double a, double b) { return a > b; }
+static inline bool gt_s8(int8_t a, int8_t b) { return a > b; }
+static inline bool gt_s16(int16_t a, int16_t b) { return a > b; }
+static inline bool gt_s32(int32_t a, int32_t b) { return a > b; }
+static inline bool gt_s64(int64_t a, int64_t b) { return a > b; }
+static inline bool gt_u8(uint8_t a, uint8_t b) { return a > b; }
+static inline bool gt_u1u16(uint16_t a, uint16_t b) { return a > b; }
+static inline bool gt_u32(uint32_t a, uint32_t b) { return a > b; }
+static inline bool gt_u64(uint64_t a, uint64_t b) { return a > b; }
+
+static inline bool gteq_f16(half a, half b) { return f16tof32(a) >= f16tof32(b); }
+static inline bool gteq_f32(float a, float b) { return a >= b; }
+static inline bool gteq_f64(double a, double b) { return a >= b; }
+static inline bool gteq_s8(int8_t a, int8_t b) { return a >= b; }
+static inline bool gteq_s16(int16_t a, int16_t b) { return a >= b; }
+static inline bool gteq_s32(int32_t a, int32_t b) { return a >= b; }
+static inline bool gteq_s64(int64_t a, int64_t b) { return a >= b; }
+static inline bool gteq_u8(uint8_t a, uint8_t b) { return a >= b; }
+static inline bool gteq_u16(uint16_t a, uint16_t b) { return a >= b; }
+static inline bool gteq_u32(uint32_t a, uint32_t b) { return a >= b; }
+static inline bool gteq_u64(uint64_t a, uint64_t b) { return a >= b; }
+
+static inline bool not_f16(half v) { return !f16tof32(v); }
+static inline bool not_f32(float v) { return !v; }
+static inline bool not_f64(double v) { return !v; }
+static inline bool not_s8(int8_t v) { return !v; }
+static inline bool not_s16(int16_t v) { return !v; }
+static inline bool not_s32(int32_t v) { return !v; }
+static inline bool not_s64(int64_t v) { return !v; }
+static inline bool not_u8(uint8_t v) { return !v; }
+static inline bool not_u16(uint16_t v) { return !v; }
+static inline bool not_u32(uint32_t v) { return !v; }
+static inline bool not_u64(uint64_t v) { return !v; }
+
+static inline half neg_f16(half v) { return f32tof16(-f16tof32(v)); }
+static inline float neg_f32(float v) { return -v; }
+static inline double neg_f64(double v) { return -v; }
+static inline int8_t neg_s8(int8_t v) { return -v; }
+static inline int16_t neg_s16(int16_t v) { return -v; }
+static inline int32_t neg_s32(int32_t v) { return -v; }
+static inline int64_t neg_s64(int64_t v) { return -v; }
+static inline uint8_t neg_u8(uint8_t v) { return -v; }
+static inline uint16_t neg_u16(uint16_t v) { return -v; }
+static inline uint32_t neg_u32(uint32_t v) { return -v; }
+static inline uint64_t neg_u64(uint64_t v) { return -v; }
 
 bool isinf_f16(half v);
 bool isinf_f32(float v);
