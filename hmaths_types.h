@@ -704,33 +704,43 @@ struct u64x4 {
 //
 // ===========================================
 
-typedef struct f32x2x2 { f32x2 cols[2]; } f32x2x2;
-typedef struct f64x2x2 { f64x2 cols[2]; } f64x2x2;
+typedef struct f32x2x2 f32x2x2;
+typedef struct f64x2x2 f64x2x2;
+typedef struct f32x2x3 f32x2x3;
+typedef struct f64x2x3 f64x2x3;
+typedef struct f32x2x4 f32x2x4;
+typedef struct f64x2x4 f64x2x4;
+typedef struct f32x3x2 f32x3x2;
+typedef struct f64x3x2 f64x3x2;
+typedef struct f32x3x3 f32x3x3;
+typedef struct f64x3x3 f64x3x3;
+typedef struct f32x3x4 f32x3x4;
+typedef struct f64x3x4 f64x3x4;
+typedef struct f32x4x2 f32x4x2;
+typedef struct f64x4x2 f64x4x2;
+typedef struct f32x4x3 f32x4x3;
+typedef struct f64x4x3 f64x4x3;
+typedef struct f32x4x4 f32x4x4;
+typedef struct f64x4x4 f64x4x4;
 
-typedef struct f32x2x3 { f32x2 cols[3]; } f32x2x3;
-typedef struct f64x2x3 { f64x2 cols[3]; } f64x2x3;
-
-typedef struct f32x2x4 { f32x2 cols[4]; } f32x2x4;
-typedef struct f64x2x4 { f64x2 cols[4]; } f64x2x4;
-
-typedef struct f32x3x2 { f32x3 cols[2]; } f32x3x2;
-typedef struct f64x3x2 { f64x3 cols[2]; } f64x3x2;
-
-typedef struct f32x3x3 { f32x3 cols[3]; } f32x3x3;
-typedef struct f64x3x3 { f64x3 cols[3]; } f64x3x3;
-
-typedef struct f32x3x4 { f32x3 cols[4]; } f32x3x4;
-typedef struct f64x3x4 { f64x3 cols[4]; } f64x3x4;
-
-typedef struct f32x4x2 { f32x4 cols[2]; } f32x4x2;
-typedef struct f64x4x2 { f64x4 cols[2]; } f64x4x2;
-
-typedef struct f32x4x3 { f32x4 cols[3]; } f32x4x3;
-typedef struct f64x4x3 { f64x4 cols[3]; } f64x4x3;
-
-typedef struct f32x4x4 { f32x4 cols[4]; } f32x4x4;
-typedef struct f64x4x4 { f64x4 cols[4]; } f64x4x4;
-
+struct f32x2x2 { f32x2 cols[2]; };
+struct f64x2x2 { f64x2 cols[2]; };
+struct f32x2x3 { f32x2 cols[3]; };
+struct f64x2x3 { f64x2 cols[3]; };
+struct f32x2x4 { f32x2 cols[4]; };
+struct f64x2x4 { f64x2 cols[4]; };
+struct f32x3x2 { f32x3 cols[2]; };
+struct f64x3x2 { f64x3 cols[2]; };
+struct f32x3x3 { f32x3 cols[3]; };
+struct f64x3x3 { f64x3 cols[3]; };
+struct f32x3x4 { f32x3 cols[4]; };
+struct f64x3x4 { f64x3 cols[4]; };
+struct f32x4x2 { f32x4 cols[2]; };
+struct f64x4x2 { f64x4 cols[2]; };
+struct f32x4x3 { f32x4 cols[3]; };
+struct f64x4x3 { f64x4 cols[3]; };
+struct f32x4x4 { f32x4 cols[4]; };
+struct f64x4x4 { f64x4 cols[4]; };
 
 #define IDENTITY_F32X2X2 ((f32x2x2) { .cols[0].x = 1.f, .cols[1].y = 1.f })
 #define IDENTITY_F64X2X2 ((f64x2x2) { .cols[0].x = 1.f, .cols[1].y = 1.f })

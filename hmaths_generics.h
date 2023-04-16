@@ -2971,6 +2971,24 @@
 	)(start, end, t)
 
 //
+// return a vector where each component is the result of appling 'lerp' to that component in 'start', 'end' and scalar 't'
+#define lerpsG(start, end, t) \
+	_Generic((start), \
+		half: lerps_f16, \
+		float: lerps_f32, \
+		double: lerps_f64, \
+		f16x2: lerps_f16x2, \
+		f32x2: lerps_f32x2, \
+		f64x2: lerps_f64x2, \
+		f16x3: lerps_f16x3, \
+		f32x3: lerps_f32x3, \
+		f64x3: lerps_f64x3, \
+		f16x4: lerps_f16x4, \
+		f32x4: lerps_f32x4, \
+		f64x4: lerps_f64x4 \
+	)(start, end, t)
+
+//
 // return a vector where each component is the result of appling 'invlerp' to that component in 'start', 'end' and 't'
 #define invlerpG(start, end, v) \
 	_Generic((start), \
@@ -2986,6 +3004,24 @@
 		f16x4: invlerp_f16x4, \
 		f32x4: invlerp_f32x4, \
 		f64x4: invlerp_f64x4 \
+	)(start, end, v)
+
+//
+// return a vector where each component is the result of appling 'invlerp' to that component in 'start', 'end' and scalar 't'
+#define invlerpsG(start, end, v) \
+	_Generic((start), \
+		half: invlerps_f16, \
+		float: invlerps_f32, \
+		double: invlerps_f64, \
+		f16x2: invlerps_f16x2, \
+		f32x2: invlerps_f32x2, \
+		f64x2: invlerps_f64x2, \
+		f16x3: invlerps_f16x3, \
+		f32x3: invlerps_f32x3, \
+		f64x3: invlerps_f64x3, \
+		f16x4: invlerps_f16x4, \
+		f32x4: invlerps_f32x4, \
+		f64x4: invlerps_f64x4 \
 	)(start, end, v)
 
 //
