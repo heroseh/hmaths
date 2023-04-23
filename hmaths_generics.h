@@ -2063,6 +2063,82 @@
 	)(v, s)
 
 //
+// returns the index of the _least_ significant bit, if 'v == 0' then 0 is returned
+#define bitlsbG(v) \
+	_Generic((v), \
+		int8_t: bitlsb_u8, \
+		int16_t: bitlsb_u16, \
+		int32_t: bitlsb_u32, \
+		int64_t: bitlsb_u64, \
+		uint8_t: bitlsb_u8, \
+		uint16_t: bitlsb_u16, \
+		uint32_t: bitlsb_u32, \
+		uint64_t: bitlsb_u64, \
+		s8x2: bitlsb_u8x2, \
+		s16x2: bitlsb_u16x2, \
+		s32x2: bitlsb_u32x2, \
+		s64x2: bitlsb_u64x2, \
+		u8x2: bitlsb_u8x2, \
+		u16x2: bitlsb_u16x2, \
+		u32x2: bitlsb_u32x2, \
+		u64x2: bitlsb_u64x2, \
+		s8x3: bitlsb_u8x3, \
+		s16x3: bitlsb_u16x3, \
+		s32x3: bitlsb_u32x3, \
+		s64x3: bitlsb_u64x3, \
+		u8x3: bitlsb_u8x3, \
+		u16x3: bitlsb_u16x3, \
+		u32x3: bitlsb_u32x3, \
+		u64x3: bitlsb_u64x3, \
+		s8x4: bitlsb_u8x4, \
+		s16x4: bitlsb_u16x4, \
+		s32x4: bitlsb_u32x4, \
+		s64x4: bitlsb_u64x4, \
+		u8x4: bitlsb_u8x4, \
+		u16x4: bitlsb_u16x4, \
+		u32x4: bitlsb_u32x4, \
+		u64x4: bitlsb_u64x4 \
+	)(v)
+
+//
+// returns the index of the _most_ significant bit, if 'v == 0' then 0 is returned
+#define bitmsbG(v) \
+	_Generic((v), \
+		int8_t: bitmsb_u8, \
+		int16_t: bitmsb_u16, \
+		int32_t: bitmsb_u32, \
+		int64_t: bitmsb_u64, \
+		uint8_t: bitmsb_u8, \
+		uint16_t: bitmsb_u16, \
+		uint32_t: bitmsb_u32, \
+		uint64_t: bitmsb_u64, \
+		s8x2: bitmsb_u8x2, \
+		s16x2: bitmsb_u16x2, \
+		s32x2: bitmsb_u32x2, \
+		s64x2: bitmsb_u64x2, \
+		u8x2: bitmsb_u8x2, \
+		u16x2: bitmsb_u16x2, \
+		u32x2: bitmsb_u32x2, \
+		u64x2: bitmsb_u64x2, \
+		s8x3: bitmsb_u8x3, \
+		s16x3: bitmsb_u16x3, \
+		s32x3: bitmsb_u32x3, \
+		s64x3: bitmsb_u64x3, \
+		u8x3: bitmsb_u8x3, \
+		u16x3: bitmsb_u16x3, \
+		u32x3: bitmsb_u32x3, \
+		u64x3: bitmsb_u64x3, \
+		s8x4: bitmsb_u8x4, \
+		s16x4: bitmsb_u16x4, \
+		s32x4: bitmsb_u32x4, \
+		s64x4: bitmsb_u64x4, \
+		u8x4: bitmsb_u8x4, \
+		u16x4: bitmsb_u16x4, \
+		u32x4: bitmsb_u32x4, \
+		u64x4: bitmsb_u64x4 \
+	)(v)
+
+//
 // returns a vector where each component is the result from bitwise noting that component in 'v'
 #define bitnotG(v) \
 	_Generic((v), \

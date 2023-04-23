@@ -1623,6 +1623,36 @@ static inline u32x4 bitshrs_u32x4(u32x4 v, uint32_t s) { u32x4 ss = u32x4s(s); r
 static inline u64x4 bitshrs_u64x4(u64x4 v, uint64_t s) { u64x4 ss = u64x4s(s); return bitshr_u64x4(v, ss); }
 
 //
+// returns the index of the _least_ significant bit, if 'v == 0' then 0 is returned
+static inline u8x2 bitlsb_u8x2(u16x2 v) { return u8x2(bitlsb_u8(v.x), bitlsb_u8(v.y)); }
+static inline u16x2 bitlsb_u16x2(u16x2 v) { return u16x2(bitlsb_u16(v.x), bitlsb_u16(v.y)); }
+static inline u32x2 bitlsb_u32x2(u32x2 v) { return u32x2(bitlsb_u32(v.x), bitlsb_u32(v.y)); }
+static inline u64x2 bitlsb_u64x2(u64x2 v) { return u64x2(bitlsb_u64(v.x), bitlsb_u64(v.y)); }
+static inline u8x3 bitlsb_u8x3(u16x3 v) { return u8x3(bitlsb_u8(v.x), bitlsb_u8(v.y), bitlsb_u8(v.z)); }
+static inline u16x3 bitlsb_u16x3(u16x3 v) { return u16x3(bitlsb_u16(v.x), bitlsb_u16(v.y), bitlsb_u16(v.z)); }
+static inline u32x3 bitlsb_u32x3(u32x3 v) { return u32x3(bitlsb_u32(v.x), bitlsb_u32(v.y), bitlsb_u32(v.z)); }
+static inline u64x3 bitlsb_u64x3(u64x3 v) { return u64x3(bitlsb_u64(v.x), bitlsb_u64(v.y), bitlsb_u64(v.z)); }
+static inline u8x4 bitlsb_u8x4(u16x4 v) { return u8x4(bitlsb_u8(v.x), bitlsb_u8(v.y), bitlsb_u8(v.z), bitlsb_u8(v.w)); }
+static inline u16x4 bitlsb_u16x4(u16x4 v) { return u16x4(bitlsb_u16(v.x), bitlsb_u16(v.y), bitlsb_u16(v.z), bitlsb_u16(v.w)); }
+static inline u32x4 bitlsb_u32x4(u32x4 v) { return u32x4(bitlsb_u32(v.x), bitlsb_u32(v.y), bitlsb_u32(v.z), bitlsb_u32(v.w)); }
+static inline u64x4 bitlsb_u64x4(u64x4 v) { return u64x4(bitlsb_u64(v.x), bitlsb_u64(v.y), bitlsb_u64(v.z), bitlsb_u64(v.w)); }
+
+//
+// returns the index of the _most_ significant bit, if 'v == 0' then 0 is returned
+static inline u8x2 bitmsb_u8x2(u16x2 v) { return u8x2(bitmsb_u8(v.x), bitmsb_u8(v.y)); }
+static inline u16x2 bitmsb_u16x2(u16x2 v) { return u16x2(bitmsb_u16(v.x), bitmsb_u16(v.y)); }
+static inline u32x2 bitmsb_u32x2(u32x2 v) { return u32x2(bitmsb_u32(v.x), bitmsb_u32(v.y)); }
+static inline u64x2 bitmsb_u64x2(u64x2 v) { return u64x2(bitmsb_u64(v.x), bitmsb_u64(v.y)); }
+static inline u8x3 bitmsb_u8x3(u16x3 v) { return u8x3(bitmsb_u8(v.x), bitmsb_u8(v.y), bitmsb_u8(v.z)); }
+static inline u16x3 bitmsb_u16x3(u16x3 v) { return u16x3(bitmsb_u16(v.x), bitmsb_u16(v.y), bitmsb_u16(v.z)); }
+static inline u32x3 bitmsb_u32x3(u32x3 v) { return u32x3(bitmsb_u32(v.x), bitmsb_u32(v.y), bitmsb_u32(v.z)); }
+static inline u64x3 bitmsb_u64x3(u64x3 v) { return u64x3(bitmsb_u64(v.x), bitmsb_u64(v.y), bitmsb_u64(v.z)); }
+static inline u8x4 bitmsb_u8x4(u16x4 v) { return u8x4(bitmsb_u8(v.x), bitmsb_u8(v.y), bitmsb_u8(v.z), bitmsb_u8(v.w)); }
+static inline u16x4 bitmsb_u16x4(u16x4 v) { return u16x4(bitmsb_u16(v.x), bitmsb_u16(v.y), bitmsb_u16(v.z), bitmsb_u16(v.w)); }
+static inline u32x4 bitmsb_u32x4(u32x4 v) { return u32x4(bitmsb_u32(v.x), bitmsb_u32(v.y), bitmsb_u32(v.z), bitmsb_u32(v.w)); }
+static inline u64x4 bitmsb_u64x4(u64x4 v) { return u64x4(bitmsb_u64(v.x), bitmsb_u64(v.y), bitmsb_u64(v.z), bitmsb_u64(v.w)); }
+
+//
 // returns a vector where each component is the result from bitwise noting that component in 'v'
 static inline s8x2 bitnot_s8x2(s8x2 v) { return s8x2(~v.x, ~v.y); }
 static inline s16x2 bitnot_s16x2(s16x2 v) { return s16x2(~v.x, ~v.y); }
@@ -1927,27 +1957,27 @@ static inline f64x4 rounddowntomultiples_f64x4(f64x4 v, double s) { return f64x4
 
 //
 // return a vector where each component is the result of appling 'bitsto' to that component in 'v'
-static inline f16x2 bitsto_f16x2(s16x2 v) { return f16x2(bitsto_f16(v.x), bitsto_f16(v.y)); }
-static inline f32x2 bitsto_f32x2(s32x2 v) { return f32x2(bitsto_f32(v.x), bitsto_f32(v.y)); }
-static inline f64x2 bitsto_f64x2(s64x2 v) { return f64x2(bitsto_f64(v.x), bitsto_f64(v.y)); }
-static inline f16x3 bitsto_f16x3(s16x3 v) { return f16x3(bitsto_f16(v.x), bitsto_f16(v.y), bitsto_f16(v.z)); }
-static inline f32x3 bitsto_f32x3(s32x3 v) { return f32x3(bitsto_f32(v.x), bitsto_f32(v.y), bitsto_f32(v.z)); }
-static inline f64x3 bitsto_f64x3(s64x3 v) { return f64x3(bitsto_f64(v.x), bitsto_f64(v.y), bitsto_f64(v.z)); }
-static inline f16x4 bitsto_f16x4(s16x4 v) { return f16x4(bitsto_f16(v.x), bitsto_f16(v.y), bitsto_f16(v.z), bitsto_f16(v.w)); }
-static inline f32x4 bitsto_f32x4(s32x4 v) { return f32x4(bitsto_f32(v.x), bitsto_f32(v.y), bitsto_f32(v.z), bitsto_f32(v.w)); }
-static inline f64x4 bitsto_f64x4(s64x4 v) { return f64x4(bitsto_f64(v.x), bitsto_f64(v.y), bitsto_f64(v.z), bitsto_f64(v.w)); }
+static inline f16x2 bitsto_f16x2(u16x2 v) { return f16x2(bitsto_f16(v.x), bitsto_f16(v.y)); }
+static inline f32x2 bitsto_f32x2(u32x2 v) { return f32x2(bitsto_f32(v.x), bitsto_f32(v.y)); }
+static inline f64x2 bitsto_f64x2(u64x2 v) { return f64x2(bitsto_f64(v.x), bitsto_f64(v.y)); }
+static inline f16x3 bitsto_f16x3(u16x3 v) { return f16x3(bitsto_f16(v.x), bitsto_f16(v.y), bitsto_f16(v.z)); }
+static inline f32x3 bitsto_f32x3(u32x3 v) { return f32x3(bitsto_f32(v.x), bitsto_f32(v.y), bitsto_f32(v.z)); }
+static inline f64x3 bitsto_f64x3(u64x3 v) { return f64x3(bitsto_f64(v.x), bitsto_f64(v.y), bitsto_f64(v.z)); }
+static inline f16x4 bitsto_f16x4(u16x4 v) { return f16x4(bitsto_f16(v.x), bitsto_f16(v.y), bitsto_f16(v.z), bitsto_f16(v.w)); }
+static inline f32x4 bitsto_f32x4(u32x4 v) { return f32x4(bitsto_f32(v.x), bitsto_f32(v.y), bitsto_f32(v.z), bitsto_f32(v.w)); }
+static inline f64x4 bitsto_f64x4(u64x4 v) { return f64x4(bitsto_f64(v.x), bitsto_f64(v.y), bitsto_f64(v.z), bitsto_f64(v.w)); }
 
 //
 // return a vector where each component is the result of appling 'bitsfrom' to that component in 'v'
-static inline s16x2 bitsfrom_f16x2(f16x2 v) { return s16x2(bitsfrom_f16(v.x), bitsfrom_f16(v.y)); }
-static inline s32x2 bitsfrom_f32x2(f32x2 v) { return s32x2(bitsfrom_f32(v.x), bitsfrom_f32(v.y)); }
-static inline s64x2 bitsfrom_f64x2(f64x2 v) { return s64x2(bitsfrom_f64(v.x), bitsfrom_f64(v.y)); }
-static inline s16x3 bitsfrom_f16x3(f16x3 v) { return s16x3(bitsfrom_f16(v.x), bitsfrom_f16(v.y), bitsfrom_f16(v.z)); }
-static inline s32x3 bitsfrom_f32x3(f32x3 v) { return s32x3(bitsfrom_f32(v.x), bitsfrom_f32(v.y), bitsfrom_f32(v.z)); }
-static inline s64x3 bitsfrom_f64x3(f64x3 v) { return s64x3(bitsfrom_f64(v.x), bitsfrom_f64(v.y), bitsfrom_f64(v.z)); }
-static inline s16x4 bitsfrom_f16x4(f16x4 v) { return s16x4(bitsfrom_f16(v.x), bitsfrom_f16(v.y), bitsfrom_f16(v.z), bitsfrom_f16(v.w)); }
-static inline s32x4 bitsfrom_f32x4(f32x4 v) { return s32x4(bitsfrom_f32(v.x), bitsfrom_f32(v.y), bitsfrom_f32(v.z), bitsfrom_f32(v.w)); }
-static inline s64x4 bitsfrom_f64x4(f64x4 v) { return s64x4(bitsfrom_f64(v.x), bitsfrom_f64(v.y), bitsfrom_f64(v.z), bitsfrom_f64(v.w)); }
+static inline u16x2 bitsfrom_f16x2(f16x2 v) { return u16x2(bitsfrom_f16(v.x), bitsfrom_f16(v.y)); }
+static inline u32x2 bitsfrom_f32x2(f32x2 v) { return u32x2(bitsfrom_f32(v.x), bitsfrom_f32(v.y)); }
+static inline u64x2 bitsfrom_f64x2(f64x2 v) { return u64x2(bitsfrom_f64(v.x), bitsfrom_f64(v.y)); }
+static inline u16x3 bitsfrom_f16x3(f16x3 v) { return u16x3(bitsfrom_f16(v.x), bitsfrom_f16(v.y), bitsfrom_f16(v.z)); }
+static inline u32x3 bitsfrom_f32x3(f32x3 v) { return u32x3(bitsfrom_f32(v.x), bitsfrom_f32(v.y), bitsfrom_f32(v.z)); }
+static inline u64x3 bitsfrom_f64x3(f64x3 v) { return u64x3(bitsfrom_f64(v.x), bitsfrom_f64(v.y), bitsfrom_f64(v.z)); }
+static inline u16x4 bitsfrom_f16x4(f16x4 v) { return u16x4(bitsfrom_f16(v.x), bitsfrom_f16(v.y), bitsfrom_f16(v.z), bitsfrom_f16(v.w)); }
+static inline u32x4 bitsfrom_f32x4(f32x4 v) { return u32x4(bitsfrom_f32(v.x), bitsfrom_f32(v.y), bitsfrom_f32(v.z), bitsfrom_f32(v.w)); }
+static inline u64x4 bitsfrom_f64x4(f64x4 v) { return u64x4(bitsfrom_f64(v.x), bitsfrom_f64(v.y), bitsfrom_f64(v.z), bitsfrom_f64(v.w)); }
 
 //
 // return a vector where each component is the result of appling 'sin' to that component in 'v'

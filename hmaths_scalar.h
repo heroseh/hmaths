@@ -142,6 +142,74 @@ static inline bool gteq_u16(uint16_t a, uint16_t b) { return a >= b; }
 static inline bool gteq_u32(uint32_t a, uint32_t b) { return a >= b; }
 static inline bool gteq_u64(uint64_t a, uint64_t b) { return a >= b; }
 
+static inline bool bitand_s8(int8_t a, int8_t b) { return a & b; }
+static inline bool bitand_s16(int16_t a, int16_t b) { return a & b; }
+static inline bool bitand_s32(int32_t a, int32_t b) { return a & b; }
+static inline bool bitand_s64(int64_t a, int64_t b) { return a & b; }
+static inline bool bitand_u8(uint8_t a, uint8_t b) { return a & b; }
+static inline bool bitand_u16(uint16_t a, uint16_t b) { return a & b; }
+static inline bool bitand_u32(uint32_t a, uint32_t b) { return a & b; }
+static inline bool bitand_u64(uint64_t a, uint64_t b) { return a & b; }
+
+static inline bool bitor_s8(int8_t a, int8_t b) { return a | b; }
+static inline bool bitor_s16(int16_t a, int16_t b) { return a | b; }
+static inline bool bitor_s32(int32_t a, int32_t b) { return a | b; }
+static inline bool bitor_s64(int64_t a, int64_t b) { return a | b; }
+static inline bool bitor_u8(uint8_t a, uint8_t b) { return a | b; }
+static inline bool bitor_u16(uint16_t a, uint16_t b) { return a | b; }
+static inline bool bitor_u32(uint32_t a, uint32_t b) { return a | b; }
+static inline bool bitor_u64(uint64_t a, uint64_t b) { return a | b; }
+
+static inline bool bitxor_s8(int8_t a, int8_t b) { return a ^ b; }
+static inline bool bitxor_s16(int16_t a, int16_t b) { return a ^ b; }
+static inline bool bitxor_s32(int32_t a, int32_t b) { return a ^ b; }
+static inline bool bitxor_s64(int64_t a, int64_t b) { return a ^ b; }
+static inline bool bitxor_u8(uint8_t a, uint8_t b) { return a ^ b; }
+static inline bool bitxor_u16(uint16_t a, uint16_t b) { return a ^ b; }
+static inline bool bitxor_u32(uint32_t a, uint32_t b) { return a ^ b; }
+static inline bool bitxor_u64(uint64_t a, uint64_t b) { return a ^ b; }
+
+static inline bool bitshl_s8(int8_t a, int8_t b) { return a << b; }
+static inline bool bitshl_s16(int16_t a, int16_t b) { return a << b; }
+static inline bool bitshl_s32(int32_t a, int32_t b) { return a << b; }
+static inline bool bitshl_s64(int64_t a, int64_t b) { return a << b; }
+static inline bool bitshl_u8(uint8_t a, uint8_t b) { return a << b; }
+static inline bool bitshl_u16(uint16_t a, uint16_t b) { return a << b; }
+static inline bool bitshl_u32(uint32_t a, uint32_t b) { return a << b; }
+static inline bool bitshl_u64(uint64_t a, uint64_t b) { return a << b; }
+
+static inline bool bitshr_s8(int8_t a, int8_t b) { return a >> b; }
+static inline bool bitshr_s16(int16_t a, int16_t b) { return a >> b; }
+static inline bool bitshr_s32(int32_t a, int32_t b) { return a >> b; }
+static inline bool bitshr_s64(int64_t a, int64_t b) { return a >> b; }
+static inline bool bitshr_u8(uint8_t a, uint8_t b) { return a >> b; }
+static inline bool bitshr_u16(uint16_t a, uint16_t b) { return a >> b; }
+static inline bool bitshr_u32(uint32_t a, uint32_t b) { return a >> b; }
+static inline bool bitshr_u64(uint64_t a, uint64_t b) { return a >> b; }
+
+static inline bool bitnot_s8(int8_t v) { return ~v; }
+static inline bool bitnot_s16(int16_t v) { return ~v; }
+static inline bool bitnot_s32(int32_t v) { return ~v; }
+static inline bool bitnot_s64(int64_t v) { return ~v; }
+static inline bool bitnot_u8(uint8_t v) { return ~v; }
+static inline bool bitnot_u16(uint16_t v) { return ~v; }
+static inline bool bitnot_u32(uint32_t v) { return ~v; }
+static inline bool bitnot_u64(uint64_t v) { return ~v; }
+
+//
+// returns the index of the _least_ significant bit, if 'v == 0' then 0 is returned
+uint8_t bitlsb_u8(uint8_t v);
+uint16_t bitlsb_u16(uint16_t v);
+uint32_t bitlsb_u32(uint32_t v);
+uint64_t bitlsb_u64(uint64_t v);
+
+//
+// returns the index of the _most_ significant bit, if 'v == 0' then 0 is returned
+uint8_t bitmsb_u8(uint8_t v);
+uint16_t bitmsb_u16(uint16_t v);
+uint32_t bitmsb_u32(uint32_t v);
+uint64_t bitmsb_u64(uint64_t v);
+
 static inline bool not_f16(half v) { return !f16tof32(v); }
 static inline bool not_f32(float v) { return !v; }
 static inline bool not_f64(double v) { return !v; }
