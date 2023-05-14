@@ -70,6 +70,18 @@ static inline uint16_t div_u16(uint16_t a, uint16_t b) { return a / b; }
 static inline uint32_t div_u32(uint32_t a, uint32_t b) { return a / b; }
 static inline uint64_t div_u64(uint64_t a, uint64_t b) { return a / b; }
 
+half mod_f16(half a, half b);
+float mod_f32(float a, float b);
+double mod_f64(double a, double b);
+static inline int8_t mod_s8(int8_t a, int8_t b) { return a % b; }
+static inline int16_t mod_s16(int16_t a, int16_t b) { return a % b; }
+static inline int32_t mod_s32(int32_t a, int32_t b) { return a % b; }
+static inline int64_t mod_s64(int64_t a, int64_t b) { return a % b; }
+static inline uint8_t mod_u8(uint8_t a, uint8_t b) { return a % b; }
+static inline uint16_t mod_u16(uint16_t a, uint16_t b) { return a % b; }
+static inline uint32_t mod_u32(uint32_t a, uint32_t b) { return a % b; }
+static inline uint64_t mod_u64(uint64_t a, uint64_t b) { return a % b; }
+
 static inline bool eq_f16(half a, half b) { return f16tof32(a) == f16tof32(b); }
 static inline bool eq_f32(float a, float b) { return a == b; }
 static inline bool eq_f64(double a, double b) { return a == b; }
@@ -241,10 +253,6 @@ bool isinf_f64(double v);
 bool isnan_f16(half v);
 bool isnan_f32(float v);
 bool isnan_f64(double v);
-
-half mod_f16(half a, half b);
-float mod_f32(float a, float b);
-double mod_f64(double a, double b);
 
 half floor_f16(half v);
 float floor_f32(float v);
