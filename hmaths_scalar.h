@@ -1,6 +1,8 @@
 #ifndef _HMATHS_SCALAR_H_
 #define _HMATHS_SCALAR_H_
 
+#include "hmaths_types.h"
+
 // ===========================================
 //
 //
@@ -209,22 +211,22 @@ static inline bool bitnot_u32(uint32_t v) { return ~v; }
 static inline bool bitnot_u64(uint64_t v) { return ~v; }
 
 //
-// returns the index of the _least_ significant bit, if 'v == 0' then 0 is returned
-uint8_t bitlsb_u8(uint8_t v);
-uint16_t bitlsb_u16(uint16_t v);
+// returns the index of the _least_ significant bit, if 'v == 0' then all bits in the return value will be set. aka -1
+uint32_t bitlsb_u8(uint8_t v);
+uint32_t bitlsb_u16(uint16_t v);
 uint32_t bitlsb_u32(uint32_t v);
-uint64_t bitlsb_u64(uint64_t v);
+uint32_t bitlsb_u64(uint64_t v);
 
 //
-// returns the index of the _most_ significant bit, if 'v == 0' then 0 is returned
-uint8_t bitmsb_u8(uint8_t v);
-uint16_t bitmsb_u16(uint16_t v);
+// returns the index of the _most_ significant bit, if 'v == 0' then all bits in the return value will be set. aka -1
+uint32_t bitmsb_u8(uint8_t v);
+uint32_t bitmsb_u16(uint16_t v);
 uint32_t bitmsb_u32(uint32_t v);
-uint64_t bitmsb_u64(uint64_t v);
+uint32_t bitmsb_u64(uint64_t v);
 
-static inline bool not_f16(half v) { return !f16tof32(v); }
-static inline bool not_f32(float v) { return !v; }
-static inline bool not_f64(double v) { return !v; }
+static inline bool not_f16(half v) { return !(bool)f16tof32(v); }
+static inline bool not_f32(float v) { return !(bool)v; }
+static inline bool not_f64(double v) { return !(bool)v; }
 static inline bool not_s8(int8_t v) { return !v; }
 static inline bool not_s16(int16_t v) { return !v; }
 static inline bool not_s32(int32_t v) { return !v; }
@@ -466,7 +468,7 @@ static inline double radians_f64(double v) { return v * (PI_F64 / 180.f); }
 
 //
 // returns 0.f if 'v' < 'edge', otherwise 1.f is returned
-static inline half step_f16(half edge, half v) { return f32tof16(f16tof32(v) ? 0.f : 1.f); }
+static inline half step_f16(half edge, half v) { return f32tof16(f16tof32(v) < f16tof32(edge) ? 0.f : 1.f); }
 static inline float step_f32(float edge, float v) { return v < edge ? 0.f : 1.f; }
 static inline double step_f64(double edge, double v) { return v < edge ? 0.f : 1.f; }
 

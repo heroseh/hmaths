@@ -1,7 +1,6 @@
 #ifndef _HMATHS_GENERICS_H_
 #define _HMATHS_GENERICS_H_
 
-
 //
 // returns true if _any_ of the vector components are a non-zero value, otherwise false is returned
 #define anyG(v) \
@@ -406,20 +405,8 @@
 		u64x4: mul_u64x4, \
 		f32x2x2: mul_f32x2x2_f32x2x2, \
 		f64x2x2: mul_f64x2x2_f64x2x2, \
-		f32x2x3: mul_f32x2x3_f32x3x2, \
-		f64x2x3: mul_f64x2x3_f64x3x2, \
-		f32x2x4: mul_f32x2x4_f32x4x2, \
-		f64x2x4: mul_f64x2x4_f64x4x2, \
-		f32x3x2: mul_f32x3x2_f32x2x3, \
-		f64x3x2: mul_f64x3x2_f64x2x3, \
 		f32x3x3: mul_f32x3x3_f32x3x3, \
 		f64x3x3: mul_f64x3x3_f64x3x3, \
-		f32x3x4: mul_f32x3x4_f32x4x3, \
-		f64x3x4: mul_f64x3x4_f64x4x3, \
-		f32x4x2: mul_f32x4x2_f32x2x4, \
-		f64x4x2: mul_f64x4x2_f64x2x4, \
-		f32x4x3: mul_f32x4x3_f32x3x4, \
-		f64x4x3: mul_f64x4x3_f64x3x4, \
 		f32x4x4: mul_f32x4x4_f32x4x4, \
 		f64x4x4: mul_f64x4x4_f64x4x4 \
 	)(a, b)
@@ -463,20 +450,8 @@
 		u64x4: muls_u64x4, \
 		f32x2x2: muls_f32x2x2, \
 		f64x2x2: muls_f64x2x2, \
-		f32x2x3: muls_f32x2x3, \
-		f64x2x3: muls_f64x2x3, \
-		f32x2x4: muls_f32x2x4, \
-		f64x2x4: muls_f64x2x4, \
-		f32x3x2: muls_f32x3x2, \
-		f64x3x2: muls_f64x3x2, \
 		f32x3x3: muls_f32x3x3, \
 		f64x3x3: muls_f64x3x3, \
-		f32x3x4: muls_f32x3x4, \
-		f64x3x4: muls_f64x3x4, \
-		f32x4x2: muls_f32x4x2, \
-		f64x4x2: muls_f64x4x2, \
-		f32x4x3: muls_f32x4x3, \
-		f64x4x3: muls_f64x4x3, \
 		f32x4x4: muls_f32x4x4, \
 		f64x4x4: muls_f64x4x4 \
 	)(v, s)
@@ -487,20 +462,8 @@
 	_Generic((m), \
 		f32x2x2: mul_f32x2x2_f32x2, \
 		f64x2x2: mul_f64x2x2_f64x2, \
-		f32x2x3: mul_f32x2x3_f32x2, \
-		f64x2x3: mul_f64x2x3_f64x2, \
-		f32x2x4: mul_f32x2x4_f32x2, \
-		f64x2x4: mul_f64x2x4_f64x2, \
-		f32x3x2: mul_f32x3x2_f32x3, \
-		f64x3x2: mul_f64x3x2_f64x3, \
 		f32x3x3: mul_f32x3x3_f32x3, \
 		f64x3x3: mul_f64x3x3_f64x3, \
-		f32x3x4: mul_f32x3x4_f32x3, \
-		f64x3x4: mul_f64x3x4_f64x3, \
-		f32x4x2: mul_f32x4x2_f32x4, \
-		f64x4x2: mul_f64x4x2_f64x4, \
-		f32x4x3: mul_f32x4x3_f32x4, \
-		f64x4x3: mul_f64x4x3_f64x4, \
 		f32x4x4: mul_f32x4x4_f32x4, \
 		f64x4x4: mul_f64x4x4_f64x4 \
 	)(m, v)
@@ -511,20 +474,8 @@
 	_Generic((m), \
 		f32x2x2: mul_f32x2_f32x2x2, \
 		f64x2x2: mul_f64x2_f64x2x2, \
-		f32x2x3: mul_f32x3_f32x2x3, \
-		f64x2x3: mul_f64x3_f64x2x3, \
-		f32x2x4: mul_f32x4_f32x2x4, \
-		f64x2x4: mul_f64x4_f64x2x4, \
-		f32x3x2: mul_f32x2_f32x3x2, \
-		f64x3x2: mul_f64x2_f64x3x2, \
 		f32x3x3: mul_f32x3_f32x3x3, \
 		f64x3x3: mul_f64x3_f64x3x3, \
-		f32x3x4: mul_f32x4_f32x3x4, \
-		f64x3x4: mul_f64x4_f64x3x4, \
-		f32x4x2: mul_f32x2_f32x4x2, \
-		f64x4x2: mul_f64x2_f64x4x2, \
-		f32x4x3: mul_f32x3_f32x4x3, \
-		f64x4x3: mul_f64x3_f64x4x3, \
 		f32x4x4: mul_f32x4_f32x4x4, \
 		f64x4x4: mul_f64x4_f64x4x4 \
 	)(v, m)

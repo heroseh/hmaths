@@ -1,6 +1,9 @@
 #ifndef _HMATHS_VECTOR_H_
 #define _HMATHS_VECTOR_H_
 
+#include "hmaths_types.h"
+#include "hmaths_scalar.h"
+
 // ===========================================
 //
 //
@@ -26,9 +29,9 @@
 //
 // returns true if _any_ of the vector components are a non-zero value, otherwise false is returned
 static inline bool any_boolx2(boolx2 v) { return v.x || v.y; }
-static inline bool any_f16x2(f16x2 v) { return f16tof32(v.x) || f16tof32(v.y); }
-static inline bool any_f32x2(f32x2 v) { return v.x || v.y; }
-static inline bool any_f64x2(f64x2 v) { return v.x || v.y; }
+static inline bool any_f16x2(f16x2 v) { return (bool)f16tof32(v.x) || (bool)f16tof32(v.y); }
+static inline bool any_f32x2(f32x2 v) { return (bool)v.x || (bool)v.y; }
+static inline bool any_f64x2(f64x2 v) { return (bool)v.x || (bool)v.y; }
 static inline bool any_s8x2(s8x2 v) { return v.x || v.y; }
 static inline bool any_s16x2(s16x2 v) { return v.x || v.y; }
 static inline bool any_s32x2(s32x2 v) { return v.x || v.y; }
@@ -38,9 +41,9 @@ static inline bool any_u16x2(u16x2 v) { return v.x || v.y; }
 static inline bool any_u32x2(u32x2 v) { return v.x || v.y; }
 static inline bool any_u64x2(u64x2 v) { return v.x || v.y; }
 static inline bool any_boolx3(boolx3 v) { return v.x || v.y || v.z; }
-static inline bool any_f16x3(f16x3 v) { return f16tof32(v.x) || f16tof32(v.y) || f16tof32(v.z); }
-static inline bool any_f32x3(f32x3 v) { return v.x || v.y || v.z; }
-static inline bool any_f64x3(f64x3 v) { return v.x || v.y || v.z; }
+static inline bool any_f16x3(f16x3 v) { return (bool)f16tof32(v.x) || (bool)f16tof32(v.y) || (bool)f16tof32(v.z); }
+static inline bool any_f32x3(f32x3 v) { return (bool)v.x || (bool)v.y || (bool)v.z; }
+static inline bool any_f64x3(f64x3 v) { return (bool)v.x || (bool)v.y || (bool)v.z; }
 static inline bool any_s8x3(s8x3 v) { return v.x || v.y || v.z; }
 static inline bool any_s16x3(s16x3 v) { return v.x || v.y || v.z; }
 static inline bool any_s32x3(s32x3 v) { return v.x || v.y || v.z; }
@@ -50,9 +53,9 @@ static inline bool any_u16x3(u16x3 v) { return v.x || v.y || v.z; }
 static inline bool any_u32x3(u32x3 v) { return v.x || v.y || v.z; }
 static inline bool any_u64x3(u64x3 v) { return v.x || v.y || v.z; }
 static inline bool any_boolx4(boolx4 v) { return v.x || v.y || v.z || v.w; }
-static inline bool any_f16x4(f16x4 v) { return f16tof32(v.x) || f16tof32(v.y) || f16tof32(v.z) || f16tof32(v.w); }
-static inline bool any_f32x4(f32x4 v) { return v.x || v.y || v.z || v.w; }
-static inline bool any_f64x4(f64x4 v) { return v.x || v.y || v.z || v.w; }
+static inline bool any_f16x4(f16x4 v) { return (bool)f16tof32(v.x) || (bool)f16tof32(v.y) || (bool)f16tof32(v.z) || (bool)f16tof32(v.w); }
+static inline bool any_f32x4(f32x4 v) { return (bool)v.x || (bool)v.y || (bool)v.z || (bool)v.w; }
+static inline bool any_f64x4(f64x4 v) { return (bool)v.x || (bool)v.y || (bool)v.z || (bool)v.w; }
 static inline bool any_s8x4(s8x4 v) { return v.x || v.y || v.z || v.w; }
 static inline bool any_s16x4(s16x4 v) { return v.x || v.y || v.z || v.w; }
 static inline bool any_s32x4(s32x4 v) { return v.x || v.y || v.z || v.w; }
@@ -65,9 +68,9 @@ static inline bool any_u64x4(u64x4 v) { return v.x || v.y || v.z || v.w; }
 //
 // returns true if _all_ of the vector components are a non-zero value, otherwise false is returned
 static inline bool all_boolx2(boolx2 v) { return v.x && v.y; }
-static inline bool all_f16x2(f16x2 v) { return f16tof32(v.x) && f16tof32(v.y); }
-static inline bool all_f32x2(f32x2 v) { return v.x && v.y; }
-static inline bool all_f64x2(f64x2 v) { return v.x && v.y; }
+static inline bool all_f16x2(f16x2 v) { return (bool)f16tof32(v.x) && (bool)f16tof32(v.y); }
+static inline bool all_f32x2(f32x2 v) { return (bool)v.x && (bool)v.y; }
+static inline bool all_f64x2(f64x2 v) { return (bool)v.x && (bool)v.y; }
 static inline bool all_s8x2(s8x2 v) { return v.x && v.y; }
 static inline bool all_s16x2(s16x2 v) { return v.x && v.y; }
 static inline bool all_s32x2(s32x2 v) { return v.x && v.y; }
@@ -77,9 +80,9 @@ static inline bool all_u16x2(u16x2 v) { return v.x && v.y; }
 static inline bool all_u32x2(u32x2 v) { return v.x && v.y; }
 static inline bool all_u64x2(u64x2 v) { return v.x && v.y; }
 static inline bool all_boolx3(boolx3 v) { return v.x && v.y && v.z; }
-static inline bool all_f16x3(f16x3 v) { return f16tof32(v.x) && f16tof32(v.y) && f16tof32(v.z); }
-static inline bool all_f32x3(f32x3 v) { return v.x && v.y && v.z; }
-static inline bool all_f64x3(f64x3 v) { return v.x && v.y && v.z; }
+static inline bool all_f16x3(f16x3 v) { return (bool)f16tof32(v.x) && (bool)f16tof32(v.y) && (bool)f16tof32(v.z); }
+static inline bool all_f32x3(f32x3 v) { return (bool)v.x && (bool)v.y && (bool)v.z; }
+static inline bool all_f64x3(f64x3 v) { return (bool)v.x && (bool)v.y && (bool)v.z; }
 static inline bool all_s8x3(s8x3 v) { return v.x && v.y && v.z; }
 static inline bool all_s16x3(s16x3 v) { return v.x && v.y && v.z; }
 static inline bool all_s32x3(s32x3 v) { return v.x && v.y && v.z; }
@@ -89,9 +92,9 @@ static inline bool all_u16x3(u16x3 v) { return v.x && v.y && v.z; }
 static inline bool all_u32x3(u32x3 v) { return v.x && v.y && v.z; }
 static inline bool all_u64x3(u64x3 v) { return v.x && v.y && v.z; }
 static inline bool all_boolx4(boolx4 v) { return v.x && v.y && v.z && v.w; }
-static inline bool all_f16x4(f16x4 v) { return f16tof32(v.x) && f16tof32(v.y) && f16tof32(v.z) && f16tof32(v.w); }
-static inline bool all_f32x4(f32x4 v) { return v.x && v.y && v.z && v.w; }
-static inline bool all_f64x4(f64x4 v) { return v.x && v.y && v.z && v.w; }
+static inline bool all_f16x4(f16x4 v) { return (bool)f16tof32(v.x) && (bool)f16tof32(v.y) && (bool)f16tof32(v.z) && (bool)f16tof32(v.w); }
+static inline bool all_f32x4(f32x4 v) { return (bool)v.x && (bool)v.y && (bool)v.z && (bool)v.w; }
+static inline bool all_f64x4(f64x4 v) { return (bool)v.x && (bool)v.y && (bool)v.z && (bool)v.w; }
 static inline bool all_s8x4(s8x4 v) { return v.x && v.y && v.z && v.w; }
 static inline bool all_s16x4(s16x4 v) { return v.x && v.y && v.z && v.w; }
 static inline bool all_s32x4(s32x4 v) { return v.x && v.y && v.z && v.w; }
@@ -105,8 +108,8 @@ static inline bool all_u64x4(u64x4 v) { return v.x && v.y && v.z && v.w; }
 // returns a boolean vector where each component is true if the component in 'v' is a zero value, otherwise it would be false
 static inline boolx2 not_boolx2(boolx2 v) { return boolx2(!v.x, !v.y); }
 static inline boolx2 not_f16x2(f16x2 v) { return boolx2(not_f16(v.x), not_f16(v.y)); }
-static inline boolx2 not_f32x2(f32x2 v) { return boolx2(!v.x, !v.y); }
-static inline boolx2 not_f64x2(f64x2 v) { return boolx2(!v.x, !v.y); }
+static inline boolx2 not_f32x2(f32x2 v) { return boolx2(!(bool)v.x, !(bool)v.y); }
+static inline boolx2 not_f64x2(f64x2 v) { return boolx2(!(bool)v.x, !(bool)v.y); }
 static inline boolx2 not_s8x2(s8x2 v) { return boolx2(!v.x, !v.y); }
 static inline boolx2 not_s16x2(s16x2 v) { return boolx2(!v.x, !v.y); }
 static inline boolx2 not_s32x2(s32x2 v) { return boolx2(!v.x, !v.y); }
@@ -117,8 +120,8 @@ static inline boolx2 not_u32x2(u32x2 v) { return boolx2(!v.x, !v.y); }
 static inline boolx2 not_u64x2(u64x2 v) { return boolx2(!v.x, !v.y); }
 static inline boolx3 not_boolx3(boolx3 v) { return boolx3(!v.x, !v.y, !v.z); }
 static inline boolx3 not_f16x3(f16x3 v) { return boolx3(not_f16(v.x), not_f16(v.y), not_f16(v.z)); }
-static inline boolx3 not_f32x3(f32x3 v) { return boolx3(!v.x, !v.y, !v.z); }
-static inline boolx3 not_f64x3(f64x3 v) { return boolx3(!v.x, !v.y, !v.z); }
+static inline boolx3 not_f32x3(f32x3 v) { return boolx3(!(bool)v.x, !(bool)v.y, !(bool)v.z); }
+static inline boolx3 not_f64x3(f64x3 v) { return boolx3(!(bool)v.x, !(bool)v.y, !(bool)v.z); }
 static inline boolx3 not_s8x3(s8x3 v) { return boolx3(!v.x, !v.y, !v.z); }
 static inline boolx3 not_s16x3(s16x3 v) { return boolx3(!v.x, !v.y, !v.z); }
 static inline boolx3 not_s32x3(s32x3 v) { return boolx3(!v.x, !v.y, !v.z); }
@@ -129,8 +132,8 @@ static inline boolx3 not_u32x3(u32x3 v) { return boolx3(!v.x, !v.y, !v.z); }
 static inline boolx3 not_u64x3(u64x3 v) { return boolx3(!v.x, !v.y, !v.z); }
 static inline boolx4 not_boolx4(boolx4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }
 static inline boolx4 not_f16x4(f16x4 v) { return boolx4(not_f16(v.x), not_f16(v.y), not_f16(v.z), not_f16(v.w)); }
-static inline boolx4 not_f32x4(f32x4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }
-static inline boolx4 not_f64x4(f64x4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }
+static inline boolx4 not_f32x4(f32x4 v) { return boolx4(!(bool)v.x, !(bool)v.y, !(bool)v.z, !(bool)v.w); }
+static inline boolx4 not_f64x4(f64x4 v) { return boolx4(!(bool)v.x, !(bool)v.y, !(bool)v.z, !(bool)v.w); }
 static inline boolx4 not_s8x4(s8x4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }
 static inline boolx4 not_s16x4(s16x4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }
 static inline boolx4 not_s32x4(s32x4 v) { return boolx4(!v.x, !v.y, !v.z, !v.w); }

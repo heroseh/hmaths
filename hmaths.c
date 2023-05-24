@@ -1,5 +1,7 @@
 #include "hmaths.h"
 
+#include <math.h>
+
 // ===========================================
 //
 //
@@ -81,15 +83,450 @@ half f64tof16(double v) {
 // ===========================================
 //
 //
+// Scalar
+//
+//
+// ===========================================
+
+#ifndef __HCC__
+
+half mod_f16(half a, half b) {
+	return f32tof16(fmodf(f16tof32(a), f16tof32(b)));
+}
+
+float mod_f32(float a, float b) {
+	return fmodf(a, b);
+}
+
+double mod_f64(double a, double b) {
+	return fmod(a, b);
+}
+
+uint32_t bitlsb_u8(uint8_t v) {
+	return bitlsb_u32(v);
+}
+
+uint32_t bitlsb_u16(uint16_t v) {
+	return bitlsb_u32(v);
+}
+
+uint32_t bitlsb_u32(uint32_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return __builtin_ctz(v);
+#elif defined(HCC_OS_WINDOWS)
+	unsigned long idx;
+	_BitScanForward(&v, v);
+	return idx;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitlsb_u64(uint64_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return __builtin_ctzl(v);
+#elif defined(HCC_OS_WINDOWS)
+	unsigned __int64 idx;
+	_BitScanForward64(&v, v);
+	return idx;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitmsb_u8(uint8_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 24;
+#elif defined(HCC_OS_WINDOWS)
+	unsigned long idx;
+	_BitScanReverse(&idx, v);
+	return idx - 24;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitmsb_u16(uint16_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 16;
+#elif defined(HCC_OS_WINDOWS)
+	unsigned long idx;
+	_BitScanReverse(&idx, v);
+	return idx - 16;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitmsb_u32(uint32_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return (sizeof(uint32_t) * 8) - __builtin_clz(v);
+#elif defined(HCC_OS_WINDOWS)
+	unsigned long idx;
+	_BitScanReverse(&idx, v);
+	return idx;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitmsb_u64(uint64_t v) {
+	if (v == 0) {
+		return 0xffffffff;
+	}
+
+#ifdef __GNUC__
+	return (sizeof(uint64_t) * 8) - __builtin_clz(v);
+#elif defined(HCC_OS_WINDOWS)
+	unsigned long idx;
+	_BitScanReverse(&idx, v);
+	return idx;
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+bool isinf_f16(half v) {
+	return isinf_f32(f16tof32(v));
+}
+
+bool isinf_f32(float v) {
+	return isinf(v);
+}
+
+bool isinf_f64(double v) {
+	return isinf(v);
+}
+
+bool isnan_f16(half v) {
+	return isnan_f32(f16tof32(v));
+}
+
+bool isnan_f32(float v) {
+	return isnan(v);
+}
+
+bool isnan_f64(double v) {
+	return isnan(v);
+}
+
+half floor_f16(half v) {
+	return floorf(f16tof32(v));
+}
+
+float floor_f32(float v) {
+	return floorf(v);
+}
+
+double floor_f64(double v) {
+	return floor(v);
+}
+
+half ceil_f16(half v) {
+	return ceilf(f16tof32(v));
+}
+
+float ceil_f32(float v) {
+	return ceilf(v);
+}
+
+double ceil_f64(double v) {
+	return ceil(v);
+}
+
+half round_f16(half v) {
+	return roundf(f16tof32(v));
+}
+
+float round_f32(float v) {
+	return roundf(v);
+}
+
+double round_f64(double v) {
+	return round(v);
+}
+
+half trunc_f16(half v) {
+	return trunc(f16tof32(v));
+}
+
+float trunc_f32(float v) {
+	return v - floorf(v);
+}
+
+double trunc_f64(double v) {
+	return v - floor(v);
+}
+
+half sin_f16(half v) {
+	return sinf(f16tof32(v));
+}
+
+float sin_f32(float v) {
+	return sinf(v);
+}
+
+double sin_f64(double v) {
+	return sin(v);
+}
+
+half cos_f16(half v) {
+	return cosf(f16tof32(v));
+}
+
+float cos_f32(float v) {
+	return cosf(v);
+}
+
+double cos_f64(double v) {
+	return cos(v);
+}
+
+half tan_f16(half v) {
+	return tanf(f16tof32(v));
+}
+
+float tan_f32(float v) {
+	return tanf(v);
+}
+
+double tan_f64(double v) {
+	return tan(v);
+}
+
+half asin_f16(half v) {
+	return asinf(f16tof32(v));
+}
+
+float asin_f32(float v) {
+	return asinf(v);
+}
+
+double asin_f64(double v) {
+	return asin(v);
+}
+
+half acos_f16(half v) {
+	return acosf(f16tof32(v));
+}
+
+float acos_f32(float v) {
+	return acosf(v);
+}
+
+double acos_f64(double v) {
+	return acos(v);
+}
+
+half atan_f16(half v) {
+	return atanf(f16tof32(v));
+}
+
+float atan_f32(float v) {
+	return atanf(v);
+}
+
+double atan_f64(double v) {
+	return atan(v);
+}
+
+half sinh_f16(half v) {
+	return sinhf(f16tof32(v));
+}
+
+float sinh_f32(float v) {
+	return sinhf(v);
+}
+
+double sinh_f64(double v) {
+	return sinh(v);
+}
+
+half cosh_f16(half v) {
+	return coshf(f16tof32(v));
+}
+
+float cosh_f32(float v) {
+	return coshf(v);
+}
+
+double cosh_f64(double v) {
+	return cosh(v);
+}
+
+half tanh_f16(half v) {
+	return tanhf(f16tof32(v));
+}
+
+float tanh_f32(float v) {
+	return tanhf(v);
+}
+
+double tanh_f64(double v) {
+	return tanh(v);
+}
+
+half asinh_f16(half v) {
+	return asinhf(f16tof32(v));
+}
+
+float asinh_f32(float v) {
+	return asinhf(v);
+}
+
+double asinh_f64(double v) {
+	return asinh(v);
+}
+
+half acosh_f16(half v) {
+	return acoshf(f16tof32(v));
+}
+
+float acosh_f32(float v) {
+	return acoshf(v);
+}
+
+double acosh_f64(double v) {
+	return acosh(v);
+}
+
+half atanh_f16(half v) {
+	return atanhf(f16tof32(v));
+}
+
+float atanh_f32(float v) {
+	return atanhf(v);
+}
+
+double atanh_f64(double v) {
+	return atanh(v);
+}
+
+half atan2_f16(half y, half x) {
+	return atan2f(f16tof32(y), f16tof32(x));
+}
+
+float atan2_f32(float y, float x) {
+	return atan2f(y, x);
+}
+
+double atan2_f64(double y, double x) {
+	return atan2(y, x);
+}
+
+half fma_f16(half a, half b, half c) {
+	return fmaf(f16tof32(a), f16tof32(b), f16tof32(c));
+}
+
+float fma_f32(float a, float b, float c) {
+	return fmaf(a, b, c);
+}
+
+double fma_f64(double a, double b, double c) {
+	return fma(a, b, c);
+}
+
+half sqrt_f16(half v) {
+	return sqrtf(f16tof32(v));
+}
+
+float sqrt_f32(float v) {
+	return sqrtf(v);
+}
+
+double sqrt_f64(double v) {
+	return sqrt(v);
+}
+
+half pow_f16(half a, half b) {
+	return powf(f16tof32(a), f16tof32(b));
+}
+
+float pow_f32(float a, float b) {
+	return powf(a, b);
+}
+
+double pow_f64(double a, double b) {
+	return pow(a, b);
+}
+
+half exp_f16(half v) {
+	return expf(f16tof32(v));
+}
+
+float exp_f32(float v) {
+	return expf(v);
+}
+
+double exp_f64(double v) {
+	return exp(v);
+}
+
+half log_f16(half v) {
+	return logf(f16tof32(v));
+}
+
+float log_f32(float v) {
+	return logf(v);
+}
+
+double log_f64(double v) {
+	return log(v);
+}
+
+half exp2_f16(half v) {
+	return exp2f(f16tof32(v));
+}
+
+float exp2_f32(float v) {
+	return exp2f(v);
+}
+
+double exp2_f64(double v) {
+	return exp2(v);
+}
+
+half log2_f16(half v) {
+	return log2f(f16tof32(v));
+}
+
+float log2_f32(float v) {
+	return log2f(v);
+}
+
+double log2_f64(double v) {
+	return log2(v);
+}
+
+#endif // ifndef __HCC__
+
+// ===========================================
+//
+//
 // Vector
 //
 //
 // ===========================================
-//
-// these vectors have scalar alignment where their alignment is the same as their scalar type
-// on the HCC and Clang compilers they will use vector extensions for +-*/ operator support and swizzling
-//
-
 
 //
 // returns a vector that is vector 'v' reflected against surface 'normal'
@@ -226,7 +663,7 @@ f64x4 refract_f64x4(f64x4 v, f64x4 normal, double eta) {
 uint32_t pack_f16x2_f32x2(f32x2 v) {
 	return
 		((uint32_t)bitsfrom_f16(f32tof16(v.x)) << 0)  ||
-	((uint32_t)bitsfrom_f16(f32tof16(v.y)) << 16)  ;
+		((uint32_t)bitsfrom_f16(f32tof16(v.y)) << 16)  ;
 }
 
 f32x2 unpack_f16x2_f32x2(uint32_t v) {
@@ -329,70 +766,6 @@ f64x2x2 mul_f64x2x2_f64x2x2(f64x2x2 a, f64x2x2 b) {
 	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y;
 	return m;
 }
-f32x2x3 mul_f32x2x3_f32x3x2(f32x2x3 a, f32x3x2 b) {
-	f32x2x3 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y;
-	return m;
-}
-f64x2x3 mul_f64x2x3_f64x3x2(f64x2x3 a, f64x3x2 b) {
-	f64x2x3 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y;
-	return m;
-}
-f32x2x4 mul_f32x2x4_f32x4x2(f32x2x4 a, f32x4x2 b) {
-	f32x2x4 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y;
-	m.cols[0].w = a.cols[0].w * b.cols[0].x + a.cols[1].w * b.cols[0].y;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y;
-	m.cols[1].w = a.cols[0].w * b.cols[1].x + a.cols[1].w * b.cols[1].y;
-	return m;
-}
-f64x2x4 mul_f64x2x4_f64x4x2(f64x2x4 a, f64x4x2 b) {
-	f64x2x4 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y;
-	m.cols[0].w = a.cols[0].w * b.cols[0].x + a.cols[1].w * b.cols[0].y;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y;
-	m.cols[1].w = a.cols[0].w * b.cols[1].x + a.cols[1].w * b.cols[1].y;
-	return m;
-}
-f32x3x2 mul_f32x3x2_f32x2x3(f32x3x2 a, f32x2x3 b) {
-	f32x3x2 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z;
-	return m;
-}
-f64x3x2 mul_f64x3x2_f64x2x3(f64x3x2 a, f64x2x3 b) {
-	f64x3x2 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z;
-	return m;
-}
 f32x3x3 mul_f32x3x3_f32x3x3(f32x3x3 a, f32x3x3 b) {
 	f32x3x3 m;
 	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z;
@@ -417,94 +790,6 @@ f64x3x3 mul_f64x3x3_f64x3x3(f64x3x3 a, f64x3x3 b) {
 	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z;
 	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z;
 	m.cols[2].z = a.cols[0].z * b.cols[2].x + a.cols[1].z * b.cols[2].y + a.cols[2].z * b.cols[2].z;
-	return m;
-}
-f32x3x4 mul_f32x3x4_f32x4x3(f32x3x4 a, f32x4x3 b) {
-	f32x3x4 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y + a.cols[2].z * b.cols[0].z;
-	m.cols[0].w = a.cols[0].w * b.cols[0].x + a.cols[1].w * b.cols[0].y + a.cols[2].w * b.cols[0].z;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y + a.cols[2].z * b.cols[1].z;
-	m.cols[1].w = a.cols[0].w * b.cols[1].x + a.cols[1].w * b.cols[1].y + a.cols[2].w * b.cols[1].z;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z;
-	m.cols[2].z = a.cols[0].z * b.cols[2].x + a.cols[1].z * b.cols[2].y + a.cols[2].z * b.cols[2].z;
-	m.cols[2].w = a.cols[0].w * b.cols[2].x + a.cols[1].w * b.cols[2].y + a.cols[2].w * b.cols[2].z;
-	return m;
-}
-f64x3x4 mul_f64x3x4_f64x4x3(f64x3x4 a, f64x4x3 b) {
-	f64x3x4 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y + a.cols[2].z * b.cols[0].z;
-	m.cols[0].w = a.cols[0].w * b.cols[0].x + a.cols[1].w * b.cols[0].y + a.cols[2].w * b.cols[0].z;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y + a.cols[2].z * b.cols[1].z;
-	m.cols[1].w = a.cols[0].w * b.cols[1].x + a.cols[1].w * b.cols[1].y + a.cols[2].w * b.cols[1].z;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z;
-	m.cols[2].z = a.cols[0].z * b.cols[2].x + a.cols[1].z * b.cols[2].y + a.cols[2].z * b.cols[2].z;
-	m.cols[2].w = a.cols[0].w * b.cols[2].x + a.cols[1].w * b.cols[2].y + a.cols[2].w * b.cols[2].z;
-	return m;
-}
-f32x4x2 mul_f32x4x2_f32x2x4(f32x4x2 a, f32x2x4 b) {
-	f32x4x2 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z + a.cols[3].x * b.cols[0].w;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z + a.cols[3].y * b.cols[0].w;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z + a.cols[3].x * b.cols[1].w;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z + a.cols[3].y * b.cols[1].w;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z + a.cols[3].x * b.cols[2].w;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z + a.cols[3].y * b.cols[2].w;
-	m.cols[3].x = a.cols[0].x * b.cols[3].x + a.cols[1].x * b.cols[3].y + a.cols[2].x * b.cols[3].z + a.cols[3].x * b.cols[3].w;
-	m.cols[3].y = a.cols[0].y * b.cols[3].x + a.cols[1].y * b.cols[3].y + a.cols[2].y * b.cols[3].z + a.cols[3].y * b.cols[3].w;
-	return m;
-}
-f64x4x2 mul_f64x4x2_f64x2x4(f64x4x2 a, f64x2x4 b) {
-	f64x4x2 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z + a.cols[3].x * b.cols[0].w;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z + a.cols[3].y * b.cols[0].w;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z + a.cols[3].x * b.cols[1].w;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z + a.cols[3].y * b.cols[1].w;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z + a.cols[3].x * b.cols[2].w;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z + a.cols[3].y * b.cols[2].w;
-	m.cols[3].x = a.cols[0].x * b.cols[3].x + a.cols[1].x * b.cols[3].y + a.cols[2].x * b.cols[3].z + a.cols[3].x * b.cols[3].w;
-	m.cols[3].y = a.cols[0].y * b.cols[3].x + a.cols[1].y * b.cols[3].y + a.cols[2].y * b.cols[3].z + a.cols[3].y * b.cols[3].w;
-	return m;
-}
-f32x4x3 mul_f32x4x3_f32x3x4(f32x4x3 a, f32x3x4 b) {
-	f32x4x3 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z + a.cols[3].x * b.cols[0].w;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z + a.cols[3].y * b.cols[0].w;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y + a.cols[2].z * b.cols[0].z + a.cols[3].z * b.cols[0].w;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z + a.cols[3].x * b.cols[1].w;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z + a.cols[3].y * b.cols[1].w;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y + a.cols[2].z * b.cols[1].z + a.cols[3].z * b.cols[1].w;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z + a.cols[3].x * b.cols[2].w;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z + a.cols[3].y * b.cols[2].w;
-	m.cols[2].z = a.cols[0].z * b.cols[2].x + a.cols[1].z * b.cols[2].y + a.cols[2].z * b.cols[2].z + a.cols[3].z * b.cols[2].w;
-	m.cols[3].x = a.cols[0].x * b.cols[3].x + a.cols[1].x * b.cols[3].y + a.cols[2].x * b.cols[3].z + a.cols[3].x * b.cols[3].w;
-	m.cols[3].y = a.cols[0].y * b.cols[3].x + a.cols[1].y * b.cols[3].y + a.cols[2].y * b.cols[3].z + a.cols[3].y * b.cols[3].w;
-	m.cols[3].z = a.cols[0].z * b.cols[3].x + a.cols[1].z * b.cols[3].y + a.cols[2].z * b.cols[3].z + a.cols[3].z * b.cols[3].w;
-	return m;
-}
-f64x4x3 mul_f64x4x3_f64x3x4(f64x4x3 a, f64x3x4 b) {
-	f64x4x3 m;
-	m.cols[0].x = a.cols[0].x * b.cols[0].x + a.cols[1].x * b.cols[0].y + a.cols[2].x * b.cols[0].z + a.cols[3].x * b.cols[0].w;
-	m.cols[0].y = a.cols[0].y * b.cols[0].x + a.cols[1].y * b.cols[0].y + a.cols[2].y * b.cols[0].z + a.cols[3].y * b.cols[0].w;
-	m.cols[0].z = a.cols[0].z * b.cols[0].x + a.cols[1].z * b.cols[0].y + a.cols[2].z * b.cols[0].z + a.cols[3].z * b.cols[0].w;
-	m.cols[1].x = a.cols[0].x * b.cols[1].x + a.cols[1].x * b.cols[1].y + a.cols[2].x * b.cols[1].z + a.cols[3].x * b.cols[1].w;
-	m.cols[1].y = a.cols[0].y * b.cols[1].x + a.cols[1].y * b.cols[1].y + a.cols[2].y * b.cols[1].z + a.cols[3].y * b.cols[1].w;
-	m.cols[1].z = a.cols[0].z * b.cols[1].x + a.cols[1].z * b.cols[1].y + a.cols[2].z * b.cols[1].z + a.cols[3].z * b.cols[1].w;
-	m.cols[2].x = a.cols[0].x * b.cols[2].x + a.cols[1].x * b.cols[2].y + a.cols[2].x * b.cols[2].z + a.cols[3].x * b.cols[2].w;
-	m.cols[2].y = a.cols[0].y * b.cols[2].x + a.cols[1].y * b.cols[2].y + a.cols[2].y * b.cols[2].z + a.cols[3].y * b.cols[2].w;
-	m.cols[2].z = a.cols[0].z * b.cols[2].x + a.cols[1].z * b.cols[2].y + a.cols[2].z * b.cols[2].z + a.cols[3].z * b.cols[2].w;
-	m.cols[3].x = a.cols[0].x * b.cols[3].x + a.cols[1].x * b.cols[3].y + a.cols[2].x * b.cols[3].z + a.cols[3].x * b.cols[3].w;
-	m.cols[3].y = a.cols[0].y * b.cols[3].x + a.cols[1].y * b.cols[3].y + a.cols[2].y * b.cols[3].z + a.cols[3].y * b.cols[3].w;
-	m.cols[3].z = a.cols[0].z * b.cols[3].x + a.cols[1].z * b.cols[3].y + a.cols[2].z * b.cols[3].z + a.cols[3].z * b.cols[3].w;
 	return m;
 }
 f32x4x4 mul_f32x4x4_f32x4x4(f32x4x4 a, f32x4x4 b) {
@@ -564,64 +849,6 @@ f64x2x2 muls_f64x2x2(f64x2x2 m, double s) {
 	m.cols[1].y *= s;
 	return m;
 }
-f32x2x3 muls_f32x2x3(f32x2x3 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	return m;
-}
-f64x2x3 muls_f64x2x3(f64x2x3 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	return m;
-}
-f32x2x4 muls_f32x2x4(f32x2x4 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[0].w *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[1].w *= s;
-	return m;
-}
-f64x2x4 muls_f64x2x4(f64x2x4 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[0].w *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[1].w *= s;
-	return m;
-}
-f32x3x2 muls_f32x3x2(f32x3x2 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	return m;
-}
-f64x3x2 muls_f64x3x2(f64x3x2 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	return m;
-}
 f32x3x3 muls_f32x3x3(f32x3x3 m, float s) {
 	m.cols[0].x *= s;
 	m.cols[0].y *= s;
@@ -644,88 +871,6 @@ f64x3x3 muls_f64x3x3(f64x3x3 m, double s) {
 	m.cols[2].x *= s;
 	m.cols[2].y *= s;
 	m.cols[2].z *= s;
-	return m;
-}
-f32x3x4 muls_f32x3x4(f32x3x4 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[0].w *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[1].w *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[2].z *= s;
-	m.cols[2].w *= s;
-	return m;
-}
-f64x3x4 muls_f64x3x4(f64x3x4 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[0].w *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[1].w *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[2].z *= s;
-	m.cols[2].w *= s;
-	return m;
-}
-f32x4x2 muls_f32x4x2(f32x4x2 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[3].x *= s;
-	m.cols[3].y *= s;
-	return m;
-}
-f64x4x2 muls_f64x4x2(f64x4x2 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[3].x *= s;
-	m.cols[3].y *= s;
-	return m;
-}
-f32x4x3 muls_f32x4x3(f32x4x3 m, float s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[2].z *= s;
-	m.cols[3].x *= s;
-	m.cols[3].y *= s;
-	m.cols[3].z *= s;
-	return m;
-}
-f64x4x3 muls_f64x4x3(f64x4x3 m, double s) {
-	m.cols[0].x *= s;
-	m.cols[0].y *= s;
-	m.cols[0].z *= s;
-	m.cols[1].x *= s;
-	m.cols[1].y *= s;
-	m.cols[1].z *= s;
-	m.cols[2].x *= s;
-	m.cols[2].y *= s;
-	m.cols[2].z *= s;
-	m.cols[3].x *= s;
-	m.cols[3].y *= s;
-	m.cols[3].z *= s;
 	return m;
 }
 f32x4x4 muls_f32x4x4(f32x4x4 m, float s) {
@@ -781,44 +926,6 @@ f64x2 mul_f64x2x2_f64x2(f64x2x2 m, f64x2 v) {
 	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y;
 	return ret;
 }
-f32x2 mul_f32x2x3_f32x2(f32x2x3 m, f32x2 v) {
-	f32x2 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y;
-	return ret;
-}
-f64x2 mul_f64x2x3_f64x2(f64x2x3 m, f64x2 v) {
-	f64x2 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y;
-	return ret;
-}
-f32x2 mul_f32x2x4_f32x2(f32x2x4 m, f32x2 v) {
-	f32x2 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y;
-	return ret;
-}
-f64x2 mul_f64x2x4_f64x2(f64x2x4 m, f64x2 v) {
-	f64x2 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y;
-	return ret;
-}
-f32x3 mul_f32x3x2_f32x3(f32x3x2 m, f32x3 v) {
-	f32x3 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z;
-	return ret;
-}
-f64x3 mul_f64x3x2_f64x3(f64x3x2 m, f64x3 v) {
-	f64x3 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z;
-	return ret;
-}
 f32x3 mul_f32x3x3_f32x3(f32x3x3 m, f32x3 v) {
 	f32x3 ret;
 	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
@@ -831,52 +938,6 @@ f64x3 mul_f64x3x3_f64x3(f64x3x3 m, f64x3 v) {
 	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
 	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z;
 	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z;
-	return ret;
-}
-f32x3 mul_f32x3x4_f32x3(f32x3x4 m, f32x3 v) {
-	f32x3 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z;
-	return ret;
-}
-f64x3 mul_f64x3x4_f64x3(f64x3x4 m, f64x3 v) {
-	f64x3 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z;
-	return ret;
-}
-f32x4 mul_f32x4x2_f32x4(f32x4x2 m, f32x4 v) {
-	f32x4 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z + m.cols[3].x * v.w;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z + m.cols[3].y * v.w;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z + m.cols[3].z * v.w;
-	ret.w = m.cols[0].w * v.x + m.cols[1].w * v.y + m.cols[2].w * v.z + m.cols[3].w * v.w;
-	return ret;
-}
-f64x4 mul_f64x4x2_f64x4(f64x4x2 m, f64x4 v) {
-	f64x4 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z + m.cols[3].x * v.w;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z + m.cols[3].y * v.w;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z + m.cols[3].z * v.w;
-	ret.w = m.cols[0].w * v.x + m.cols[1].w * v.y + m.cols[2].w * v.z + m.cols[3].w * v.w;
-	return ret;
-}
-f32x4 mul_f32x4x3_f32x4(f32x4x3 m, f32x4 v) {
-	f32x4 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z + m.cols[3].x * v.w;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z + m.cols[3].y * v.w;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z + m.cols[3].z * v.w;
-	ret.w = m.cols[0].w * v.x + m.cols[1].w * v.y + m.cols[2].w * v.z + m.cols[3].w * v.w;
-	return ret;
-}
-f64x4 mul_f64x4x3_f64x4(f64x4x3 m, f64x4 v) {
-	f64x4 ret;
-	ret.x = m.cols[0].x * v.x + m.cols[1].x * v.y + m.cols[2].x * v.z + m.cols[3].x * v.w;
-	ret.y = m.cols[0].y * v.x + m.cols[1].y * v.y + m.cols[2].y * v.z + m.cols[3].y * v.w;
-	ret.z = m.cols[0].z * v.x + m.cols[1].z * v.y + m.cols[2].z * v.z + m.cols[3].z * v.w;
-	ret.w = m.cols[0].w * v.x + m.cols[1].w * v.y + m.cols[2].w * v.z + m.cols[3].w * v.w;
 	return ret;
 }
 f32x4 mul_f32x4x4_f32x4(f32x4x4 m, f32x4 v) {
@@ -910,48 +971,6 @@ f64x2 mul_f64x2_f64x2x2(f64x2 v, f64x2x2 m) {
 	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y;
 	return ret;
 }
-f32x3 mul_f32x3_f32x2x3(f32x3 v, f32x2x3 m) {
-	f32x3 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y;
-	return ret;
-}
-f64x3 mul_f64x3_f64x2x3(f64x3 v, f64x2x3 m) {
-	f64x3 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y;
-	return ret;
-}
-f32x4 mul_f32x4_f32x2x4(f32x4 v, f32x2x4 m) {
-	f32x4 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y;
-	ret.w = v.x * m.cols[3].x + v.y * m.cols[3].y;
-	return ret;
-}
-f64x4 mul_f64x4_f64x2x4(f64x4 v, f64x2x4 m) {
-	f64x4 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y;
-	ret.w = v.x * m.cols[3].x + v.y * m.cols[3].y;
-	return ret;
-}
-f32x2 mul_f32x2_f32x3x2(f32x2 v, f32x3x2 m) {
-	f32x2 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z;
-	return ret;
-}
-f64x2 mul_f64x2_f64x3x2(f64x2 v, f64x3x2 m) {
-	f64x2 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z;
-	return ret;
-}
 f32x3 mul_f32x3_f32x3x3(f32x3 v, f32x3x3 m) {
 	f32x3 ret;
 	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
@@ -964,48 +983,6 @@ f64x3 mul_f64x3_f64x3x3(f64x3 v, f64x3x3 m) {
 	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
 	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z;
 	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y + v.z * m.cols[2].z;
-	return ret;
-}
-f32x4 mul_f32x4_f32x3x4(f32x4 v, f32x3x4 m) {
-	f32x4 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y + v.z * m.cols[2].z;
-	ret.w = v.x * m.cols[3].x + v.y * m.cols[3].y + v.z * m.cols[3].z;
-	return ret;
-}
-f64x4 mul_f64x4_f64x3x4(f64x4 v, f64x3x4 m) {
-	f64x4 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y + v.z * m.cols[2].z;
-	ret.w = v.x * m.cols[3].x + v.y * m.cols[3].y + v.z * m.cols[3].z;
-	return ret;
-}
-f32x2 mul_f32x2_f32x4x2(f32x2 v, f32x4x2 m) {
-	f32x2 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z + v.w * m.cols[0].w;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z + v.w * m.cols[1].w;
-	return ret;
-}
-f64x2 mul_f64x2_f64x4x2(f64x2 v, f64x4x2 m) {
-	f64x2 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z + v.w * m.cols[0].w;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z + v.w * m.cols[1].w;
-	return ret;
-}
-f32x3 mul_f32x3_f32x4x3(f32x3 v, f32x4x3 m) {
-	f32x3 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z + v.w * m.cols[0].w;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z + v.w * m.cols[1].w;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y + v.z * m.cols[2].z + v.w * m.cols[2].w;
-	return ret;
-}
-f64x3 mul_f64x3_f64x4x3(f64x3 v, f64x4x3 m) {
-	f64x3 ret;
-	ret.x = v.x * m.cols[0].x + v.y * m.cols[0].y + v.z * m.cols[0].z + v.w * m.cols[0].w;
-	ret.y = v.x * m.cols[1].x + v.y * m.cols[1].y + v.z * m.cols[1].z + v.w * m.cols[1].w;
-	ret.z = v.x * m.cols[2].x + v.y * m.cols[2].y + v.z * m.cols[2].z + v.w * m.cols[2].w;
 	return ret;
 }
 f32x4 mul_f32x4_f32x4x4(f32x4 v, f32x4x4 m) {
@@ -1043,70 +1020,6 @@ f64x2x2 transpose_f64x2x2(f64x2x2 m) {
 	ret.cols[1].y = m.cols[1].y;
 	return ret;
 }
-f32x3x2 transpose_f32x2x3(f32x2x3 m) {
-	f32x3x2 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	return ret;
-}
-f64x3x2 transpose_f64x2x3(f64x2x3 m) {
-	f64x3x2 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	return ret;
-}
-f32x4x2 transpose_f32x2x4(f32x2x4 m) {
-	f32x4x2 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[3].x = m.cols[0].w;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[3].y = m.cols[1].w;
-	return ret;
-}
-f64x4x2 transpose_f64x2x4(f64x2x4 m) {
-	f64x4x2 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[3].x = m.cols[0].w;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[3].y = m.cols[1].w;
-	return ret;
-}
-f32x2x3 transpose_f32x3x2(f32x3x2 m) {
-	f32x2x3 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	return ret;
-}
-f64x2x3 transpose_f64x3x2(f64x3x2 m) {
-	f64x2x3 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	return ret;
-}
 f32x3x3 transpose_f32x3x3(f32x3x3 m) {
 	f32x3x3 ret;
 	ret.cols[0].x = m.cols[0].x;
@@ -1131,94 +1044,6 @@ f64x3x3 transpose_f64x3x3(f64x3x3 m) {
 	ret.cols[0].z = m.cols[2].x;
 	ret.cols[1].z = m.cols[2].y;
 	ret.cols[2].z = m.cols[2].z;
-	return ret;
-}
-f32x4x3 transpose_f32x3x4(f32x3x4 m) {
-	f32x4x3 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[3].x = m.cols[0].w;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[3].y = m.cols[1].w;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[2].z = m.cols[2].z;
-	ret.cols[3].z = m.cols[2].w;
-	return ret;
-}
-f64x4x3 transpose_f64x3x4(f64x3x4 m) {
-	f64x4x3 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[3].x = m.cols[0].w;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[3].y = m.cols[1].w;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[2].z = m.cols[2].z;
-	ret.cols[3].z = m.cols[2].w;
-	return ret;
-}
-f32x2x4 transpose_f32x4x2(f32x4x2 m) {
-	f32x2x4 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[0].w = m.cols[3].x;
-	ret.cols[1].w = m.cols[3].y;
-	return ret;
-}
-f64x2x4 transpose_f64x4x2(f64x4x2 m) {
-	f64x2x4 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[0].w = m.cols[3].x;
-	ret.cols[1].w = m.cols[3].y;
-	return ret;
-}
-f32x3x4 transpose_f32x4x3(f32x4x3 m) {
-	f32x3x4 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[2].z = m.cols[2].z;
-	ret.cols[0].w = m.cols[3].x;
-	ret.cols[1].w = m.cols[3].y;
-	ret.cols[2].w = m.cols[3].z;
-	return ret;
-}
-f64x3x4 transpose_f64x4x3(f64x4x3 m) {
-	f64x3x4 ret;
-	ret.cols[0].x = m.cols[0].x;
-	ret.cols[1].x = m.cols[0].y;
-	ret.cols[2].x = m.cols[0].z;
-	ret.cols[0].y = m.cols[1].x;
-	ret.cols[1].y = m.cols[1].y;
-	ret.cols[2].y = m.cols[1].z;
-	ret.cols[0].z = m.cols[2].x;
-	ret.cols[1].z = m.cols[2].y;
-	ret.cols[2].z = m.cols[2].z;
-	ret.cols[0].w = m.cols[3].x;
-	ret.cols[1].w = m.cols[3].y;
-	ret.cols[2].w = m.cols[3].z;
 	return ret;
 }
 f32x4x4 transpose_f32x4x4(f32x4x4 m) {
@@ -1264,238 +1089,86 @@ f64x4x4 transpose_f64x4x4(f64x4x4 m) {
 
 //
 // returns a matrix from the outer product of vector 'a' and vector 'b'
-f32x2x2 outerproduct_f32x2_f32x2(f32x2 c, f32x2 r) {
+f32x2x2 outerproduct_f32x2_f32x2(f32x2 r, f32x2 c) {
 	f32x2x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
 	return ret;
 }
-f64x2x2 outerproduct_f64x2_f64x2(f64x2 c, f64x2 r) {
+f64x2x2 outerproduct_f64x2_f64x2(f64x2 r, f64x2 c) {
 	f64x2x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
 	return ret;
 }
-f32x2x3 outerproduct_f32x2_f32x3(f32x2 c, f32x3 r) {
-	f32x2x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	return ret;
-}
-f64x2x3 outerproduct_f64x2_f64x3(f64x2 c, f64x3 r) {
-	f64x2x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	return ret;
-}
-f32x2x4 outerproduct_f32x2_f32x4(f32x2 c, f32x4 r) {
-	f32x2x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	return ret;
-}
-f64x2x4 outerproduct_f64x2_f64x4(f64x2 c, f64x4 r) {
-	f64x2x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	return ret;
-}
-f32x3x2 outerproduct_f32x3_f32x2(f32x3 c, f32x2 r) {
-	f32x3x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	return ret;
-}
-f64x3x2 outerproduct_f64x3_f64x2(f64x3 c, f64x2 r) {
-	f64x3x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	return ret;
-}
-f32x3x3 outerproduct_f32x3_f32x3(f32x3 c, f32x3 r) {
+f32x3x3 outerproduct_f32x3_f32x3(f32x3 r, f32x3 c) {
 	f32x3x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[0].z = r.x * c.z;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
+	ret.cols[1].z = r.y * c.z;
+	ret.cols[2].x = r.z * c.x;
+	ret.cols[2].y = r.z * c.y;
+	ret.cols[2].z = r.z * c.z;
 	return ret;
 }
-f64x3x3 outerproduct_f64x3_f64x3(f64x3 c, f64x3 r) {
+f64x3x3 outerproduct_f64x3_f64x3(f64x3 r, f64x3 c) {
 	f64x3x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[0].z = r.x * c.z;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
+	ret.cols[1].z = r.y * c.z;
+	ret.cols[2].x = r.z * c.x;
+	ret.cols[2].y = r.z * c.y;
+	ret.cols[2].z = r.z * c.z;
 	return ret;
 }
-f32x3x4 outerproduct_f32x3_f32x4(f32x3 c, f32x4 r) {
-	f32x3x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[2].w = c.z * r.w;
-	return ret;
-}
-f64x3x4 outerproduct_f64x3_f64x4(f64x3 c, f64x4 r) {
-	f64x3x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[2].w = c.z * r.w;
-	return ret;
-}
-f32x4x2 outerproduct_f32x4_f32x2(f32x4 c, f32x2 r) {
-	f32x4x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	return ret;
-}
-f64x4x2 outerproduct_f64x4_f64x2(f64x4 c, f64x2 r) {
-	f64x4x2 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	return ret;
-}
-f32x4x3 outerproduct_f32x4_f32x3(f32x4 c, f32x3 r) {
-	f32x4x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	ret.cols[3].z = c.w * r.z;
-	return ret;
-}
-f64x4x3 outerproduct_f64x4_f64x3(f64x4 c, f64x3 r) {
-	f64x4x3 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	ret.cols[3].z = c.w * r.z;
-	return ret;
-}
-f32x4x4 outerproduct_f32x4_f32x4(f32x4 c, f32x4 r) {
+f32x4x4 outerproduct_f32x4_f32x4(f32x4 r, f32x4 c) {
 	f32x4x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[2].w = c.z * r.w;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	ret.cols[3].z = c.w * r.z;
-	ret.cols[3].w = c.w * r.w;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[0].z = r.x * c.z;
+	ret.cols[0].w = r.x * c.w;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
+	ret.cols[1].z = r.y * c.z;
+	ret.cols[1].w = r.y * c.w;
+	ret.cols[2].x = r.z * c.x;
+	ret.cols[2].y = r.z * c.y;
+	ret.cols[2].z = r.z * c.z;
+	ret.cols[2].w = r.z * c.w;
+	ret.cols[3].x = r.w * c.x;
+	ret.cols[3].y = r.w * c.y;
+	ret.cols[3].z = r.w * c.z;
+	ret.cols[3].w = r.w * c.w;
 	return ret;
 }
-f64x4x4 outerproduct_f64x4_f64x4(f64x4 c, f64x4 r) {
+f64x4x4 outerproduct_f64x4_f64x4(f64x4 r, f64x4 c) {
 	f64x4x4 ret;
-	ret.cols[0].x = c.x * r.x;
-	ret.cols[0].y = c.x * r.y;
-	ret.cols[0].z = c.x * r.z;
-	ret.cols[0].w = c.x * r.w;
-	ret.cols[1].x = c.y * r.x;
-	ret.cols[1].y = c.y * r.y;
-	ret.cols[1].z = c.y * r.z;
-	ret.cols[1].w = c.y * r.w;
-	ret.cols[2].x = c.z * r.x;
-	ret.cols[2].y = c.z * r.y;
-	ret.cols[2].z = c.z * r.z;
-	ret.cols[2].w = c.z * r.w;
-	ret.cols[3].x = c.w * r.x;
-	ret.cols[3].y = c.w * r.y;
-	ret.cols[3].z = c.w * r.z;
-	ret.cols[3].w = c.w * r.w;
+	ret.cols[0].x = r.x * c.x;
+	ret.cols[0].y = r.x * c.y;
+	ret.cols[0].z = r.x * c.z;
+	ret.cols[0].w = r.x * c.w;
+	ret.cols[1].x = r.y * c.x;
+	ret.cols[1].y = r.y * c.y;
+	ret.cols[1].z = r.y * c.z;
+	ret.cols[1].w = r.y * c.w;
+	ret.cols[2].x = r.z * c.x;
+	ret.cols[2].y = r.z * c.y;
+	ret.cols[2].z = r.z * c.z;
+	ret.cols[2].w = r.z * c.w;
+	ret.cols[3].x = r.w * c.x;
+	ret.cols[3].y = r.w * c.y;
+	ret.cols[3].z = r.w * c.z;
+	ret.cols[3].w = r.w * c.w;
 	return ret;
 }
 
