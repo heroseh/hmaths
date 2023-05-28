@@ -117,9 +117,9 @@ uint32_t bitlsb_u32(uint32_t v) {
 
 #ifdef __GNUC__
 	return __builtin_ctz(v);
-#elif defined(HCC_OS_WINDOWS)
+#elif defined(_WIN32)
 	unsigned long idx;
-	_BitScanForward(&v, v);
+	_BitScanForward(&idx, v);
 	return idx;
 #else
 #error "unsupported fartcount"
@@ -133,9 +133,9 @@ uint32_t bitlsb_u64(uint64_t v) {
 
 #ifdef __GNUC__
 	return __builtin_ctzl(v);
-#elif defined(HCC_OS_WINDOWS)
-	unsigned __int64 idx;
-	_BitScanForward64(&v, v);
+#elif defined(_WIN32)
+	unsigned long idx;
+	_BitScanForward64(&idx, v);
 	return idx;
 #else
 #error "unsupported fartcount"
@@ -149,7 +149,7 @@ uint32_t bitmsb_u8(uint8_t v) {
 
 #ifdef __GNUC__
 	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 24;
-#elif defined(HCC_OS_WINDOWS)
+#elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse(&idx, v);
 	return idx - 24;
@@ -165,7 +165,7 @@ uint32_t bitmsb_u16(uint16_t v) {
 
 #ifdef __GNUC__
 	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 16;
-#elif defined(HCC_OS_WINDOWS)
+#elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse(&idx, v);
 	return idx - 16;
@@ -181,7 +181,7 @@ uint32_t bitmsb_u32(uint32_t v) {
 
 #ifdef __GNUC__
 	return (sizeof(uint32_t) * 8) - __builtin_clz(v);
-#elif defined(HCC_OS_WINDOWS)
+#elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse(&idx, v);
 	return idx;
@@ -197,9 +197,9 @@ uint32_t bitmsb_u64(uint64_t v) {
 
 #ifdef __GNUC__
 	return (sizeof(uint64_t) * 8) - __builtin_clz(v);
-#elif defined(HCC_OS_WINDOWS)
+#elif defined(_WIN32)
 	unsigned long idx;
-	_BitScanReverse(&idx, v);
+	_BitScanReverse64(&idx, v);
 	return idx;
 #else
 #error "unsupported fartcount"
@@ -231,7 +231,7 @@ bool isnan_f64(double v) {
 }
 
 half floor_f16(half v) {
-	return floorf(f16tof32(v));
+	return f32tof16(floorf(f16tof32(v)));
 }
 
 float floor_f32(float v) {
@@ -243,7 +243,7 @@ double floor_f64(double v) {
 }
 
 half ceil_f16(half v) {
-	return ceilf(f16tof32(v));
+	return f32tof16(ceilf(f16tof32(v)));
 }
 
 float ceil_f32(float v) {
@@ -255,7 +255,7 @@ double ceil_f64(double v) {
 }
 
 half round_f16(half v) {
-	return roundf(f16tof32(v));
+	return f32tof16(roundf(f16tof32(v)));
 }
 
 float round_f32(float v) {
@@ -267,7 +267,7 @@ double round_f64(double v) {
 }
 
 half trunc_f16(half v) {
-	return trunc(f16tof32(v));
+	return f32tof16(trunc(f16tof32(v)));
 }
 
 float trunc_f32(float v) {
@@ -279,7 +279,7 @@ double trunc_f64(double v) {
 }
 
 half sin_f16(half v) {
-	return sinf(f16tof32(v));
+	return f32tof16(sinf(f16tof32(v)));
 }
 
 float sin_f32(float v) {
@@ -291,7 +291,7 @@ double sin_f64(double v) {
 }
 
 half cos_f16(half v) {
-	return cosf(f16tof32(v));
+	return f32tof16(cosf(f16tof32(v)));
 }
 
 float cos_f32(float v) {
@@ -303,7 +303,7 @@ double cos_f64(double v) {
 }
 
 half tan_f16(half v) {
-	return tanf(f16tof32(v));
+	return f32tof16(tanf(f16tof32(v)));
 }
 
 float tan_f32(float v) {
@@ -315,7 +315,7 @@ double tan_f64(double v) {
 }
 
 half asin_f16(half v) {
-	return asinf(f16tof32(v));
+	return f32tof16(asinf(f16tof32(v)));
 }
 
 float asin_f32(float v) {
@@ -327,7 +327,7 @@ double asin_f64(double v) {
 }
 
 half acos_f16(half v) {
-	return acosf(f16tof32(v));
+	return f32tof16(acosf(f16tof32(v)));
 }
 
 float acos_f32(float v) {
@@ -339,7 +339,7 @@ double acos_f64(double v) {
 }
 
 half atan_f16(half v) {
-	return atanf(f16tof32(v));
+	return f32tof16(atanf(f16tof32(v)));
 }
 
 float atan_f32(float v) {
@@ -351,7 +351,7 @@ double atan_f64(double v) {
 }
 
 half sinh_f16(half v) {
-	return sinhf(f16tof32(v));
+	return f32tof16(sinhf(f16tof32(v)));
 }
 
 float sinh_f32(float v) {
@@ -363,7 +363,7 @@ double sinh_f64(double v) {
 }
 
 half cosh_f16(half v) {
-	return coshf(f16tof32(v));
+	return f32tof16(coshf(f16tof32(v)));
 }
 
 float cosh_f32(float v) {
@@ -375,7 +375,7 @@ double cosh_f64(double v) {
 }
 
 half tanh_f16(half v) {
-	return tanhf(f16tof32(v));
+	return f32tof16(tanhf(f16tof32(v)));
 }
 
 float tanh_f32(float v) {
@@ -387,7 +387,7 @@ double tanh_f64(double v) {
 }
 
 half asinh_f16(half v) {
-	return asinhf(f16tof32(v));
+	return f32tof16(asinhf(f16tof32(v)));
 }
 
 float asinh_f32(float v) {
@@ -399,7 +399,7 @@ double asinh_f64(double v) {
 }
 
 half acosh_f16(half v) {
-	return acoshf(f16tof32(v));
+	return f32tof16(acoshf(f16tof32(v)));
 }
 
 float acosh_f32(float v) {
@@ -411,7 +411,7 @@ double acosh_f64(double v) {
 }
 
 half atanh_f16(half v) {
-	return atanhf(f16tof32(v));
+	return f32tof16(atanhf(f16tof32(v)));
 }
 
 float atanh_f32(float v) {
@@ -423,7 +423,7 @@ double atanh_f64(double v) {
 }
 
 half atan2_f16(half y, half x) {
-	return atan2f(f16tof32(y), f16tof32(x));
+	return f32tof16(atan2f(f16tof32(y), f16tof32(x)));
 }
 
 float atan2_f32(float y, float x) {
@@ -435,7 +435,7 @@ double atan2_f64(double y, double x) {
 }
 
 half fma_f16(half a, half b, half c) {
-	return fmaf(f16tof32(a), f16tof32(b), f16tof32(c));
+	return f32tof16(fmaf(f16tof32(a), f16tof32(b), f16tof32(c)));
 }
 
 float fma_f32(float a, float b, float c) {
@@ -447,7 +447,7 @@ double fma_f64(double a, double b, double c) {
 }
 
 half sqrt_f16(half v) {
-	return sqrtf(f16tof32(v));
+	return f32tof16(sqrtf(f16tof32(v)));
 }
 
 float sqrt_f32(float v) {
@@ -459,7 +459,7 @@ double sqrt_f64(double v) {
 }
 
 half pow_f16(half a, half b) {
-	return powf(f16tof32(a), f16tof32(b));
+	return f32tof16(powf(f16tof32(a), f16tof32(b)));
 }
 
 float pow_f32(float a, float b) {
@@ -471,7 +471,7 @@ double pow_f64(double a, double b) {
 }
 
 half exp_f16(half v) {
-	return expf(f16tof32(v));
+	return f32tof16(expf(f16tof32(v)));
 }
 
 float exp_f32(float v) {
@@ -483,7 +483,7 @@ double exp_f64(double v) {
 }
 
 half log_f16(half v) {
-	return logf(f16tof32(v));
+	return f32tof16(logf(f16tof32(v)));
 }
 
 float log_f32(float v) {
@@ -495,7 +495,7 @@ double log_f64(double v) {
 }
 
 half exp2_f16(half v) {
-	return exp2f(f16tof32(v));
+	return f32tof16(exp2f(f16tof32(v)));
 }
 
 float exp2_f32(float v) {
@@ -507,7 +507,7 @@ double exp2_f64(double v) {
 }
 
 half log2_f16(half v) {
-	return log2f(f16tof32(v));
+	return f32tof16(log2f(f16tof32(v)));
 }
 
 float log2_f32(float v) {
