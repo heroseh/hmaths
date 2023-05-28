@@ -22,7 +22,7 @@
 typedef __hcc_half_t half;
 #define HALF_CONST(lit, bits) (lit)
 #define HMATHS_NATIVE_F16_SUPPORT
-#elif defined(__clang__)
+#elif defined(__clang__) && !defined(_WIN32)
 typedef _Float16 half;
 #define HALF_CONST(lit, bits) (lit)
 #define HMATHS_NATIVE_F16_SUPPORT

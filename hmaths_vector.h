@@ -2284,15 +2284,15 @@ static inline f64x4 lerp_f64x4(f64x4 start, f64x4 end, f64x4 t) { return f64x4(l
 
 //
 // return a vector where each component is the result of appling 'lerp' to that component in 'start', 'end' and scalar 't'
-static inline f16x2 lerps_f16x2(f16x2 start, f16x2 end, float t) { f16x2 vt = f16x2s(t); return lerp_f16x2(start, end, vt); }
+static inline f16x2 lerps_f16x2(f16x2 start, f16x2 end, half t) { f16x2 vt = f16x2s(t); return lerp_f16x2(start, end, vt); }
 static inline f32x2 lerps_f32x2(f32x2 start, f32x2 end, float t) { f32x2 vt = f32x2s(t); return lerp_f32x2(start, end, vt); }
-static inline f64x2 lerps_f64x2(f64x2 start, f64x2 end, float t) { f64x2 vt = f64x2s(t); return lerp_f64x2(start, end, vt); }
-static inline f16x3 lerps_f16x3(f16x3 start, f16x3 end, float t) { f16x3 vt = f16x3s(t); return lerp_f16x3(start, end, vt); }
+static inline f64x2 lerps_f64x2(f64x2 start, f64x2 end, double t) { f64x2 vt = f64x2s(t); return lerp_f64x2(start, end, vt); }
+static inline f16x3 lerps_f16x3(f16x3 start, f16x3 end, half t) { f16x3 vt = f16x3s(t); return lerp_f16x3(start, end, vt); }
 static inline f32x3 lerps_f32x3(f32x3 start, f32x3 end, float t) { f32x3 vt = f32x3s(t); return lerp_f32x3(start, end, vt); }
-static inline f64x3 lerps_f64x3(f64x3 start, f64x3 end, float t) { f64x3 vt = f64x3s(t); return lerp_f64x3(start, end, vt); }
-static inline f16x4 lerps_f16x4(f16x4 start, f16x4 end, float t) { f16x4 vt = f16x4s(t); return lerp_f16x4(start, end, vt); }
+static inline f64x3 lerps_f64x3(f64x3 start, f64x3 end, double t) { f64x3 vt = f64x3s(t); return lerp_f64x3(start, end, vt); }
+static inline f16x4 lerps_f16x4(f16x4 start, f16x4 end, half t) { f16x4 vt = f16x4s(t); return lerp_f16x4(start, end, vt); }
 static inline f32x4 lerps_f32x4(f32x4 start, f32x4 end, float t) { f32x4 vt = f32x4s(t); return lerp_f32x4(start, end, vt); }
-static inline f64x4 lerps_f64x4(f64x4 start, f64x4 end, float t) { f64x4 vt = f64x4s(t); return lerp_f64x4(start, end, vt); }
+static inline f64x4 lerps_f64x4(f64x4 start, f64x4 end, double t) { f64x4 vt = f64x4s(t); return lerp_f64x4(start, end, vt); }
 
 //
 // return a vector where each component is the result of appling 'invlerp' to that component in 'start', 'end' and 't'
@@ -2308,15 +2308,15 @@ static inline f64x4 invlerp_f64x4(f64x4 start, f64x4 end, f64x4 v) { return f64x
 
 //
 // return a vector where each component is the result of appling 'lerp' to that component in 'start', 'end' and scalar 't'
-static inline f16x2 invlerps_f16x2(f16x2 start, f16x2 end, float t) { f16x2 vt = f16x2s(t); return invlerp_f16x2(start, end, vt); }
-static inline f32x2 invlerps_f32x2(f32x2 start, f32x2 end, float t) { f32x2 vt = f32x2s(t); return invlerp_f32x2(start, end, vt); }
-static inline f64x2 invlerps_f64x2(f64x2 start, f64x2 end, float t) { f64x2 vt = f64x2s(t); return invlerp_f64x2(start, end, vt); }
-static inline f16x3 invlerps_f16x3(f16x3 start, f16x3 end, float t) { f16x3 vt = f16x3s(t); return invlerp_f16x3(start, end, vt); }
-static inline f32x3 invlerps_f32x3(f32x3 start, f32x3 end, float t) { f32x3 vt = f32x3s(t); return invlerp_f32x3(start, end, vt); }
-static inline f64x3 invlerps_f64x3(f64x3 start, f64x3 end, float t) { f64x3 vt = f64x3s(t); return invlerp_f64x3(start, end, vt); }
-static inline f16x4 invlerps_f16x4(f16x4 start, f16x4 end, float t) { f16x4 vt = f16x4s(t); return invlerp_f16x4(start, end, vt); }
-static inline f32x4 invlerps_f32x4(f32x4 start, f32x4 end, float t) { f32x4 vt = f32x4s(t); return invlerp_f32x4(start, end, vt); }
-static inline f64x4 invlerps_f64x4(f64x4 start, f64x4 end, float t) { f64x4 vt = f64x4s(t); return invlerp_f64x4(start, end, vt); }
+static inline f16x2 invlerps_f16x2(f16x2 start, f16x2 end, half v) { f16x2 vt = f16x2s(v); return invlerp_f16x2(start, end, vt); }
+static inline f32x2 invlerps_f32x2(f32x2 start, f32x2 end, float v) { f32x2 vt = f32x2s(v); return invlerp_f32x2(start, end, vt); }
+static inline f64x2 invlerps_f64x2(f64x2 start, f64x2 end, double v) { f64x2 vt = f64x2s(v); return invlerp_f64x2(start, end, vt); }
+static inline f16x3 invlerps_f16x3(f16x3 start, f16x3 end, half v) { f16x3 vt = f16x3s(v); return invlerp_f16x3(start, end, vt); }
+static inline f32x3 invlerps_f32x3(f32x3 start, f32x3 end, float v) { f32x3 vt = f32x3s(v); return invlerp_f32x3(start, end, vt); }
+static inline f64x3 invlerps_f64x3(f64x3 start, f64x3 end, double v) { f64x3 vt = f64x3s(v); return invlerp_f64x3(start, end, vt); }
+static inline f16x4 invlerps_f16x4(f16x4 start, f16x4 end, half v) { f16x4 vt = f16x4s(v); return invlerp_f16x4(start, end, vt); }
+static inline f32x4 invlerps_f32x4(f32x4 start, f32x4 end, float v) { f32x4 vt = f32x4s(v); return invlerp_f32x4(start, end, vt); }
+static inline f64x4 invlerps_f64x4(f64x4 start, f64x4 end, double v) { f64x4 vt = f64x4s(v); return invlerp_f64x4(start, end, vt); }
 
 //
 // returns a vector which is the cross product of 'a' and 'b'
