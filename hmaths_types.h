@@ -720,6 +720,10 @@ struct u64x4 {
 #define NAN_F32X4 f32x4(NAN_F32, NAN_F32, NAN_F32, NAN_F32)
 #define NAN_F64X4 f64x4(NAN_F64, NAN_F64, NAN_F64, NAN_F64)
 
+#define splat2(v) (v).x, (v).y
+#define splat3(v) (v).x, (v).y, (v).z
+#define splat4(v) (v).x, (v).y, (v).z, (v).w
+
 // ===========================================
 //
 //
