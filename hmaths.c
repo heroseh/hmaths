@@ -164,7 +164,7 @@ uint32_t bitmsb_u16(uint16_t v) {
 	}
 
 #ifdef __GNUC__
-	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 16;
+	return ((sizeof(uint32_t) * 8) - __builtin_clz(v)) - 16 - 1;
 #elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse(&idx, v);
@@ -180,7 +180,7 @@ uint32_t bitmsb_u32(uint32_t v) {
 	}
 
 #ifdef __GNUC__
-	return (sizeof(uint32_t) * 8) - __builtin_clz(v);
+	return (sizeof(uint32_t) * 8) - __builtin_clz(v) - 1;
 #elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse(&idx, v);
@@ -196,7 +196,7 @@ uint32_t bitmsb_u64(uint64_t v) {
 	}
 
 #ifdef __GNUC__
-	return (sizeof(uint64_t) * 8) - __builtin_clz(v);
+	return (sizeof(uint64_t) * 8) - __builtin_clzl(v) - 1;
 #elif defined(_WIN32)
 	unsigned long idx;
 	_BitScanReverse64(&idx, v);
