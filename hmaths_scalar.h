@@ -399,10 +399,10 @@ static inline uint64_t clamp_u64(uint64_t v, uint64_t min, uint64_t max) { retur
 static inline half abs_f16(half v) { return f16tof32(v) < 0.f ? neg_f16(v) : v; }
 static inline float abs_f32(float v) { return v < 0.f ? -v : v; }
 static inline double abs_f64(double v) { return v < 0.f ? -v : v; }
-static inline int8_t abs_s8(int8_t v) { return (v &= ~0x80); }
-static inline int16_t abs_s16(int16_t v) { return (v &= ~0x8000); }
-static inline int32_t abs_s32(int32_t v) { return (v &= ~0x800000); }
-static inline int64_t abs_s64(int64_t v) { return (v &= ~0x80000000); }
+static inline int8_t abs_s8(int8_t v) { return v < 0 ? -v : v; }
+static inline int16_t abs_s16(int16_t v) { return v < 0 ? -v : v; }
+static inline int32_t abs_s32(int32_t v) { return v < 0 ? -v : v; }
+static inline int64_t abs_s64(int64_t v) { return v < 0 ? -v : v; }
 
 //
 // returns the reciprocal square root of 'v' aka. inverse square root
@@ -428,13 +428,13 @@ static inline int64_t sign_s64(int64_t v) { return v == 0 ? 0 : (v < 0 ? -1 : 1)
 
 //
 // returns a 'v' with sign copied from 'sign'
-static inline half copysign_f16(half v, half sign) { return f32tof16(f16tof32(v) * (f16tof32(sign) < 0.f ? -1.f : 1.f)); }
-static inline float copysign_f32(float v, float sign) { return v * (sign < 0.f ? -1.f : 1.f); }
-static inline double copysign_f64(double v, double sign) { return v * (sign < 0.f ? -1.f : 1.f); }
-static inline int8_t copysign_s8(int8_t v, int8_t sign) { return v | (sign & 0x80); }
-static inline int16_t copysign_s16(int16_t v, int16_t sign) { return v | (sign & 0x8000); }
-static inline int32_t copysign_s32(int32_t v, int32_t sign) { return v | (sign & 0x800000); }
-static inline int64_t copysign_s64(int64_t v, int64_t sign) { return v | (sign & 0x80000000); }
+static inline half copysign_f16(half v, half sign) { return f32tof16(abs_f32(f16tof32(v)) * sign_f32(f16tof32(sign))); }
+static inline float copysign_f32(float v, float sign) { return abs_f32(v) * sign_f32(sign); }
+static inline double copysign_f64(double v, double sign) { return abs_f64(v) * sign_f64(sign); }
+static inline int8_t copysign_s8(int8_t v, int8_t sign) { return abs_s8(v) * sign_s8(sign); }
+static inline int16_t copysign_s16(int16_t v, int16_t sign) { return abs_s16(v) * sign_s16(sign); }
+static inline int32_t copysign_s32(int32_t v, int32_t sign) { return abs_s32(v) * sign_s32(sign); }
+static inline int64_t copysign_s64(int64_t v, int64_t sign) { return abs_s64(v) * sign_s64(sign); }
 
 //
 // returns a linear interpolation from 'start' to 'end' at the point of 't' where 't' = 0.f = 'start' and 't' = 1.f = 'end'
