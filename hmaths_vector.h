@@ -2641,7 +2641,7 @@ f32x2 unpack_s16x2_f32x2(uint32_t v);
 
 //
 // packs a unsigned normalized f32x4 into a 32 bit integer where each component is given 8 bits
-uint32_t pack_s8x4_f32x4(f32x4 v);
+uint32_t pack_u8x4_f32x4(f32x4 v);
 
 //
 // unpacks a unsigned normalized f32x4 from a 32 bit integer where each component is given 8 bits

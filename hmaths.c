@@ -662,8 +662,8 @@ f64x4 refract_f64x4(f64x4 v, f64x4 normal, double eta) {
 
 uint32_t pack_f16x2_f32x2(f32x2 v) {
 	return
-		((uint32_t)bitsfrom_f16(f32tof16(v.x)) << 0)  ||
-		((uint32_t)bitsfrom_f16(f32tof16(v.y)) << 16)  ;
+		((uint32_t)bitsfrom_f16(f32tof16(v.x)) << 0)  |
+		((uint32_t)bitsfrom_f16(f32tof16(v.y)) << 16) ;
 }
 
 f32x2 unpack_f16x2_f32x2(uint32_t v) {
@@ -676,7 +676,7 @@ f32x2 unpack_f16x2_f32x2(uint32_t v) {
 uint32_t pack_u16x2_f32x2(f32x2 v) {
 	v = round_f32x2(muls_f32x2(clamps_f32x2(v, 0.f, 1.f), 65535.f));
 	return
-		((uint32_t)v.x << 0) ||
+		((uint32_t)v.x << 0)  |
 		((uint32_t)v.y << 16) ;
 }
 
@@ -690,7 +690,7 @@ f32x2 unpack_u16x2_f32x2(uint32_t v) {
 uint32_t pack_s16x2_f32x2(f32x2 v) {
 	v = round_f32x2(muls_f32x2(clamps_f32x2(v, -1.f, 1.f), 32767.f));
 	return
-		((uint32_t)(uint16_t)(int16_t)v.x << 0) ||
+		((uint32_t)(uint16_t)(int16_t)v.x << 0)  |
 		((uint32_t)(uint16_t)(int16_t)v.y << 16) ;
 }
 
@@ -704,10 +704,10 @@ f32x2 unpack_s16x2_f32x2(uint32_t v) {
 uint32_t pack_u8x4_f32x4(f32x4 v) {
 	v = round_f32x4(muls_f32x4(clamps_f32x4(v, 0.f, 1.f), 255.f));
 	return
-		((uint32_t)v.x << 0)  ||
-		((uint32_t)v.y << 8)  ||
-		((uint32_t)v.z << 16) ||
-		((uint32_t)v.w << 24)  ;
+		((uint32_t)v.x << 0)  |
+		((uint32_t)v.y << 8)  |
+		((uint32_t)v.z << 16) |
+		((uint32_t)v.w << 24) ;
 }
 
 f32x4 unpack_u8x4_f32x4(uint32_t v) {
@@ -722,10 +722,10 @@ f32x4 unpack_u8x4_f32x4(uint32_t v) {
 uint32_t pack_s8x4_f32x4(f32x4 v) {
 	v = round_f32x4(muls_f32x4(clamps_f32x4(v, -1.f, 1.f), 127.f));
 	return
-		((uint32_t)(uint8_t)(int8_t)v.x << 0)  ||
-		((uint32_t)(uint8_t)(int8_t)v.y << 8)  ||
-		((uint32_t)(uint8_t)(int8_t)v.z << 16) ||
-		((uint32_t)(uint8_t)(int8_t)v.w << 24)  ;
+		((uint32_t)(uint8_t)(int8_t)v.x << 0)  |
+		((uint32_t)(uint8_t)(int8_t)v.y << 8)  |
+		((uint32_t)(uint8_t)(int8_t)v.z << 16) |
+		((uint32_t)(uint8_t)(int8_t)v.w << 24) ;
 }
 
 f32x4 unpack_s8x4_f32x4(uint32_t v) {
