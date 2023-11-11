@@ -2653,6 +2653,6 @@ uint32_t pack_s8x4_f32x4(f32x4 v);
 
 //
 // unpacks a signed normalized f32x4 from a 32 bit integer where each component is given 8 bits
-f32x4 unpack_u8x4_f32x4(uint32_t v);
+f32x4 unpack_s8x4_f32x4(uint32_t v);
 
 #endif // _HMATHS_VECTOR_H_
