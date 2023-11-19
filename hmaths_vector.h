@@ -2509,6 +2509,7 @@ static inline uint64_t maxelmt_u64x4(u64x4 v) { return max_u64(v.x, max_u64(v.y,
 
 //
 // returns the sum of all of the components in 'v'
+static inline uint32_t sumelmts_boolx2(boolx2 v) { return v.x + v.y; }
 static inline half sumelmts_f16x2(f16x2 v) { return add_f16(v.x, v.y); }
 static inline float sumelmts_f32x2(f32x2 v) { return v.x + v.y; }
 static inline double sumelmts_f64x2(f64x2 v) { return v.x + v.y; }
@@ -2520,6 +2521,7 @@ static inline uint8_t sumelmts_u8x2(u8x2 v) { return v.x + v.y; }
 static inline uint16_t sumelmts_u16x2(u16x2 v) { return v.x + v.y; }
 static inline uint32_t sumelmts_u32x2(u32x2 v) { return v.x + v.y; }
 static inline uint64_t sumelmts_u64x2(u64x2 v) { return v.x + v.y; }
+static inline uint32_t sumelmts_boolx3(boolx3 v) { return v.x + v.y + v.z; }
 static inline half sumelmts_f16x3(f16x3 v) { return add_f16(v.x, add_f16(v.y, v.z)); }
 static inline float sumelmts_f32x3(f32x3 v) { return v.x + v.y + v.z; }
 static inline double sumelmts_f64x3(f64x3 v) { return v.x + v.y + v.z; }
@@ -2531,6 +2533,7 @@ static inline uint8_t sumelmts_u8x3(u8x3 v) { return v.x + v.y + v.z; }
 static inline uint16_t sumelmts_u16x3(u16x3 v) { return v.x + v.y + v.z; }
 static inline uint32_t sumelmts_u32x3(u32x3 v) { return v.x + v.y + v.z; }
 static inline uint64_t sumelmts_u64x3(u64x3 v) { return v.x + v.y + v.z; }
+static inline uint32_t sumelmts_boolx4(boolx4 v) { return v.x + v.y + v.z + v.w; }
 static inline half sumelmts_f16x4(f16x4 v) { return add_f16(v.x, add_f16(v.y, add_f16(v.z, v.w))); }
 static inline float sumelmts_f32x4(f32x4 v) { return v.x + v.y + v.z + v.w; }
 static inline double sumelmts_f64x4(f64x4 v) { return v.x + v.y + v.z + v.w; }
