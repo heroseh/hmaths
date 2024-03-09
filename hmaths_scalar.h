@@ -224,6 +224,13 @@ uint32_t bitmsb_u16(uint16_t v);
 uint32_t bitmsb_u32(uint32_t v);
 uint32_t bitmsb_u64(uint64_t v);
 
+//
+// returns a count of the number of bits set to 1
+uint32_t bitcount_u8(uint8_t v);
+uint32_t bitcount_u16(uint16_t v);
+uint32_t bitcount_u32(uint32_t v);
+uint32_t bitcount_u64(uint64_t v);
+
 static inline bool not_f16(half v) { return !(bool)f16tof32(v); }
 static inline bool not_f32(float v) { return !(bool)v; }
 static inline bool not_f64(double v) { return !(bool)v; }

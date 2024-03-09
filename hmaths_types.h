@@ -62,7 +62,6 @@ typedef struct half { uint16_t _bits; } half;
 //
 
 #if HMATHS_ENABLE_VECTOR_EXTENSIONS
-HMATHS_DEFINE_VECTOR(boolx2, bool, 2);
 HMATHS_DEFINE_VECTOR(f16x2, half, 2);
 HMATHS_DEFINE_VECTOR(f32x2, float, 2);
 HMATHS_DEFINE_VECTOR(f64x2, double, 2);
@@ -75,7 +74,6 @@ HMATHS_DEFINE_VECTOR(u16x2, uint16_t, 2);
 HMATHS_DEFINE_VECTOR(u32x2, uint32_t, 2);
 HMATHS_DEFINE_VECTOR(u64x2, uint64_t, 2);
 
-HMATHS_DEFINE_VECTOR(boolx3, bool, 3);
 HMATHS_DEFINE_VECTOR(f16x3, half, 3);
 HMATHS_DEFINE_VECTOR(f32x3, float, 3);
 HMATHS_DEFINE_VECTOR(f64x3, double, 3);
@@ -88,7 +86,6 @@ HMATHS_DEFINE_VECTOR(u16x3, uint16_t, 3);
 HMATHS_DEFINE_VECTOR(u32x3, uint32_t, 3);
 HMATHS_DEFINE_VECTOR(u64x3, uint64_t, 3);
 
-HMATHS_DEFINE_VECTOR(boolx4, bool, 4);
 HMATHS_DEFINE_VECTOR(f16x4, half, 4);
 HMATHS_DEFINE_VECTOR(f32x4, float, 4);
 HMATHS_DEFINE_VECTOR(f64x4, double, 4);
@@ -103,7 +100,6 @@ HMATHS_DEFINE_VECTOR(u64x4, uint64_t, 4);
 
 #else //!HMATHS_ENABLE_VECTOR_EXTENSIONS
 
-typedef struct boolx2 boolx2;
 typedef struct f16x2 f16x2;
 typedef struct f32x2 f32x2;
 typedef struct f64x2 f64x2;
@@ -116,7 +112,6 @@ typedef struct u16x2 u16x2;
 typedef struct u32x2 u32x2;
 typedef struct u64x2 u64x2;
 
-typedef struct boolx3 boolx3;
 typedef struct f16x3 f16x3;
 typedef struct f32x3 f32x3;
 typedef struct f64x3 f64x3;
@@ -129,7 +124,6 @@ typedef struct u16x3 u16x3;
 typedef struct u32x3 u32x3;
 typedef struct u64x3 u64x3;
 
-typedef struct boolx4 boolx4;
 typedef struct f16x4 f16x4;
 typedef struct f32x4 f32x4;
 typedef struct f64x4 f64x4;
@@ -141,13 +135,6 @@ typedef struct u8x4 u8x4;
 typedef struct u16x4 u16x4;
 typedef struct u32x4 u32x4;
 typedef struct u64x4 u64x4;
-
-struct boolx2 {
-	union {
-		struct { bool x; bool y; };
-		struct { bool r; bool g; };
-	};
-};
 
 struct f16x2 {
 	union {
@@ -223,17 +210,6 @@ struct u64x2 {
 	union {
 		struct { uint64_t x; uint64_t y; };
 		struct { uint64_t r; uint64_t g; };
-	};
-};
-
-struct boolx3 {
-	union {
-		struct { bool x; bool y; bool z; };
-		struct { bool r; bool g; bool b; };
-		boolx2 xy;
-		struct { bool _; boolx2 yz; };
-		boolx2 rg;
-		struct { bool __; boolx2 gb; };
 	};
 };
 
@@ -358,20 +334,6 @@ struct u64x3 {
 	};
 };
 
-struct boolx4 {
-	union {
-		struct { bool x; bool y; bool z; bool w; };
-		struct { bool r; bool g; bool b; bool a; };
-		struct { boolx2 xy; boolx2 zw; };
-		struct { boolx2 rg; boolx2 ba; };
-		boolx3 xyz;
-		struct { bool _0; boolx3 yzw; };
-		boolx3 rgb;
-		struct { bool _1; boolx3 gba; };
-		struct { bool _2; boolx2 yz; bool _3; };
-		struct { bool _4; boolx2 gb; bool _5; };
-	};
-};
 struct f16x4 {
 	union {
 		struct { half x; half y; half z; half w; };
@@ -531,8 +493,6 @@ struct u64x4 {
 //
 // initializes a new vector with 2, 3 or 4 components of any of the following types:
 //	bool, half, float, double, uint8_t, uint16_t, uint32_t, uint64_t, int8_t, int16_t, int32_t, or int64_t
-#define boolx2(x, y) ((boolx2){ x, y })
-#define boolx2s(s) ((boolx2){ s, s })
 #define f16x2(x, y) ((f16x2){ x, y })
 #define f16x2s(s) ((f16x2){ s, s })
 #define f32x2(x, y) ((f32x2){ x, y })
@@ -556,10 +516,6 @@ struct u64x4 {
 #define u64x2(x, y) ((u64x2){ x, y })
 #define u64x2s(s) ((u64x2){ s, s })
 
-#define boolx3(x, y, z) ((boolx3){ x, y, z })
-#define boolx3s(s) ((boolx3){ s, s, s })
-#define boolx3sv2(x, v) ((boolx3){ x, (v).x, (v).y })
-#define boolx3v2s(v, z) ((boolx3){ (v).x, (v).y, z })
 #define f16x3(x, y, z) ((f16x3){ x, y, z })
 #define f16x3s(s) ((f16x3){ s, s, s })
 #define f16x3sv2(x, v) ((f16x3){ x, (v).x, (v).y })
@@ -605,13 +561,6 @@ struct u64x4 {
 #define u64x3sv2(x, v) ((u64x3){ x, (v).x, (v).y })
 #define u64x3v2s(v, z) ((u64x3){ (v).x, (v).y, z })
 
-#define boolx4(x, y, z, w) ((boolx4){ x, y, z, w })
-#define boolx4s(s) ((boolx4){ s, s, s, s })
-#define boolx4sv2(x, y, v) ((boolx4){ x, y, (v).x, (v).y })
-#define boolx4v2s(v, z, w) ((boolx4){ (v).x, (v).y, z, w })
-#define boolx4sv2s(x, v, w) ((boolx4){ x, (v).x, (v).y, w })
-#define boolx4sv3(x, v) ((boolx4){ x, (v).x, (v).y, (v).z })
-#define boolx4v3s(v, w) ((boolx4){ (v).x, (v).y, (v).z, w })
 #define f16x4(x, y, z, w) ((f16x4){ x, y, z, w })
 #define f16x4s(s) ((f16x4){ s, s, s, s })
 #define f16x4sv2(x, y, v) ((f16x4){ x, y, (v).x, (v).y })

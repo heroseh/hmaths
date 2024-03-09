@@ -206,6 +206,46 @@ uint32_t bitmsb_u64(uint64_t v) {
 #endif
 }
 
+uint32_t bitcount_u8(uint8_t v) {
+#ifdef __GNUC__
+	return __builtin_popcount(v);
+#elif defined(_WIN32)
+	return __popcnt(v);
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitcount_u16(uint16_t v) {
+#ifdef __GNUC__
+	return __builtin_popcount(v);
+#elif defined(_WIN32)
+	return __popcnt(v);
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitcount_u32(uint32_t v) {
+#ifdef __GNUC__
+	return __builtin_popcount(v);
+#elif defined(_WIN32)
+	return __popcnt(v);
+#else
+#error "unsupported fartcount"
+#endif
+}
+
+uint32_t bitcount_u64(uint64_t v) {
+#ifdef __GNUC__
+	return __builtin_popcountll(v);
+#elif defined(_WIN32)
+	return __popcnt64(v);
+#else
+#error "unsupported fartcount"
+#endif
+}
+
 bool isinf_f16(half v) {
 	return isinf_f32(f16tof32(v));
 }

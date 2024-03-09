@@ -5,7 +5,6 @@
 // returns true if _any_ of the vector components are a non-zero value, otherwise false is returned
 #define anyG(v) \
 	_Generic((v), \
-		boolx2: any_boolx2, \
 		f16x2: any_f16x2, \
 		f32x2: any_f32x2, \
 		f64x2: any_f64x2, \
@@ -17,7 +16,6 @@
 		u16x2: any_u16x2, \
 		u32x2: any_u32x2, \
 		u64x2: any_u64x2, \
-		boolx3: any_boolx3, \
 		f16x3: any_f16x3, \
 		f32x3: any_f32x3, \
 		f64x3: any_f64x3, \
@@ -29,7 +27,6 @@
 		u16x3: any_u16x3, \
 		u32x3: any_u32x3, \
 		u64x3: any_u64x3, \
-		boolx4: any_boolx4, \
 		f16x4: any_f16x4, \
 		f32x4: any_f32x4, \
 		f64x4: any_f64x4, \
@@ -47,7 +44,6 @@
 // returns true if _all_ of the vector components are a non-zero value, otherwise false is returned
 #define allG(v) \
 	_Generic((v), \
-		boolx2: all_boolx2, \
 		f16x2: all_f16x2, \
 		f32x2: all_f32x2, \
 		f64x2: all_f64x2, \
@@ -59,7 +55,6 @@
 		u16x2: all_u16x2, \
 		u32x2: all_u32x2, \
 		u64x2: all_u64x2, \
-		boolx3: all_boolx3, \
 		f16x3: all_f16x3, \
 		f32x3: all_f32x3, \
 		f64x3: all_f64x3, \
@@ -71,7 +66,6 @@
 		u16x3: all_u16x3, \
 		u32x3: all_u32x3, \
 		u64x3: all_u64x3, \
-		boolx4: all_boolx4, \
 		f16x4: all_f16x4, \
 		f32x4: all_f32x4, \
 		f64x4: all_f64x4, \
@@ -100,7 +94,6 @@
 		uint16_t: not_u16, \
 		uint32_t: not_u32, \
 		uint64_t: not_u64, \
-		boolx2: not_boolx2, \
 		f16x2: not_f16x2, \
 		f32x2: not_f32x2, \
 		f64x2: not_f64x2, \
@@ -112,7 +105,6 @@
 		u16x2: not_u16x2, \
 		u32x2: not_u32x2, \
 		u64x2: not_u64x2, \
-		boolx3: not_boolx3, \
 		f16x3: not_f16x3, \
 		f32x3: not_f32x3, \
 		f64x3: not_f64x3, \
@@ -124,7 +116,6 @@
 		u16x3: not_u16x3, \
 		u32x3: not_u32x3, \
 		u64x3: not_u64x3, \
-		boolx4: not_boolx4, \
 		f16x4: not_f16x4, \
 		f32x4: not_f32x4, \
 		f64x4: not_f64x4, \
