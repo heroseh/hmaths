@@ -1810,27 +1810,27 @@ static inline f64x4 degrees_f64x4(f64x4 v) { return f64x4(degrees_f64(v.x), degr
 
 //
 // return a vector where each component is the result of appling 'step' to that component in 'v'
-static inline f16x2 step_f16x2(f16x2 v, f16x2 edge) { return f16x2(step_f16(v.x, edge.x), step_f16(v.y, edge.y)); }
-static inline f32x2 step_f32x2(f32x2 v, f32x2 edge) { return f32x2(step_f32(v.x, edge.x), step_f32(v.y, edge.y)); }
-static inline f64x2 step_f64x2(f64x2 v, f64x2 edge) { return f64x2(step_f64(v.x, edge.x), step_f64(v.y, edge.y)); }
-static inline f16x3 step_f16x3(f16x3 v, f16x3 edge) { return f16x3(step_f16(v.x, edge.x), step_f16(v.y, edge.y), step_f16(v.z, edge.z)); }
-static inline f32x3 step_f32x3(f32x3 v, f32x3 edge) { return f32x3(step_f32(v.x, edge.x), step_f32(v.y, edge.y), step_f32(v.z, edge.z)); }
-static inline f64x3 step_f64x3(f64x3 v, f64x3 edge) { return f64x3(step_f64(v.x, edge.x), step_f64(v.y, edge.y), step_f64(v.z, edge.z)); }
-static inline f16x4 step_f16x4(f16x4 v, f16x4 edge) { return f16x4(step_f16(v.x, edge.x), step_f16(v.y, edge.y), step_f16(v.z, edge.z), step_f16(v.w, edge.w)); }
-static inline f32x4 step_f32x4(f32x4 v, f32x4 edge) { return f32x4(step_f32(v.x, edge.x), step_f32(v.y, edge.y), step_f32(v.z, edge.z), step_f32(v.w, edge.w)); }
-static inline f64x4 step_f64x4(f64x4 v, f64x4 edge) { return f64x4(step_f64(v.x, edge.x), step_f64(v.y, edge.y), step_f64(v.z, edge.z), step_f64(v.w, edge.w)); }
+static inline f16x2 step_f16x2(f16x2 edge, f16x2 v) { return f16x2(step_f16(edge.x, v.x), step_f16(edge.y, v.y)); }
+static inline f32x2 step_f32x2(f32x2 edge, f32x2 v) { return f32x2(step_f32(edge.x, v.x), step_f32(edge.y, v.y)); }
+static inline f64x2 step_f64x2(f64x2 edge, f64x2 v) { return f64x2(step_f64(edge.x, v.x), step_f64(edge.y, v.y)); }
+static inline f16x3 step_f16x3(f16x3 edge, f16x3 v) { return f16x3(step_f16(edge.x, v.x), step_f16(edge.y, v.y), step_f16(edge.z, v.z)); }
+static inline f32x3 step_f32x3(f32x3 edge, f32x3 v) { return f32x3(step_f32(edge.x, v.x), step_f32(edge.y, v.y), step_f32(edge.z, v.z)); }
+static inline f64x3 step_f64x3(f64x3 edge, f64x3 v) { return f64x3(step_f64(edge.x, v.x), step_f64(edge.y, v.y), step_f64(edge.z, v.z)); }
+static inline f16x4 step_f16x4(f16x4 edge, f16x4 v) { return f16x4(step_f16(edge.x, v.x), step_f16(edge.y, v.y), step_f16(edge.z, v.z), step_f16(edge.w, v.w)); }
+static inline f32x4 step_f32x4(f32x4 edge, f32x4 v) { return f32x4(step_f32(edge.x, v.x), step_f32(edge.y, v.y), step_f32(edge.z, v.z), step_f32(edge.w, v.w)); }
+static inline f64x4 step_f64x4(f64x4 edge, f64x4 v) { return f64x4(step_f64(edge.x, v.x), step_f64(edge.y, v.y), step_f64(edge.z, v.z), step_f64(edge.w, v.w)); }
 
 //
 // return a vector where each component is the result of appling 'step' to that component in 'v'
-static inline f16x2 steps_f16x2(f16x2 v, half edge) { f16x2 edges = f16x2s(edge); return step_f16x2(v, edges); }
-static inline f32x2 steps_f32x2(f32x2 v, float edge) { f32x2 edges = f32x2s(edge); return step_f32x2(v, edges); }
-static inline f64x2 steps_f64x2(f64x2 v, double edge) { f64x2 edges = f64x2s(edge); return step_f64x2(v, edges); }
-static inline f16x3 steps_f16x3(f16x3 v, half edge) { f16x3 edges = f16x3s(edge); return step_f16x3(v, edges); }
-static inline f32x3 steps_f32x3(f32x3 v, float edge) { f32x3 edges = f32x3s(edge); return step_f32x3(v, edges); }
-static inline f64x3 steps_f64x3(f64x3 v, double edge) { f64x3 edges = f64x3s(edge); return step_f64x3(v, edges); }
-static inline f16x4 steps_f16x4(f16x4 v, half edge) { f16x4 edges = f16x4s(edge); return step_f16x4(v, edges); }
-static inline f32x4 steps_f32x4(f32x4 v, float edge) { f32x4 edges = f32x4s(edge); return step_f32x4(v, edges); }
-static inline f64x4 steps_f64x4(f64x4 v, double edge) { f64x4 edges = f64x4s(edge); return step_f64x4(v, edges); }
+static inline f16x2 steps_f16x2(f16x2 edge, half v) { f16x2 vs = f16x2s(v); return step_f16x2(edge, vs); }
+static inline f32x2 steps_f32x2(f32x2 edge, float v) { f32x2 vs = f32x2s(v); return step_f32x2(edge, vs); }
+static inline f64x2 steps_f64x2(f64x2 edge, double v) { f64x2 vs = f64x2s(v); return step_f64x2(edge, vs); }
+static inline f16x3 steps_f16x3(f16x3 edge, half v) { f16x3 vs = f16x3s(v); return step_f16x3(edge, vs); }
+static inline f32x3 steps_f32x3(f32x3 edge, float v) { f32x3 vs = f32x3s(v); return step_f32x3(edge, vs); }
+static inline f64x3 steps_f64x3(f64x3 edge, double v) { f64x3 vs = f64x3s(v); return step_f64x3(edge, vs); }
+static inline f16x4 steps_f16x4(f16x4 edge, half v) { f16x4 vs = f16x4s(v); return step_f16x4(edge, vs); }
+static inline f32x4 steps_f32x4(f32x4 edge, float v) { f32x4 vs = f32x4s(v); return step_f32x4(edge, vs); }
+static inline f64x4 steps_f64x4(f64x4 edge, double v) { f64x4 vs = f64x4s(v); return step_f64x4(edge, vs); }
 
 //
 // return a vector where each component is the result of appling 'smoothstep' to that component in 'v'
