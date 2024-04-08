@@ -2329,7 +2329,13 @@ static inline f64x4 invlerps_f64x4(f64x4 start, f64x4 end, double v) { f64x4 vt 
 static inline half cross_f16x2(f16x2 a, f16x2 b) { return sub_f16(mul_f16(a.x, b.y), mul_f16(b.x, a.y)); }
 static inline float cross_f32x2(f32x2 a, f32x2 b) { return (a.x * b.y) - (b.x * a.y); }
 static inline double cross_f64x2(f64x2 a, f64x2 b) { return (a.x * b.y) - (b.x * a.y); }
-static inline half cross_f16x3(f16x3 a, f16x3 b) { return add_f16(mul_f16(a.x, b.x), add_f16(mul_f16(a.y, b.y), mul_f16(a.z, b.z))); }
+static inline f16x3 cross_f16x3(f16x3 a, f16x3 b) { 
+	return f16x3(
+		sub_f16(mul_f16(a.y, b.z), mul_f16(a.z, b.y)),
+		sub_f16(mul_f16(a.z, b.x), mul_f16(a.x, b.z)),
+		sub_f16(mul_f16(a.x, b.y), mul_f16(a.y, b.x))
+	);	
+}
 static inline f32x3 cross_f32x3(f32x3 a, f32x3 b) {
 	return f32x3(
 		a.y * b.z - a.z * b.y,
