@@ -521,4 +521,32 @@ static inline uint16_t bitsfrom_f16(half v) { union { uint16_t u; half f; } d = 
 static inline uint32_t bitsfrom_f32(float v) { union { uint32_t u; float f; } d = { .f = v }; return d.u; }
 static inline uint64_t bitsfrom_f64(double v) { union { uint64_t u; double f; } d = { .f = v }; return d.u; }
 
+//
+// returns the square of 'v'
+static inline half square_f16(half v) { return mul_f16(v, v); }
+static inline float square_f32(float v) { return v * v; }
+static inline double square_f64(double v) { return v * v; }
+static inline int8_t square_s8(int8_t v) { return v * v; }
+static inline int16_t square_s16(int16_t v) { return v * v; }
+static inline int32_t square_s32(int32_t v) { return v * v; }
+static inline int64_t square_s64(int64_t v) { return v * v; }
+static inline uint8_t square_u8(uint8_t v) { return v * v; }
+static inline uint16_t square_u16(uint16_t v) { return v * v; }
+static inline uint32_t square_u32(uint32_t v) { return v * v; }
+static inline uint64_t square_u64(uint64_t v) { return v * v; }
+
+//
+// returns the cube of 'v'
+static inline half cube_f16(half v) { return mul_f16(v, mul_f16(v, v)); }
+static inline float cube_f32(float v) { return v * v * v; }
+static inline double cube_f64(double v) { return v * v * v; }
+static inline int8_t cube_s8(int8_t v) { return v * v * v; }
+static inline int16_t cube_s16(int16_t v) { return v * v * v; }
+static inline int32_t cube_s32(int32_t v) { return v * v * v; }
+static inline int64_t cube_s64(int64_t v) { return v * v * v; }
+static inline uint8_t cube_u8(uint8_t v) { return v * v * v; }
+static inline uint16_t cube_u16(uint16_t v) { return v * v * v; }
+static inline uint32_t cube_u32(uint32_t v) { return v * v * v; }
+static inline uint64_t cube_u64(uint64_t v) { return v * v * v; }
+
 #endif // _HMATHS_SCALAR_H_
