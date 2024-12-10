@@ -425,13 +425,13 @@ static inline bool approxeq_f64(double a, double b, double epsilon) { return abs
 
 //
 // returns -1 if 'v' is less than 0, 1 if 'v' is greater than 0 or 0 if 'v' is 0
-static inline half sign_f16(half v) { return f32tof16(f16tof32(v) == 0.f ? 0.f : (f16tof32(v) < 0.f ? -1.f : 1.f)); }
-static inline float sign_f32(float v) { return v == 0.f ? 0.f : (v < 0.f ? -1.f : 1.f); }
-static inline double sign_f64(double v) { return v == 0.f ? 0.f : (v < 0.f ? -1.f : 1.f); }
-static inline int8_t sign_s8(int8_t v) { return v == 0 ? 0 : (v < 0 ? -1 : 1); }
-static inline int16_t sign_s16(int16_t v) { return v == 0 ? 0 : (v < 0 ? -1 : 1); }
-static inline int32_t sign_s32(int32_t v) { return v == 0 ? 0 : (v < 0 ? -1 : 1); }
-static inline int64_t sign_s64(int64_t v) { return v == 0 ? 0 : (v < 0 ? -1 : 1); }
+static inline half sign_f16(half v) { return f32tof16(f16tof32(v) < 0.f ? -1.f : 1.f); }
+static inline float sign_f32(float v) { return v < 0.f ? -1.f : 1.f; }
+static inline double sign_f64(double v) { return v < 0.f ? -1.f : 1.f; }
+static inline int8_t sign_s8(int8_t v) { return v < 0 ? -1 : 1; }
+static inline int16_t sign_s16(int16_t v) { return v < 0 ? -1 : 1; }
+static inline int32_t sign_s32(int32_t v) { return v < 0 ? -1 : 1; }
+static inline int64_t sign_s64(int64_t v) { return v < 0 ? -1 : 1; }
 
 //
 // returns a 'v' with sign copied from 'sign'
